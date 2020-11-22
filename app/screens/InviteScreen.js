@@ -1,9 +1,21 @@
 import React, { useState,useEffect,Component } from 'react';
 import { SearchBar } from 'react-native-elements';
-import { StyleSheet,TouchableOpacity, View,Button, Alert,FlatList,Text} from 'react-native';
+import { StyleSheet,TouchableOpacity, View, Alert,FlatList,Text} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import Screen from "../components/Screen";
 import navigation from "@react-navigation/native";
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Left,
+  Right,
+  Body,
+  
+} from "native-base";
 
 import AppButton from "../components/AppButton";
 import firebase from "../config/firebaseConfig";
@@ -64,9 +76,15 @@ const firestore_ref=firebase.firestore().collection('InviteStudents')
           <Text style={styles.align }>Update </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
-         <Text style={styles.align}>Delete </Text>
-         </TouchableOpacity>
-
+         <Button
+              danger
+              transparent
+              style={{  marginLeft: 350,marginBottom:30 }}
+              onPress={() => openTwoButtonAlert(item.key)}
+              >
+              <Icon active name="trash" />
+       </Button>
+        </TouchableOpacity>
           
           
          </Table>
@@ -116,8 +134,8 @@ const styles = StyleSheet.create({
     },
     align:{
       alignSelf:'flex-end',
-      
-     },
+      marginBottom:-9
+    },
     screen: {
       flex: 1,
       marginBottom: 30,

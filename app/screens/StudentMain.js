@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   StyleSheet,
   Button,Text
 } from 'react-native';
 import Screen from "../components/Screen";
-
+import  AsyncStorage  from '@react-native-community/async-storage';
 const StudentMain = props => {
+  // const [data,setdata]= useState([])
     
+  // useEffect(() => {
+  //   AsyncStorage.getItem('class)'.then((res)=> {
+  //     let classData = JSON.parse(res);
+  //    setdata(classData);
+
+  //   }));
+    
+  //   AsyncStorage.getItem('studentData)'.then((res)=> {
+  //     let classData = JSON.parse(res);
+  //     setdata(classData)
+    
+  //   }));
+  
+  // });
+  
+
+
+
     return (
       <Screen style={styles.container}>
       <View style={styles.screen}>

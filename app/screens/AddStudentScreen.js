@@ -27,6 +27,10 @@ function AddStudentScreen() {
   const [RegNumber, setRegNumber] = useState('');
 
   const [Email, setEmail] = useState('');
+  const setStForAsync=async(stData)=>
+  {
+    AsyncStorage.setItem('studentData',JSON.stringify(stData));
+  }
 
   const  addInvitingStudent = async() => {
     
@@ -52,6 +56,7 @@ function AddStudentScreen() {
    array.forEach( (item)=> {
       const collectionRef =  datas.collection('InviteStudents').doc();
       batch.set(collectionRef, item);
+      setStForAsync(item)
     });
   
   const result =  batch.commit();

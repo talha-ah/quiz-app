@@ -1,5 +1,5 @@
 import { ImageBackground ,StyleSheet, View } from "react-native";
-import React ,{useState} from "react";
+import React ,{useState, useEffect} from "react";
 import * as Yup from "yup";
 import { ScrollView,Button, Text } from "react-native";
 import  AsyncStorage  from '@react-native-community/async-storage';
@@ -23,19 +23,54 @@ function LoginScreen(props ) {
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
 
+  // useEffect(async () => {  
+  //   await _retrieveData();
+  // },[])
+
+  // _storeData = async (key, value) => {
+  //   try {
+  //     await AsyncStorage.setItem(
+  //       '@MySuperStore:key',
+  //       'I like to save it.'
+  //     );
+  //   } catch (error) {
+  //     // Error saving data
+  //   }
+  // };
+
+  // _retrieveData = async (key) => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('userData');
+  //     if (value !== null) {
+  //       // We have data!!
+  //       console.log(value);
+  //     }
+  //   } catch (error) {
+  //     // Error retrieving data
+  //   }
+  // };
+
   const handleLogin = () => {
-  //  const { email, password } = props;
+    //  const { email, password } = props;
     console.log('login pressed');
-                
+    const flag = props.route.params.flag;
+    const navigate = props.navigation.navigate;
+    const firestore_ref = firebase.firestore();
+
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((userData) => {
-        AsyncStorage.setItem('userData', JSON.stringify(userData));
-        props.navigation.navigate(props.route.params.flag==0 ? "teacher":"student")
+      .then(async (response) => {
+        await AsyncStorage.setItem('userData', JSON.stringify(response));
+        const doc = await firestore_ref.collection(flag === 0 ? "TeacherUser" : "StudentUser")
+          .doc(response.user.uid)
+          .get();
+        if (doc.exists) { navigate(flag === 0 ? "teacher" : "student") }
+        else { alert(`Not registered as a ${flag === 0 ? "teacher" : "student"}`); }
       })
-      .catch((error) => {alert(error)});
-  };  
+      .catch((error) => { alert(error) });
+  };
   return (
     <ImageBackground                                                       
     blurRadius={1}

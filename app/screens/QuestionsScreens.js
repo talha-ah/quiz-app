@@ -28,7 +28,7 @@ state = {
     value1:false
   };
   
-const AddQuestionScreen = props => {
+const QuestionsScreen = props => {
 
 
   const [decision, setDecision] = useState(0)
@@ -410,7 +410,7 @@ function _isChecked(){
   
     }
   });
-  export default AddQuestionScreen;
+  export default QuestionsScreen;
   
 
 

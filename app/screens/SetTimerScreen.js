@@ -40,11 +40,12 @@ const SetTimerScreen = props => {
   const  setter = () => {
 
   console.log("set pressed");
+ 
   if(date === "" ||stime=== ""||  etime=== ""){
     
   //  setShowLoading(true);
-    console.log("write details");
-    Alert.alert('write details ');
+    console.log("Enter Valid details");
+    Alert.alert('Enter Valid details');
 
     }
     else{
@@ -59,39 +60,16 @@ const SetTimerScreen = props => {
           const collectionRef =  datas.collection('Timers').doc();
           batch.set(collectionRef, item);
         });
+        
       
       const result =  batch.commit();
       
-
       
-    props.navigation.navigate("ClassSelection");
+      
+    // props.navigation.navigate("ClassSelection");
   }
   };
-  /*
-    
-        const datas=firebase.firestore().collection('Timers').doc('timing')
-        datas.set({
-
-      date:date,
-      stime:stime,
-      etime:etime*/
-
-   // },
-   // {merge:true}'
- //  )
-/*  const handleConfirm = (date,st,et) => {
-    setDate(date);
-    setSTime(st);
-    setETime(et);
-    console.log( "date is ",date);
-    console.log( "stime is ",st);
-    console.log( "etime is ",et);
-    hideDatePicker();
-    hideETimePicker();
-    hideSTimePicker();
-  };*/
- 
-  const handleDConfirm = (date) => {
+   const handleDConfirm = (date) => {
     setDate(date);
     console.log( "date is ",date);
     hideDatePicker();
@@ -116,6 +94,7 @@ const SetTimerScreen = props => {
     hideDatePicker();
     hideETimePicker();
     hideSTimePicker();
+    
   };
 
   return (
@@ -144,7 +123,8 @@ const SetTimerScreen = props => {
         onCancel={hideETimePicker}
       />
       
-      <Button title = "Set"  onPress={ setter  }></Button>
+      <Button title = "Set"  onPress={ setter  }
+      ></Button>
 
 
       

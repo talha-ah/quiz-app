@@ -87,17 +87,7 @@ const firestore_ref=firebase.firestore().collection('Courses')
 
   
   
-  /*updateCourser = (key,Courses, {coursecode,coursetitle,creditHrs}) => {
-    const db = firestore_ref.doc(key)
-    db.ref(`/${Courses}/${key}`)
-  .update(data)
-  .then(() => console.log('Data updated.'));
-  }*/
-
-
-  // updateCourser('z78asdasldjl', 'Class', {coursecode:'ABC', credithour:})
-    // updater=(key)=>{props.navigation.navigate('CourseUpdateScreen',key);
- // }
+  
 
   openTwoButtonAlert=(key)=>{  
     Alert.alert(
@@ -117,19 +107,17 @@ const firestore_ref=firebase.firestore().collection('Courses')
 
   return (
     
-       
-    <ScrollView
-    contentContainerStyle={styles.scrollView}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
-  >
+    
+
+    <Container  style={styles.container }>
+    
+    <Content  style={styles.container }>
      <FlatList
      data={courses}
      renderItem={({ item }) => (
-       <ScrollView>
+       
        <View style={{backgroundColor:'#465881',height: 90  }}>
-           <Table borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
+           {/* <Table borderStyle={{borderWidth: 3, borderColor: '#c8e1ff'}}> */}
          
 
           <Text style= {styles.txt}>Course Title: {item.coursetitle} </Text> 
@@ -140,102 +128,42 @@ const firestore_ref=firebase.firestore().collection('Courses')
           <Text style={styles.align }>Update </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
-         <Text style={styles.align}>Delete </Text>
-         </TouchableOpacity>
-
+         <Button
+              danger
+              transparent
+              style={{  marginLeft: 350,marginBottom:30 }}
+              onPress={() => openTwoButtonAlert(item.key)}
+              >
+              <Icon active name="trash" />
+       </Button>
+        </TouchableOpacity>
          
-        </Table>
+        {/* </Table> */}
         
         
        </View>
 
-       </ScrollView>
+
+       
      
      )}
 
    />
+   
     
-{/* <View style={{backgroundColor:'#465881',  alignItems: 'center'}} >
-<Left>
-<Button
-              danger
-              transparent
-              style={{ marginBottom: 20, marginLeft: 10 }}
-              onPress={
-                      openTwoButtonAlert
-                              } 
 
-            >
-                   <Icon active name="trash" />
-            </Button>
-            </Left> */}
             
-  <AppButton style={styles.btn}
-          title="Add Course"
-          onPress={() =>
-          
-            props.navigation.navigate("CourseEditScreen")
-          //   getCourses
-
-            }
-
-        />
+   <Button  style= {styles.btn}>
+            <Text style={styles.text} onPress={() => props.navigation.navigate('CourseEditScreen')} >Add Course</Text>
+          </Button>
       
        
-   </ScrollView>
+      </Content>
+</Container>
      );
   
     }
   
-
-
-
- 
-
-
-
-
- 
-    // return (
-    //     <Screen style={styles.container}>
-    //          <View style={styles.screen}>
-     
-      
-    // </View>
-     
-     
-    //   <View style={styles.container}>
-    //     <Table borderStyle={{borderWidth: 1}}>
-    //       <Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
-    //       <TableWrapper style={styles.wrapper}>
-    //         <Col data={state.tableTitle} style={styles.title} heightArr={[28,28]} textStyle={styles.text}/>
-           
-    //        <Rows data={state.tableData} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text}/>
-    //       </TableWrapper>
-    //     </Table>
-    //     <Button style={styles.btn}
-    //       title="Add Course"
-    //       onPress={() =>
-          
-    //         props.navigation.navigate("CourseEditScreen")
-    //       //   getCourses
-
-    //         }
-
-    //     />
-      
-     
-        
-        
-
-      
-      
-
-  
-    // )
-  
-
- 
 const styles = StyleSheet.create({
     container: {
         flex:1,
@@ -248,6 +176,7 @@ const styles = StyleSheet.create({
      },
      align:{
       alignSelf:'flex-end',
+      marginBottom:-9
       
      },
   wrapper: {
@@ -269,13 +198,22 @@ const styles = StyleSheet.create({
       },
      
       btn: {
-        marginTop: 20,
-        width: '70%',
-        padding: "20%",
-        alignSelf: "flex-end",
-        borderRadius: 10
+        backgroundColor: "#fc5c65",
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        width: "100%",
+        marginVertical: 50,
     
       },
+      text: {
+        color: '#fff',
+        fontSize: 18,
+        textTransform: "uppercase",
+        fontWeight: "bold",
+      },
+     
        screen: {
         flex: 1,
       

@@ -31,6 +31,10 @@ const MainScreen = props => {
     
     });
   });
+//   clearAsyncStorage = async() => {
+//    await  AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove);
+//     console.log("removed")
+// }
 
   const signOutUser = async () => {
     console.log("data is:"+data)
@@ -102,7 +106,7 @@ const MainScreen = props => {
             View Report</Text>
             </Button>
           
-       <Button  style={styles.btn}>
+       <Button  style={styles.logout}>
               <Text 
             style={styles.appButtonText1}
             onPress={signOutUser}
@@ -135,8 +139,10 @@ const styles = StyleSheet.create({
   },
   logout:{
     position: 'absolute',
-    right: 4,
-    top: 2,
+    right:10,
+    top:1,
+    width:'30%',
+    height:'10%'
    
   },
   appButtonText: {

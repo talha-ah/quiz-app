@@ -34,13 +34,17 @@ function ClassEditScreen() {
    
    
     const  addClass = () => {
+      const setClassAsync=async(cLData)=>
+      {
+        AsyncStorage.setItem('class',JSON.stringify(cLData));
+      }
         //try{
           console.log("add pressed");
           if(batchs === "" ||programme=== ""||  section=== ""){
             //your error
           //  setShowLoading(true);
-            console.log("write details");
-            Alert.alert('write details ');
+            console.log("Enter Valid details");
+            Alert.alert('Enter Valid details');
         
             }
             else{
@@ -58,6 +62,7 @@ function ClassEditScreen() {
                 array.forEach( (item)=> {
                     const collectionRef =  datas.collection('Class').doc();
                     batch.set(collectionRef, item);
+                    setClassAsync(item)
                   });
                 
                 const result =  batch.commit();

@@ -5,7 +5,7 @@ import Screen from "../components/Screen";
 import Header from "../components/Header"
 
 
-const AddQuestionScreen = props => {
+const AddQuestionsScreen = props => {
   // state = {
   //   search: '',
     
@@ -32,7 +32,7 @@ const AddQuestionScreen = props => {
 
         <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate('QuestionsScreen')}
+           onPress={() => props.navigation.navigate('QuestionsScreens')}
            >
             Add Question
         </Text>
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
   },
  
 });
-export default AddQuestionScreen;
+export default AddQuestionsScreen;

@@ -1,12 +1,15 @@
 import React ,{useState,useEffect}from "react";
 import { Button,Text, Alert, StyleSheet, View ,FlatList} from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import firebase from "../config/firebaseConfig";
 
 const ViewQuestionScreen = props => {
  
    const [question, setQuestion] = useState([])
+
+   
+  
 
    useEffect(() => {
   
@@ -30,12 +33,37 @@ const ViewQuestionScreen = props => {
        });
       }, []);
     
+  const deleteQuestioner=(key)=> {
+    console.log('quesionkey_'+key)
+    const db = firebase
+    .firestore()
+    .collection('Question').doc('QuestionMCQS').collection('Mcqs').doc(key)
+      db.delete().then((res) => {
+          console.log('Item removed from database')
+               }).catch((err)=>{Alert.alert(err)})
+               
+  },
+
+  openTwoButtonAlert=(key)=>{  
+    Alert.alert(
+      'Delete Question',
+      'Are you sure to delete it?',
+      [
+        {text: 'Yes', onPress: () => {deleteQuestioner(key)}},
+        {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+      ],
+      { 
+        cancelable: true 
+      }
+    );
+  }
+  const updater=(key)=>{props.navigation.navigate('ClassUpdateScreen',{key:key});
+  }
+
+ 
  
 
      return (
-       <ScrollView>
-         <View>
-      
     <FlatList
     data={question}
     renderItem={({ item }) => (
@@ -43,22 +71,21 @@ const ViewQuestionScreen = props => {
         <TouchableOpacity>
         <Text>Question: {item.Question} </Text>
         </TouchableOpacity>
-       
+          <TouchableOpacity onPress={() => updater(item.key)}>
+          <Text >Update </Text>
+          </TouchableOpacity>
+
+         <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
+         <Text >Delete </Text>
+
+        </TouchableOpacity>
+
+
       </View>
     
     )}
 
   />
-  <View style={{backgroundColor:'#465881',  alignItems: 'center'}} >
-   <Text 
-            style={styles.loginText}
-           onPress={() => props.navigation.navigate('SetTimerScreen')}
-           >
-            Set Timer
-        </Text>
-        </View>
-  </View>
-  </ScrollView>
      )}
   
 

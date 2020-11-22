@@ -32,7 +32,7 @@ const AssignQuizScreen = props => {
 
         <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate("AddQuestionScreen")}
+           onPress={() => props.navigation.navigate("QuizSelect")}
            >
             Quiz 1
         </Text>
@@ -41,7 +41,7 @@ const AssignQuizScreen = props => {
           </View>
         <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate("AddQuestionScreen")}
+           onPress={() => props.navigation.navigate("AddQuestionsScreen")}
            >
             Quiz 2
         </Text>
@@ -50,7 +50,7 @@ const AssignQuizScreen = props => {
           </View>
         <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate("AddQuestionScreen")}
+           onPress={() => props.navigation.navigate("AddQuestionsScreen")}
            >
             Quiz 3
         </Text>
@@ -59,7 +59,7 @@ const AssignQuizScreen = props => {
           </View>
         <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate("AddQuestionScreen")}
+           onPress={() => props.navigation.navigate("AddQuestionsScreen")}
            >
             Quiz 4
         </Text>

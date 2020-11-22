@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import React ,{useState} from "react";
 import { StyleSheet,ScrollView,ImageBackground,Alert,View } from "react-native";
 import * as Yup from "yup";
@@ -31,13 +32,14 @@ function CourseEditScreen() {
   const [showLoading, setShowLoading] = useState(false);
 
   const  addCourse = () => {
+   
 //try{
   console.log("add pressed");
   if(coursetitle === "" ||creditHrs=== ""||  coursecode=== ""){
     //your error
   //  setShowLoading(true);
-    console.log("write details");
-    Alert.alert('write details ');
+    console.log('Enter Valid details');
+    Alert.alert('Enter Valid details');
 
     }
     else{
@@ -54,6 +56,7 @@ function CourseEditScreen() {
        arr.forEach( (item)=> {
           const collectionRef =  datas.collection('Courses').doc();
           batch.set(collectionRef, item);
+         
         });
       
       const result =  batch.commit();

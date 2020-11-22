@@ -75,9 +75,11 @@ function AddClassScreen(props) {
   }
  
     return (
+      <ScrollView>
     
-       <ScrollView>
-     <View>
+      <Container  style={styles.container }>
+    
+    <Content  style={styles.container }>
     
       <FlatList
      
@@ -86,13 +88,16 @@ function AddClassScreen(props) {
         <ScrollView>
       
         <View style={{backgroundColor:'#465881',height: 90  }}>
-           <Table borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
+           {/* <Table borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}> */}
+
            <TouchableOpacity>
           <Text onPress={() => props.navigation.navigate('InviteScreen')}>Batch: {item.batchs}  </Text>
           </TouchableOpacity>
+
           <TouchableOpacity>
             <Text onPress={() => props.navigation.navigate('InviteScreen')}>Programme: {item.programme}  </Text>
             </TouchableOpacity>
+
           <TouchableOpacity>
              <Text onPress={() => props.navigation.navigate('InviteScreen')}>Section: {item.section}  </Text>
              </TouchableOpacity>
@@ -100,12 +105,20 @@ function AddClassScreen(props) {
           <TouchableOpacity onPress={() => updater(item.key)}>
           <Text style={styles.align }>Update </Text>
           </TouchableOpacity>
-
+          
+      
          <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
-         <Text style={styles.align }>Delete </Text>
-
+         <Button
+              danger
+              transparent
+              style={{  marginLeft: 350,marginBottom:30 }}
+              onPress={() => openTwoButtonAlert(item.key)}
+              >
+              <Icon active name="trash" />
+       </Button>
         </TouchableOpacity>
-        </Table>
+
+        {/* </Table> */}
         </View>
         </ScrollView>
       
@@ -113,44 +126,28 @@ function AddClassScreen(props) {
 
     />
 
-{/*     
-<View style={{backgroundColor:'#465881',  alignItems: 'center'}} >
-<Left>
-<Button
-              danger
-              transparent
-              style={{ marginBottom: 20, marginLeft: 10 }}
-              onPress={
-                openTwoButtonAlert
-                              } 
 
-            >
-                   <Icon active name="trash" />
-            </Button>
-            </Left>*/}
-    <AppButton style={styles.btn} 
-          title="Add Class"
-          onPress={() =>
-          
-            props.navigation.navigate("ClassEditScreen")
-          //   getCourses
-
-            }/>
-        </View>
+    <Button  style= {styles.btn}>
+            <Text style={styles.text} onPress={() => props.navigation.navigate('ClassEditScreen')} >Add Class</Text>
+          </Button>
         
-        </ScrollView>
-    
-  );
+        </Content>
+</Container>
+</ScrollView>
+     );
+  
   
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    
+    flex:1,
     backgroundColor: '#465881',
   },
   align:{
     alignSelf:'flex-end',
+    marginBottom:-9
     
    },
   screen: {
@@ -167,25 +164,23 @@ const styles = StyleSheet.create({
      
     
   },
-  bttn:{
-    marginTop:10,
-    paddingTop:15,
-    paddingBottom:15,
-    marginLeft:30,
-    marginRight:30,
-    backgroundColor:'#00BCD4',
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#fff'
-  },
+  
 
   btn: {
-    marginTop: 20,
-    width: '70%',
-    padding: "20%",
-    alignSelf: "flex-end",
-    borderRadius: 10
+    backgroundColor: "#fc5c65",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    width: "100%",
+    marginVertical: 50,
 
+  },
+  text: {
+    color: '#fff',
+    fontSize: 18,
+    textTransform: "uppercase",
+    fontWeight: "bold",
   },
  
 });

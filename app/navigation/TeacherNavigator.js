@@ -7,8 +7,8 @@ import AssignQuizScreen from "../screens/AssignQuizScreen";
 import ViewReportScreen from "../screens/ViewReportScreen";
 import InviteScreen from "../screens/InviteScreen";
 import TakeQuizWait from "../screens/TakeQuizWait";
-import AddQuestionScreen from "../screens/AddQuestionsScreen";
-import QuestionsScreen from "../screens/QuestionsScreens";
+import AddQuestionsScreen from "../screens/AddQuestionsScreen";
+import QuestionsScreens from "../screens/QuestionsScreens";
 import CourseEditScreen from "../screens/CourseEditScreen";
 import ViewQuestionsScreen from "../screens/ViewQuestionsScreen";
 import SetTimerScreen from "../screens/SetTimerScreen";
@@ -20,8 +20,9 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import CourseUpdateScreen from "../screens/CourseUpdateScreen";
 import ClassUpdateScreen from "../screens/ClassUpdateScreen";
-
-
+// import QuestionUpdateScreen from "../screens/QuestionUpdateScreen";
+import QuizSelect from "../screens/QuizSelect";
+QuizSelect
 const Stack = createStackNavigator();
 
 const TeacherNavigator = () => (
@@ -32,17 +33,20 @@ const TeacherNavigator = () => (
         component={MainScreen}
         options={{ headerShown: true}}
       />
+
       <Stack.Screen name="AddClassScreen" component={AddClassScreen} />
       <Stack.Screen name="AddCourseScreen" component={AddCourseScreen} />
       <Stack.Screen name="AssignQuizScreen" component={AssignQuizScreen} />
       <Stack.Screen name="ViewReportScreen" component={ViewReportScreen} />
       <Stack.Screen name="InviteScreen" component={InviteScreen} />
        <Stack.Screen name="MainScreen" component={MainScreen} /> 
-      <Stack.Screen name="AddQuestionScreen" component={AddQuestionScreen} />
-      <Stack.Screen name="QuestionsScreen" component={QuestionsScreen} />
-      <Stack.Screen name="CourseEditScreen" component={CourseEditScreen} />
+      <Stack.Screen name="AddQuestionsScreen" component={AddQuestionsScreen} />
+      <Stack.Screen name="QuestionsScreens" component={QuestionsScreens} />
+   <Stack.Screen name="QuizSelect" component={QuizSelect} />
+       <Stack.Screen name="CourseEditScreen" component={CourseEditScreen} />
       <Stack.Screen name="CourseUpdateScreen" component={CourseUpdateScreen} />
       <Stack.Screen name="ClassUpdateScreen" component={ClassUpdateScreen} />
+      {/* <Stack.Screen name="QuestionUpdateScreen" component={QuestionUpdateScreen} /> */}
       <Stack.Screen name="TakeQuizWait" component={TakeQuizWait} />
       <Stack.Screen name="ViewQuestionsScreen" component={ViewQuestionsScreen} />
       <Stack.Screen name="SetTimerScreen" component={SetTimerScreen} />
@@ -52,16 +56,12 @@ const TeacherNavigator = () => (
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} 
-       options={{ headerLeft: null}} />
-      
-      
+       options={{ headerLeft: null}}
+       
+      />
 
     </Stack.Navigator>
   
 );
 
 export default TeacherNavigator;
-      
-     
-
-
