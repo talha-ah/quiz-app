@@ -90,7 +90,7 @@ const MainScreen = props => {
    <Button bordered style={styles.btn}>
               <Text 
             style={styles.appButtonText}
-            onPress={() => props.navigation.navigate("ClassSelection")}
+            onPress={() => props.navigation.navigate("QuizSelect")}
            >
             Assign Quiz</Text>
             </Button>

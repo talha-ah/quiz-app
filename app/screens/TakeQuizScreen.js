@@ -18,7 +18,7 @@ const TakeQuizScreen = props => {
      const Viewer = [];
      firebase
        .firestore()
-       .collection('Question').doc('QuestionMCQS').collection('Mcqs')
+       .collection('QuizNo')
       //  .collection('Question').doc('QuestionTF').collection('tf')
       // 
       .get()
@@ -26,6 +26,7 @@ const TakeQuizScreen = props => {
          
          docSnapshot.forEach((doc) => {
            console.log(doc.data());
+           //if(doc.quizclass == "bcs")
            Viewer.push({
              ...doc.data(),
              key: doc.id,

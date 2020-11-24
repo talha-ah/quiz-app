@@ -53,7 +53,30 @@ const firestore_ref=firebase.firestore().collection('InviteStudents')
       });
       
   }, []);
+  const updater=(key)=>{props.navigation.navigate('StudentUpdateScreen',{key:key});
+}
+const deleteClasser=(key)=> {
+  console.log('classkey_'+key)
+  const db = firestore_ref.doc(key)
+    db.delete().then((res) => {
+        console.log('Item removed from database')
+             }).catch((err)=>{Alert.alert(err)})
+             
+},
 
+openTwoButtonAlert=(key)=>{  
+  Alert.alert(
+    'Delete Class',
+    'Are you sure to delete it?',
+    [
+      {text: 'Yes', onPress: () => {deleteClasser(key)}},
+      {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+    ],
+    { 
+      cancelable: true 
+    }
+  );
+}
   
     return (
         

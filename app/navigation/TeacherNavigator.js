@@ -21,6 +21,8 @@ import RegisterScreen from "../screens/RegisterScreen";
 import CourseUpdateScreen from "../screens/CourseUpdateScreen";
 import ClassUpdateScreen from "../screens/ClassUpdateScreen";
 // import QuestionUpdateScreen from "../screens/QuestionUpdateScreen";
+import StudentUpdateScreen from "../screens/StudentUpdateScreen";
+import StudentMain from "../screens/StudentMain";
 import QuizSelect from "../screens/QuizSelect";
 QuizSelect
 const Stack = createStackNavigator();
@@ -33,8 +35,10 @@ const TeacherNavigator = () => (
         component={MainScreen}
         options={{ headerShown: true}}
       />
+      
 
       <Stack.Screen name="AddClassScreen" component={AddClassScreen} />
+      <Stack.Screen name="StudentUpdateScreen" component={StudentUpdateScreen} />
       <Stack.Screen name="AddCourseScreen" component={AddCourseScreen} />
       <Stack.Screen name="AssignQuizScreen" component={AssignQuizScreen} />
       <Stack.Screen name="ViewReportScreen" component={ViewReportScreen} />
@@ -59,6 +63,7 @@ const TeacherNavigator = () => (
        options={{ headerLeft: null}}
        
       />
+      <Stack.Screen name="StudentMain" component={StudentMain} />
 
     </Stack.Navigator>
   

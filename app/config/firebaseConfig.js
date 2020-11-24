@@ -4,17 +4,17 @@ import '@firebase/firestore';
 const settings = {timestampsInSnapshots: true};
 
 
-let firebaseConfig = {
-    apiKey: "AIzaSyBtjMBwLf2CnOBr8wGwPhdXILsZdX96YeY",
-    authDomain: "digitalquizsystem.firebaseapp.com",
-    databaseURL: "https://digitalquizsystem.firebaseio.com",
-    projectId: "digitalquizsystem",
-    storageBucket: "digitalquizsystem.appspot.com",
-    messagingSenderId: "657420256459",
-    appId: "1:657420256459:web:eef3815695d22831d7474e",
-    measurementId: "G-Z2PCK3M2P5"
-  };
-  //export default !firebase.apps.length
+const firebaseConfig = {
+  apiKey: "AIzaSyDYbyEYEa3_aiw2gsyUn29xLGPT6H60KCk",
+  authDomain: "dquizsystem-6b3bb.firebaseapp.com",
+  databaseURL: "https://dquizsystem-6b3bb.firebaseio.com",
+  projectId: "dquizsystem-6b3bb",
+  storageBucket: "dquizsystem-6b3bb.appspot.com",
+  messagingSenderId: "670048101063",
+  appId: "1:670048101063:web:4efbac4c954721084654e2",
+  measurementId: "G-DB3BJXBVXM"
+};
+ //export default !firebase.apps.length
  // ? firebase.initializeApp(firebaseConfig).firestore()
  // : firebase.app().firestore;
  firebase.initializeApp(firebaseConfig);
@@ -23,4 +23,3 @@ let firebaseConfig = {
  //firebase.firestore();
  
  export default firebase;
-

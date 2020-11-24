@@ -34,15 +34,14 @@ function ClassEditScreen() {
    
    
     const  addClass = () => {
-      const setClassAsync=async(cLData)=>
-      {
-        AsyncStorage.setItem('class',JSON.stringify(cLData));
-      }
-        //try{
+      // const setClassAsync=async(cLData)=>
+      // {
+      //   AsyncStorage.setItem('class',JSON.stringify(cLData));
+      // }
+       
           console.log("add pressed");
           if(batchs === "" ||programme=== ""||  section=== ""){
-            //your error
-          //  setShowLoading(true);
+          
             console.log("Enter Valid details");
             Alert.alert('Enter Valid details');
         
@@ -62,33 +61,13 @@ function ClassEditScreen() {
                 array.forEach( (item)=> {
                     const collectionRef =  datas.collection('Class').doc();
                     batch.set(collectionRef, item);
-                    setClassAsync(item)
+                    // setClassAsync(item)
                   });
                 
                 const result =  batch.commit();
       
 
-                        /*
-                            const datas=firebase.firestore();
-                            const batch = datas.batch();
-                            const arr=[
-                      
-                          {
-                                batch: batch,
-                                programme:programme,
-                                section:  section             
-                              }];
-                      
-                            arr.forEach( (item)=> {
-                                const collectionRef =  datas.collection('Class').doc('Class');
-                                batch.set(collectionRef, item);
-                              });
-                            
-                            const result =  batch.commit();*/
-
-                      //  {merge:false})
-                    
-
+                       
           }
           
 

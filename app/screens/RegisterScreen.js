@@ -33,6 +33,8 @@ const RegisterScreen = props =>{
   const [regno,setRegno]=useState('')
   const [phonenumber,setPhoneNumber]=useState('')
   const [classcode,setClasscode]=useState('')
+
+  
   const [showLoading, setShowLoading] = useState(false);
 const  handleSignUp = async() => {
   if(password !== cpassword){
@@ -63,7 +65,7 @@ const  handleSignUp = async() => {
           cpassword:cpassword,
           regno:regno,
           phonenumber:phonenumber,
-          classcode:classcode
+        
             })
       
       .then(() => {
@@ -78,7 +80,7 @@ const  handleSignUp = async() => {
       alert(error)});
 
     }
-     if(username === "" ||email=== ""||  password=== "" || cpassword=== ""|| regno=== "" || phonenumber=== ""||  classcode=== ""){
+     if(username === "" ||email=== ""||  password=== "" || cpassword=== ""|| regno=== "" || phonenumber=== ""  ){
       //your error
       setShowLoading(true);
       console.log("write details");
@@ -96,7 +98,7 @@ const  handleSignUp = async() => {
       <Screen style={styles.container}>
       
         <AppForm
-          initialValues={{ username: "", email: "", password: "", cpassword: "",regno: "",phonenumber:"",  classcode: "" }}
+          initialValues={{ username: "", email: "", password: "", cpassword: "",regno: "",phonenumber:"" }}
           onSubmit={(values) => console.log(values)}
           validationSchema={validationSchema}
         >
@@ -159,15 +161,7 @@ const  handleSignUp = async() => {
             onChangeText={(text) => setPhoneNumber(text)}
             value={phonenumber}
           />
-          <AppFormField
-            autoCorrect={false}
-            icon="keyboard"
-            name="classcode"
-            placeholder="Class Code"
-            onChangeText={(text) => setClasscode(text)}
-            value={classcode}
-            
-          />
+         
           <AppButton title="Register" 
 
             onPress= {
@@ -178,7 +172,7 @@ const  handleSignUp = async() => {
            <View>
            <Text 
             style={styles.loginText}
-           onPress={() => navigation.navigate('Login')}
+           onPress={() => props.navigation.navigate('Login')}
            >
             Already Registered? Click here to login
         </Text>

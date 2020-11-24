@@ -6,7 +6,7 @@
 // import { Container, Header, Content, Picker, Form } from "native-base";
 
 
-import { Container, Header, Content, Icon, Picker, Form,Button,Text } from "native-base";
+import { Container, Header, Content, Icon, Picker, Form,Button,Text, Input } from "native-base";
 import React, { Component,useEffect,useState } from "react";
 import {StyleSheet,FlatList,ScrollView,View,TouchableOpacity} from 'react-native';
 import firebase from "../config/firebaseConfig";
@@ -53,6 +53,18 @@ let controller;
       <Container  style={styles.container }>
     
     <Content  style={styles.container }>
+      <Input
+      placeholder='Quiz Title'
+      style={{ height: 50,
+        width :"50%",
+      borderWidth: 1,
+      borderColor: "black" }}
+  
+      
+      >
+      
+      </Input>
+      <View style={{height: 10}}></View>
      <Text style={{ marginBottom:30,fontWeight:'bold',color:'red' }}>Selected Class: {selectedClass}</Text>
       <FlatList
      
@@ -82,9 +94,9 @@ let controller;
     />
      <Text 
             style={styles.loginText}
-           onPress={() => props.navigation.navigate('SetTimerScreen')}
+           onPress={() => props.navigation.navigate('QuestionsScreens')}
            >
-            Set Timer
+            Next
         </Text>
     
  

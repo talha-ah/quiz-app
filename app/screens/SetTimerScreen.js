@@ -6,7 +6,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import firebase from "../config/firebaseConfig";
 
-
+import {Permissions,Notifications} from 'expo'
 
 const SetTimerScreen = props => {
 
@@ -96,6 +96,27 @@ const SetTimerScreen = props => {
     hideSTimePicker();
     
   };
+  // async function registerForPushNotificationsAsync(){
+  //   const{status}= await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  //   let finalStatus = status;
+  //   if(status !=='granted'){
+  //     const {status}= await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //     finalStatus=status;
+  //   }
+  //   if(finalStatus = status){
+  //     return;
+  //   }
+  //   let token= await Notifications.getExpoPushTokenAsync();
+  //   return fetch(PUSH_ENDPOINT, {
+  //     method:'POST',
+  //     body:JSON.stringify({
+  //     token: {
+  //       value: token,
+  //     }  
+  //     })
+
+  //   });
+  // }
 
   return (
     <Screen style={styles.container}>

@@ -42,6 +42,8 @@ const QuestionsScreen = props => {
   const [tOption1 ,settOption1]= useState('')
   const [tOption2 ,settOption2]= useState('')
   const [checkboxState ,setCheckboxState]= useState(false)
+  const [quizTitle ,setquizTitle]= useState('')
+  const [quizKey ,setquizKey]= useState('')
   const [questionArray ,setquestionarray]= useState([])
 
 const resetForm = () =>{
@@ -55,6 +57,7 @@ const resetForm = () =>{
   settOption1('')
   settOption2('')
   setAnswer('')
+  setCheckboxState(false)
   
 }
 
@@ -87,11 +90,12 @@ function _isChecked(){
               Option3:Option3,
               Option4:Option4,
               Answer:Answer,
-              classKey:''
+              quizKey:'',
+              quizTitle:''
             }];
              // arr=questionArray;
              arr.forEach( (q)=> {
-                const collectionQ =  datas.collection('Question').doc('QuestionMCQS').collection('Mcqs').doc();
+                const collectionQ =  datas.collection('QuestionMcqs').doc();
                 batch.set(collectionQ, q);
     
               });
@@ -101,35 +105,29 @@ function _isChecked(){
             }
             resetForm();
     }
-
-    if(decision === 1){ //T/F
-      if(decision===1 && (QuestionT  === "" ||tOption1 === ""|| tOption2 === "")){
+    if(decision === 1){ //mcqs
+      if(decision===1 && (QuestionT === "")){
       
         //  setShowLoading(true);
-          console.log("write details");
-          Alert.alert('write details ');
+          console.log('Enter Valid details');
+          Alert.alert('Enter Valid details');
       
           }
           else{
             const datas=firebase.firestore()
             
             const batch = datas.batch();
-            const array=[{
+            const arr=[{
               QuestionType:1,
-              Question :QuestionT ,
+              QuestionT:QuestionT,
               Answer:Answer,
-              classKey:''
+              quizKey:'',
+              quizTitle:''
             }];
-            console.log('Data: '+ JSON.stringify({
-              QuestionType:1,
-              Question :QuestionT ,
-              Answer:Answer,
-              classKey:''
-            }))
              // arr=questionArray;
-             array.forEach( (item)=> {
-                const collectionRef =  datas.collection('Question').doc('QuestionTF').collection('tf').doc();
-                batch.set(collectionRef, item);
+             arr.forEach( (q)=> {
+                const collectionQ =  datas.collection('QuestionTF').doc();
+                batch.set(collectionQ, q);
     
               });
               const result =  batch.commit();
@@ -138,14 +136,12 @@ function _isChecked(){
             }
             resetForm();
     }
+    
+           
 
     console.log("saver pressed");
     
-           
-        
-      //  const result =  batch.commit();
-      //  props.navigation.navigate("AddQuestionScreen")
-  
+          
         
       };  
   return (
@@ -302,27 +298,16 @@ function _isChecked(){
          </View>
            <View style = {styles.container}>
      <View style = {styles.container}>
-        {/* < Button style={styles.btn}
-        title="Next"   onPress={() => {
-          console.log("Next Pressed")
-          
-          //save your data
-          var fullquestionObject = {Question:Question,tOption1:tOption1,tOption2:tOption2}
-          questionArray.push(fullquestionObject)
-          //save array async storage.
-          setTQuestion('')
-          settOption1('')
-          settOption2('')
-          
-        }
-          
-        }/> */}
+       
         </View>
 
         
          <View style = {styles.container}>
          < Button style={styles.btn}
         title="Save" onPress={saver}/>
+        < Button style={styles.btn}
+        title="Next"  onPress={() => props.navigation.navigate('SetTimerScreen')}/>
+        
       
         
         </View>
