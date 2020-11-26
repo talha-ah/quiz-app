@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, Alert, Image, StyleSheet, View ,Text} from "react-native";
 import Screen from "../components/Screen";
-import Header from "../components/Header"
+import AppButton from "../components/AppButton"
 
 
 const AddQuestionsScreen = props => {
@@ -29,22 +29,20 @@ const AddQuestionsScreen = props => {
        
 
 
-
-        <Text 
-            style={styles.loginText}
-           onPress={() => props.navigation.navigate('QuestionsScreens')}
-           >
-            Add Question
-        </Text>
+        <AppButton
+          title="Add Question"
+          onPress={() => props.navigation.navigate("QuestionsScreens")}
+        />
+        
+            
+       
         <View style ={styles.container}>
           
           </View>
-        <Text 
-            style={styles.loginText}
-           onPress={() => props.navigation.navigate('ViewQuestionsScreen')}
-           >
-            View Question
-        </Text>
+          <AppButton
+          title="View Question"
+          onPress={() => props.navigation.navigate("ViewQuestionsScreen")}
+        />
        
         
 

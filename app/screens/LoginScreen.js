@@ -10,7 +10,7 @@ import { AppForm, AppFormField,SubmitButton } from "../components/forms";
 //import firestore from '@react-native-firebase/firestore'
 //import * as firebase1 from "firebase";
 import firebase from "../config/firebaseConfig";
-import Signup from "./RegisterScreen";
+
 
 import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
 
@@ -22,8 +22,23 @@ function LoginScreen(props ) {
   
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
+  const [classes,setclasses] = useState()
+  const [data,setdata]= useState([])
+ 
+  //  useEffect(async () => {  
 
-  // useEffect(async () => {  
+  //   //Like this....Keep it simple
+
+  // //  let studentdata = await AsyncStorage.getItem('studentData')
+  // //  console.log(studentdata)
+  //  },[])
+
+   
+
+
+
+
+
   //   await _retrieveData();
   // },[])
 
@@ -56,7 +71,7 @@ function LoginScreen(props ) {
     const flag = props.route.params.flag;
     const navigate = props.navigation.navigate;
     const firestore_ref = firebase.firestore();
-
+    
 
     firebase
       .auth()
@@ -66,12 +81,16 @@ function LoginScreen(props ) {
         const doc = await firestore_ref.collection(flag === 0 ? "TeacherUser" : "StudentUser")
           .doc(response.user.uid)
           .get();
+
+          console.log(response.user)
+
         if (doc.exists) { navigate(flag === 0 ? "teacher" : "student") }
         else { alert(`Not registered as a ${flag === 0 ? "teacher" : "student"}`); }
       })
       .catch((error) => { alert(error) });
   };
   return (
+    
     <ImageBackground                                                       
     blurRadius={1}
     style={styles.background}
@@ -81,7 +100,7 @@ function LoginScreen(props ) {
      
         <View style={styles.container}>
         <AppForm
-          initialValues={{ email: "",  password: "" }}
+          initialValues={{ email: "",  password: "" ,   classes:""}}
         
         >  
            <AppFormField
@@ -95,6 +114,7 @@ function LoginScreen(props ) {
             onChangeText={(text) => setEmail( text )}
             value={email}
           />
+          
          <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
@@ -106,13 +126,20 @@ function LoginScreen(props ) {
             onChangeText={(text) => setPassword (text)}
             value={password}
           />
+        
+           <AppFormField
+            autoCorrect={false}
+            icon="keyboard"
+            name="classes"
+            placeholder="Class"
+            onChangeText={(text) => setclasses(text)}
+            value={classes}
+            
+          />
           <AppButton title="Login"
             onPress={
               handleLogin
             }     
-              
-            
-            
           />
           
          
@@ -124,7 +151,7 @@ function LoginScreen(props ) {
         title="Forget Password"
         onPress={() => props.navigation.navigate('ForgetButtonScreen')}
       />
-      <CheckBox checked={true} />
+     
       <View>
           <Text 
             style={styles.loginText}

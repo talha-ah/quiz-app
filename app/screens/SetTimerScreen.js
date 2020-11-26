@@ -6,7 +6,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import firebase from "../config/firebaseConfig";
 
-import {Permissions,Notifications} from 'expo'
+
 
 const SetTimerScreen = props => {
 
@@ -17,6 +17,7 @@ const SetTimerScreen = props => {
   const [date, setDate] = useState('');
   const [stime, setSTime] = useState('');
   const [etime, setETime] = useState('');
+  const [msg,setMsg]=useState('');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -49,12 +50,15 @@ const SetTimerScreen = props => {
 
     }
     else{
+      setMsg("The quiz has been uploaded");
+      console.log(msg)
       const datas=firebase.firestore()
        const batch = datas.batch();
       const arr=[
     {date:date,
     stime:stime,
-    etime:etime}];
+    etime:etime,
+    msg:msg}];
 
        arr.forEach( (item)=> {
           const collectionRef =  datas.collection('Timers').doc();
@@ -96,27 +100,6 @@ const SetTimerScreen = props => {
     hideSTimePicker();
     
   };
-  // async function registerForPushNotificationsAsync(){
-  //   const{status}= await Permissions.getAsync(Permissions.NOTIFICATIONS);
-  //   let finalStatus = status;
-  //   if(status !=='granted'){
-  //     const {status}= await Permissions.askAsync(Permissions.NOTIFICATIONS);
-  //     finalStatus=status;
-  //   }
-  //   if(finalStatus = status){
-  //     return;
-  //   }
-  //   let token= await Notifications.getExpoPushTokenAsync();
-  //   return fetch(PUSH_ENDPOINT, {
-  //     method:'POST',
-  //     body:JSON.stringify({
-  //     token: {
-  //       value: token,
-  //     }  
-  //     })
-
-  //   });
-  // }
 
   return (
     <Screen style={styles.container}>
@@ -158,36 +141,6 @@ const SetTimerScreen = props => {
 
   );
 }  
-
-    {/*</Screen>
-
-    return (
-
-      <Screen style={styles.container}>
-        
-
-        <Text>Start Time </Text>
-         <TextInput style ={styles.text}
-        
-         placeholder ="Set a Time"
-        
-         onChangeText={(text) => {
-          
-         }} > 
-
-           </TextInput>
-           <Text>End Time </Text>
-         <TextInput style ={styles.text}
-        
-         placeholder ="Set a Time"
-        
-         onChangeText={(text) => {
-          
-         }} > 
-         
-           </TextInput>*/
-
-    }
 const styles = StyleSheet.create({
   container: {
     padding: 10,
@@ -233,82 +186,3 @@ const styles = StyleSheet.create({
   }
 });
 export default SetTimerScreen;
-
-
-
-
-
-
-
-
-
-
-
-
-/*import CountDown from 'react-native-countdown-component';
-import * as React from 'react';
-import {Text,View,ScrollView,StatusBar,StyleSheet} from "react-native";
-
-const SetTimerScreen = props => {
-  return(
-<CountDown
-        until={60 * 10 + 30}
-        size={30}
-        onFinish={() => alert('Finished')}
-        digitStyle={{backgroundColor: '#FFF'}}
-        digitTxtStyle={{color: '#1CC625'}}
-        timeToShow={['M', 'S']}
-        timeLabels={{m: 'MM', s: 'SS'}}
-      />
-  )}
-      export default SetTimerScreen;
-
-
-// //after pressing set timer move to class selection screen
-// import React, { useState } from "react";
-// import { Button, View } from "react-native";
-// import DateTimePickerModal from "react-native-modal-datetime-picker";
- 
-// const Example = () => {
-//   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
- 
-//   const showDatePicker = () => {
-//     setDatePickerVisibility(true);
-//   };
- 
-//   const hideDatePicker = () => {
-//     setDatePickerVisibility(false);
-//   };
- 
-//   const handleConfirm = (date) => {
-//     console.warn("A date has been picked: ", date);
-//     hideDatePicker();
-//   };
- 
-//   return (
-//     <ImageBackground
-//       blurRadius={1}
-//       style={styles.background}
-//       source={require("../assets/backgroundimage.jpg")}
-//     >
-//     <View>
-//       <Button title="Show Date Picker" onPress={showDatePicker} />
-//       <DateTimePickerModal
-//         isVisible={isDatePickerVisible}
-//         mode="date"
-//         onConfirm={handleConfirm}
-//         onCancel={hideDatePicker}
-//       />
-//     </View>
-//     </ImageBackground>
-//   );
-// };
-// const styles = StyleSheet.create({
-// background: {
-//   flex: 1,
-//   justifyContent: "flex-end",
-//   alignItems: "center",
-// },
-// });
-// export default Example;
-*/

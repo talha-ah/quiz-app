@@ -1,9 +1,7 @@
 import React, { useState,useEffect,Component } from 'react';
-import { SearchBar } from 'react-native-elements';
-import { StyleSheet,TouchableOpacity, View, Alert,FlatList,Text} from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-import Screen from "../components/Screen";
-import navigation from "@react-navigation/native";
+
+import { ScrollView,StyleSheet,TouchableOpacity, View, Alert,FlatList,Text} from 'react-native';
+
 import {
   Container,
   Header,
@@ -19,6 +17,7 @@ import {
 
 import AppButton from "../components/AppButton";
 import firebase from "../config/firebaseConfig";
+import { color } from 'react-native-reanimated';
 
 function InviteScreen(props) {
   state = {
@@ -80,55 +79,95 @@ openTwoButtonAlert=(key)=>{
   
     return (
         
+      <ScrollView>
+      <Container style={styles.container}>
+        <Content style={styles.container}>
       
-      <View>
       <FlatList
       data={student}
       renderItem={({ item }) => (
-        <View style={{backgroundColor:'#465881',height: 90  }}>
-            <Table borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
-           
+        <ScrollView>
+        <View
+          style={{
+            backgroundColor: "#465881",
+            height: 90,
+            width: "100%",
+            borderWidth: 1,
+            borderColor: "white",
+            borderRadius: 15,
+            padding: 10,
+            marginVertical: 10
+          }}
+        >
  
+ <TouchableOpacity>
+                    <Text
+                      style={{ color: "white" }}
+                      
+                    >
+                      Student Name: {item.StudentName}{" "}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text
+                      style={{ color: "white" }}
+                      
+                    >
+                      Registration Number:  {item.RegNumber}{" "}
+                    </Text>
+                  </TouchableOpacity>
            
-           
-           <Text >Student Name: {item.StudentName} </Text>
-           <Text >Registration Number: {item.RegNumber} </Text> 
-          <Text >Email.: {item.Email} </Text>
+                  <TouchableOpacity>
+                    <Text
+                      style={{ color: "white" }}
+                      
+                    >
+                      Email:  {item.Email}{" "}
+                    </Text>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      bottom: 30
+                    }}
+                  >
  
-          <TouchableOpacity onPress={() => updater(item.key)}>
-          <Text style={styles.align }>Update </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
-         <Button
-              danger
-              transparent
-              style={{  marginLeft: 350,marginBottom:30 }}
-              onPress={() => openTwoButtonAlert(item.key)}
-              >
-              <Icon active name="trash" />
-       </Button>
-        </TouchableOpacity>
-          
-          
-         </Table>
-         
-         
-        </View>
+ <TouchableOpacity
+                      style={{}}
+                      onPress={() => updater(item.key)}
+                    >
+                      <Text style={styles.align}>Update </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => openTwoButtonAlert(item.key)}
+                    >
+                      <Button
+                        danger
+                        transparent
+                        style={{}}
+                        onPress={() => openTwoButtonAlert(item.key)}
+                      >
+                        <Icon active name="trash" />
+                      </Button>
+                    </TouchableOpacity>
+                  </View>
+                
+                </View>
+              </ScrollView>
       
       )}
  
     />
-      <AppButton style={styles.btn}
-          title="Add Students"
-          onPress={() =>
-          
-            props.navigation.navigate("AddStudentScreen")
-          
-
-            }
-
-
-        />
+      <Button style={styles.btn}>
+            <Text
+              style={styles.text}
+              onPress={() => props.navigation.navigate("AddStudentScreen")}
+            >
+              Add Students
+            </Text>
+          </Button>
          <AppButton style={styles.btn}
           title="InviteStudents"
           onPress={() =>
@@ -142,49 +181,55 @@ openTwoButtonAlert=(key)=>{
         />
         
 
-       
+      
+        </Content>
+      </Container>
+    </ScrollView>
             
-   </View>
+   
      );
   
     }
 
 
-const styles = StyleSheet.create({
-  container: {
-      padding: 10,
-      backgroundColor: '#465881',
-    },
-    align:{
-      alignSelf:'flex-end',
-      marginBottom:-9
-    },
-    screen: {
-      flex: 1,
-      marginBottom: 30,
-      marginTop: 150
-    },
-head: { 
-     height: 30, 
-      backgroundColor: '#f1f8ff' 
-      
-   },
-wrapper: {
-     flexDirection: 'row' 
-  },
-title: { 
-    flex: 1,
-     backgroundColor: '#f6f8fa'
-   },
-row: { 
-     height: 28 
-     
-   },
-text: {
-     textAlign: 'center'
-   },
-  
-   
-
-});
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: "#465881",
+        padding: 10
+      },
+      align: {
+        // alignSelf: "flex-end",
+        // marginBottom: -9
+        color: "red"
+      },
+      screen: {
+        flex: 1,
+        marginBottom: 30,
+        marginTop: 150
+      },
+      loginText: {
+        textAlignVertical: "center",
+        textAlign: "center",
+        color: "blue",
+        fontSize: 18
+      },
+    
+      btn: {
+        backgroundColor: "#fc5c65",
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        width: "100%",
+        marginVertical: 20
+      },
+      text: {
+        color: "#fff",
+        fontSize: 18,
+        textTransform: "uppercase",
+        fontWeight: "bold"
+      }
+    });
+    
 export default InviteScreen;

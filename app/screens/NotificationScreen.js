@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import React, { useState ,useEffect} from "react";
+import { FlatList, StyleSheet,Alert,Text, View } from "react-native";
+import firebase from "../config/firebaseConfig";
 
 import Screen from "../components/Screen";
 import {
@@ -8,24 +9,33 @@ import {
   ListItemSeparator,
 } from "../components/lists";
 
-const initialMessages = [
-  {
-    id: 1,
-    title: "Notification 1",
-    description: "Dr. Hasan uploaded the quiz",
-    
-  },
-  {
-    id: 2,
-    title: "Notification 2",
-    description: "Dr Salman uploaded quiz",
-  
-  },
-];
+
 
 function NotificationScreen(props) {
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+  
+    const msger = [];
+    firebase
+      .firestore()
+      .collection('Timers')
+      .get()
+      .then((docSnapshot) => {
+        
+        docSnapshot.forEach((doc) => {
+          console.log(doc.data());
+          msger.push({
+            ...doc.data(),
+            key: doc.id,
+          });
+        });
+        console.log(msger);
+        setMessages(msger);
+      
+      });
+     }, []);
+  
 
   const handleDelete = (message) => {
     // Delete the message from messages
@@ -35,33 +45,37 @@ function NotificationScreen(props) {
   return (
     <Screen style = {styles.background}>
       <View >
+        
       <FlatList style = {styles.background}
         data={messages}
-        keyExtractor={(message) => message.id.toString()}
+     //  keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
+          
           <ListItem style = {styles.background}
-            title={item.title}
-            subTitle={item.description}
-            image={item.image}
+            title='Notification'
+           subTitle={item.msg}
+                      image={item.image}
             onPress={() => console.log("Message selected", item)}
+        
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
+           
           />
         )}
         
-        ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-        onRefresh={() => {
-          setMessages([
-            {
-              id: 2,
-              title: "Notification 1",
-              description: "Dr Hasan has uploaded the quiz",
-              
-            },
-          ]);
-        }}
+  //       ItemSeparatorComponent={ListItemSeparator}
+  //       refreshing={refreshing}
+  //       onRefresh={() => {
+  //         setMessages([ {
+  //   id: 1,
+  //   title: "Notification 1",
+  //   description: "Dr. Hasan uploaded the quiz",
+    
+  // },
+  // ]);
+  //      }
+  //    }
       />
       </View>
     </Screen>
@@ -75,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationScreen
+export default NotificationScreen;

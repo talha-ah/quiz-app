@@ -1,7 +1,17 @@
 import React ,{useState,useEffect}from "react";
-import { Button,Text, Alert, StyleSheet, View ,FlatList} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Text, Alert, StyleSheet, View ,FlatList,TouchableOpacity} from "react-native";
 
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Left,
+  Right,
+  Body
+} from "native-base";
 import firebase from "../config/firebaseConfig";
 
 const ViewQuestionScreen = props => {
@@ -9,14 +19,14 @@ const ViewQuestionScreen = props => {
    const [question, setQuestion] = useState([])
 
    
-  
+   const firestore_ref = firebase.firestore().collection("QuestionMcqs");
 
    useEffect(() => {
   
      const Viewer = [];
      firebase
        .firestore()
-       .collection('Question').doc('QuestionMCQS').collection('Mcqs')
+       .collection('QuestionMcqs')
        .get()
        .then((docSnapshot) => {
          
@@ -33,59 +43,105 @@ const ViewQuestionScreen = props => {
        });
       }, []);
     
-  const deleteQuestioner=(key)=> {
-    console.log('quesionkey_'+key)
-    const db = firebase
-    .firestore()
-    .collection('Question').doc('QuestionMCQS').collection('Mcqs').doc(key)
-      db.delete().then((res) => {
-          console.log('Item removed from database')
-               }).catch((err)=>{Alert.alert(err)})
-               
-  },
-
-  openTwoButtonAlert=(key)=>{  
-    Alert.alert(
-      'Delete Question',
-      'Are you sure to delete it?',
-      [
-        {text: 'Yes', onPress: () => {deleteQuestioner(key)}},
-        {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
-      ],
-      { 
-        cancelable: true 
-      }
-    );
-  }
-  const updater=(key)=>{props.navigation.navigate('ClassUpdateScreen',{key:key});
-  }
-
+      const deleteQuestioner = (key) => {
+        console.log("questionkey_" + key);
+        const db = firestore_ref.doc(key);
+        db.delete()
+          .then((res) => {
+            console.log("Item removed from database");
+          })
+          .catch((err) => {
+            Alert.alert(err);
+          });
+      },
+      openTwoButtonAlert = (key) => {
+        Alert.alert(
+          "Delete Question",
+          "Are you sure to delete it?",
+          [
+            {
+              text: "Yes",
+              onPress: () => {
+                deleteQuestioner(key);
+              }
+            },
+            {
+              text: "No",
+              onPress: () => console.log("No item was removed"),
+              style: "cancel"
+            }
+          ],
+          {
+            cancelable: true
+          }
+        );
+      };
+      const updater = (key) => {
+        props.navigation.navigate("QuestionUpdateScreen", { key: key });
+      };
+    
  
  
 
      return (
+      <Container style={styles.container}>
+      <Content style={styles.container}>
     <FlatList
     data={question}
     renderItem={({ item }) => (
-      <View style={{backgroundColor:'#465881',height: 70, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity>
-        <Text>Question: {item.Question} </Text>
+      <View
+      style={{
+        backgroundColor: "#465881",
+        height: 90,
+        width: "100%",
+        borderWidth: 1,
+        borderColor: "white",
+        borderRadius: 15,
+        padding: 10,
+        marginVertical: 10
+      }}
+    >
+       
+        <Text style={{ color: "white" }}>
+                Question: {item.Question
+                }
+              </Text>
+       
+       
+        <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  bottom: 30
+                }}
+              >
+       <TouchableOpacity onPress={() => updater(item.key)}>
+                  <Text style={styles.align}>Update </Text>
+                </TouchableOpacity> 
+
+                <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
+                  <Button
+                    danger
+                    transparent
+                    style={{}}
+                    onPress={() => openTwoButtonAlert(item.key)}
+                  >
+                    <Icon active name="trash" />
+                  </Button>
+                
+
         </TouchableOpacity>
-          <TouchableOpacity onPress={() => updater(item.key)}>
-          <Text >Update </Text>
-          </TouchableOpacity>
-
-         <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
-         <Text >Delete </Text>
-
-        </TouchableOpacity>
-
+</View>
 
       </View>
+
     
     )}
 
   />
+  </Content>
+    </Container>
      )}
   
 
@@ -111,6 +167,11 @@ fontSize:18
     marginTop: 10,
     marginBottom: 20,
   },
+  align: {
+    // alignSelf: "flex-end",
+    // marginBottom: -9
+    color: "white"
+  },
   btn: {
     marginTop: 20,
     width: '70%',
@@ -127,8 +188,4 @@ fontSize:18
 
   }
 });
-export default ViewQuestionScreen;
-
-
-
-
+export default ViewQuestionScreen
