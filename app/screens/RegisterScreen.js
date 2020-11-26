@@ -74,6 +74,7 @@ const RegisterScreen = (props) => {
 
             .then(() => {
               setShowLoading(false);
+              Alert.alert("successfully created user!!")
               console.log("successfully create user!!");
             });
           //    .then(() => navigation.navigate('Login'))

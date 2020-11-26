@@ -81,6 +81,7 @@ function QuestionUpdateScreen({ route, navigation }) {
       const collectionRef = datas.collection("QuestionMcqs").doc(keys);
       batch.set(collectionRef, item);
     });
+    Alert.alert("successfully updated!!")
 
     const result = batch.commit();
     };
@@ -123,7 +124,7 @@ function QuestionUpdateScreen({ route, navigation }) {
        <View style ={styles.box1}>
              <TextInput style ={styles.text}
            value = {Option1}
-           placeholder ="option 1"
+           placeholder ={item.Option1}
            onChangeText={(text) => {
              setOption1(text)
            }} > 
@@ -134,7 +135,7 @@ function QuestionUpdateScreen({ route, navigation }) {
              <View style ={styles.box2}>
              <TextInput style ={styles.text}
            value = {Option2}
-           placeholder ="option 2"
+           placeholder ={item.Option2}
            onChangeText={(text) => {
              setOption2(text)
            }} > 
@@ -147,7 +148,7 @@ function QuestionUpdateScreen({ route, navigation }) {
              <View style ={styles.box3}>
              <TextInput style ={styles.text}
            value = {Option3}
-           placeholder ="option 3"
+           placeholder ={item.Option3}
            onChangeText={(text) => {
              setOption3(text)
            }} > 
@@ -157,18 +158,18 @@ function QuestionUpdateScreen({ route, navigation }) {
              <View style ={styles.box4}>
              <TextInput style ={styles.text}
            value = {Option4}
-           placeholder ="option 4"
+           placeholder ={item.Option4}
            onChangeText={(text) => {
              setOption4(text)
            }} > 
              </TextInput>
             
              </View>
-             <View style={styles.container} >
+             <View style={{marginTop: 10}} >
 
              <TextInput style ={styles.text}
      value = {Answer}
-     placeholder ="Correct Answer"
+     placeholder ={item.Answer}
      multiline={true}
      onChangeText={(text) => {
        setAnswer(text)

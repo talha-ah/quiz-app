@@ -168,17 +168,17 @@ openTwoButtonAlert=(key)=>{
               Add Students
             </Text>
           </Button>
-         <AppButton style={styles.btn}
+         {/* <AppButton style={styles.btn}
           title="InviteStudents"
           onPress={() =>
           
             Alert.alert("Invitation Sent")
           
 
-            }
+            } */}
 
 
-        />
+        {/* /> */}
         
 
       

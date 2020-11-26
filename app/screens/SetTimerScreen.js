@@ -17,7 +17,7 @@ const SetTimerScreen = props => {
   const [date, setDate] = useState('');
   const [stime, setSTime] = useState('');
   const [etime, setETime] = useState('');
-  const [msg,setMsg]=useState('');
+  const [msg,setMsg]=useState('The quiz has been uploaded');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -41,7 +41,9 @@ const SetTimerScreen = props => {
   const  setter = () => {
 
   console.log("set pressed");
- 
+  setMsg("The quiz has been uploaded");
+  console.log(msg)
+  
   if(date === "" ||stime=== ""||  etime=== ""){
     
   //  setShowLoading(true);
@@ -68,7 +70,8 @@ const SetTimerScreen = props => {
       
       const result =  batch.commit();
       
-      
+      Alert.alert("successfully time has been set!!")
+
       
     // props.navigation.navigate("ClassSelection");
   }

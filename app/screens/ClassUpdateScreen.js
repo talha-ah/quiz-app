@@ -7,6 +7,7 @@ import {
   Alert,
   View
 } from "react-native";
+
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
 
@@ -16,7 +17,7 @@ import {
   AppFormPicker as Picker,
   SubmitButton
 } from "../components/forms";
-import CourseEditScreen from "./CourseEditScreen";
+
 import firebase from "../config/firebaseConfig";
 
 // const validationSchema = Yup.object().shape({
@@ -61,17 +62,10 @@ function ClassUpdateScreen({ route, navigation }) {
       });
   }, []);
 
-  const save = (keys) => {
+  const save = (keys,props) => {
     //try{
     console.log("save pressed");
-    // if(coursetitle === "" ||creditHrs=== ""||  coursecode=== ""){
-    //your error
-    //  setShowLoading(true);
-    // console.log("write details");
-    // Alert.alert('write details ');
-
-    //  }
-    //  else{
+    
 
     const datas = firebase.firestore();
 
@@ -82,15 +76,19 @@ function ClassUpdateScreen({ route, navigation }) {
         programme: programme,
         section: section
       }
+    
     ];
 
     array.forEach((item) => {
       const collectionRef = datas.collection("Class").doc(keys);
       batch.set(collectionRef, item);
     });
+    Alert.alert('Class has been updated ');  
 
     const result = batch.commit();
+  
     // }
+   
   };
 
   return (

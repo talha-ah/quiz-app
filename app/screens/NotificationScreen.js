@@ -8,12 +8,16 @@ import {
   ListItemDeleteAction,
   ListItemSeparator,
 } from "../components/lists";
+//import { color } from "react-native-reanimated";
 
 
 
 function NotificationScreen(props) {
   const [messages, setMessages] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const firestore_ref = firebase.firestore().collection("Timers");
+  //check now!!!
+
   useEffect(() => {
   
     const msger = [];
@@ -35,11 +39,47 @@ function NotificationScreen(props) {
       
       });
      }, []);
+    
   
+     const deleteNotification = (key) => {
+      console.log("Notificationkey_" + key);
+      const db = firestore_ref.doc(key);
+      db.delete()
+        .then((res) => {
+          console.log("Item removed from database");
+        ///  setMessages('');
+        })
+        .catch((err) => {
+          Alert.alert(err);
+        });
+    },
+    openTwoButtonAlert = (key) => {
+      Alert.alert(
+        "Delete Notification",
+        "Are you sure to delete it?",
+        [
+          {
+            text: "Yes",
+            onPress: () => {
+              deleteNotification(key);
+            }
+          },
+          {
+            text: "No",
+            onPress: () => console.log("No item was removed"),
+            style: "cancel"
+          }
+        ],
+        {
+          cancelable: true
+        }
+      );
+    };
 
-  const handleDelete = (message) => {
+  const handleDelete = (msg) => {
+    openTwoButtonAlert(msg)
     // Delete the message from messages
-    setMessages(messages.filter((m) => m.id !== message.id));
+    
   };
 
   return (
@@ -55,10 +95,10 @@ function NotificationScreen(props) {
             title='Notification'
            subTitle={item.msg}
                       image={item.image}
-            onPress={() => console.log("Message selected", item)}
+            onPress={() => props.navigation.navigate("TakeQuizScreen")}
         
             renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
+              <ListItemDeleteAction onPress={() => handleDelete(item.key)} />
             )}
            
           />
@@ -84,7 +124,8 @@ function NotificationScreen(props) {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor:'#465881'
+    backgroundColor:'#465881',
+    color:'white'
 
   },
 });

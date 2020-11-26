@@ -58,7 +58,8 @@ function AddStudentScreen() {
       batch.set(collectionRef, item);
       setStForAsync(item)
     });
-  
+    Alert.alert('Student data are inserted ');
+
   const result =  batch.commit();
         }}
 

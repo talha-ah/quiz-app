@@ -62,6 +62,8 @@ function AddClassScreen(props) {
       db.delete()
         .then((res) => {
           console.log("Item removed from database");
+          Alert.alert('Item removed from database ');
+
         })
         .catch((err) => {
           Alert.alert(err);
@@ -115,7 +117,7 @@ function AddClassScreen(props) {
                   <TouchableOpacity>
                     <Text
                       style={{ color: "white" }}
-                      onPress={() => props.navigation.navigate("InviteScreen")}
+                      onPress={() => props.navigation.navigate("StudentsScreen")}
                     >
                       Batch: {item.batchs}{" "}
                     </Text>
@@ -124,7 +126,7 @@ function AddClassScreen(props) {
                   <TouchableOpacity>
                     <Text
                       style={{ color: "white" }}
-                      onPress={() => props.navigation.navigate("InviteScreen")}
+                      onPress={() => props.navigation.navigate("StudentsScreen")}
                     >
                       Programme: {item.programme}{" "}
                     </Text>
@@ -133,7 +135,7 @@ function AddClassScreen(props) {
                   <TouchableOpacity>
                     <Text
                       style={{ color: "white" }}
-                      onPress={() => props.navigation.navigate("InviteScreen")}
+                      onPress={() => props.navigation.navigate("StudentsScreen")}
                     >
                       Section: {item.section}{" "}
                     </Text>

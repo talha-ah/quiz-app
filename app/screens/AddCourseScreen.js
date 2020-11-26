@@ -73,13 +73,13 @@ function AddCourseScreen(props) {
     props.navigation.navigate("CourseUpdateScreen", { key: key });
   };
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  // const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
+  // const onRefresh = React.useCallback(() => {
+  //   setRefreshing(true);
 
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+  //   wait(2000).then(() => setRefreshing(false));
+  // }, []);
 
   (deleteCourser = (key) => {
     console.log("coursekey_" + key);
@@ -87,6 +87,8 @@ function AddCourseScreen(props) {
     db.delete()
       .then((res) => {
         console.log("Item removed from database");
+        Alert.alert('Item removed from database ');
+
       })
       .catch((err) => {
         Alert.alert(err);

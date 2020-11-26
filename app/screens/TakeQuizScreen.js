@@ -116,6 +116,7 @@ const TakeQuizScreen = props => {
        });
       }, []);
   
+      
   
   return (
     <ScrollView>
@@ -128,7 +129,7 @@ const TakeQuizScreen = props => {
       <View
         style={{
           backgroundColor: "#465881",
-          height: 50,
+          height: 40,
           width: "90%",
           borderWidth: 1,
           borderColor: "white",
@@ -144,16 +145,16 @@ const TakeQuizScreen = props => {
       </TouchableOpacity>
       </View>
       <View style={styles.box1}> 
-      <Text>Option 1: {item.Option1} </Text>
+      <Text> {item.Option1} </Text>
       </View>
       <View style={styles.box2}> 
-      <Text>Option 2: {item.Option2} </Text>
+      <Text> {item.Option2} </Text>
       </View>
       <View style={styles.box2}> 
-      <Text>Option 3: {item.Option3} </Text>
+      <Text> {item.Option3} </Text>
       </View>
       <View style={styles.box2}> 
-      <Text>Option 4: {item.Option4} </Text>
+      <Text> {item.Option4} </Text>
       </View>
       
       </View>
@@ -166,7 +167,15 @@ const TakeQuizScreen = props => {
 />
   
       
-
+ <CountDown
+        until={60 * .5 +10}
+        size={30}
+        onFinish={() =>  props.navigation.navigate("StudentPortal")}
+        digitStyle={{backgroundColor: '#FFF'}}
+        digitTxtStyle={{color: '#1CC625'}}
+        timeToShow={['M', 'S']}
+        timeLabels={{m: 'MM', s: 'SS'}}
+      />
      
     
     </Content>
@@ -233,11 +242,11 @@ justifyContent:'space-around'
     
     borderRadius: 10,
     width: "100%",
-    marginBottom:40
+    
     
   },
   box2: {
-    marginBottom:40,
+    
     alignSelf: "flex-end",
     borderRadius: 10,
     width: "100%"

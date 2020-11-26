@@ -5,7 +5,7 @@ import AddClassScreen from "../screens/AddClassScreen";
 import AddCourseScreen from "../screens/AddCourseScreen";
 import AssignQuizScreen from "../screens/AssignQuizScreen";
 import ViewReportScreen from "../screens/ViewReportScreen";
-import InviteScreen from "../screens/InviteScreen";
+import StudentScreen from "../screens/StudentsScreen";
 import TakeQuizWait from "../screens/TakeQuizWait";
 import AddQuestionsScreen from "../screens/AddQuestionsScreen";
 import QuestionsScreens from "../screens/QuestionsScreens";
@@ -13,7 +13,7 @@ import CourseEditScreen from "../screens/CourseEditScreen";
 import ViewQuestionsScreen from "../screens/ViewQuestionsScreen";
 import SetTimerScreen from "../screens/SetTimerScreen";
 import ClassEditScreen from "../screens/ClassEditScreen";
-import ClassSelection from "../screens/ClassSelection";
+
 import AddStudentScreen from "../screens/AddStudentScreen";
 import LoginScreen from "../screens/LoginScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
@@ -47,7 +47,7 @@ const TeacherNavigator = () => (
       <Stack.Screen name="AddCourseScreen" component={AddCourseScreen} />
       <Stack.Screen name="AssignQuizScreen" component={AssignQuizScreen} />
       <Stack.Screen name="ViewReportScreen" component={ViewReportScreen} />
-      <Stack.Screen name="InviteScreen" component={InviteScreen} />
+      <Stack.Screen name="StudentsScreen" component={StudentScreen} />
        <Stack.Screen name="MainScreen" component={MainScreen} /> 
       <Stack.Screen name="AddQuestionsScreen" component={AddQuestionsScreen} />
       <Stack.Screen name="QuestionsScreens" component={QuestionsScreens} />
@@ -60,7 +60,7 @@ const TeacherNavigator = () => (
       <Stack.Screen name="ViewQuestionsScreen" component={ViewQuestionsScreen} />
       <Stack.Screen name="SetTimerScreen" component={SetTimerScreen} />
       <Stack.Screen name="ClassEditScreen" component={ClassEditScreen} />
-      <Stack.Screen name="ClassSelection" component={ClassSelection} />
+      
       <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />

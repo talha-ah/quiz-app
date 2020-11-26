@@ -126,16 +126,6 @@ function LoginScreen(props ) {
             onChangeText={(text) => setPassword (text)}
             value={password}
           />
-        
-           <AppFormField
-            autoCorrect={false}
-            icon="keyboard"
-            name="classes"
-            placeholder="Class"
-            onChangeText={(text) => setclasses(text)}
-            value={classes}
-            
-          />
           <AppButton title="Login"
             onPress={
               handleLogin

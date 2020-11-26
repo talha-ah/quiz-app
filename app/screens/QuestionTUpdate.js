@@ -29,7 +29,8 @@ import {
 } from "../components/forms";
 import CourseEditScreen from "./CourseEditScreen";
 import firebase from "../config/firebaseConfig";
-
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+var radio_props = [{label:'True', value:0}, {label:'False', value:1}]
 function QuestionTUpdate({ route, navigation }) {
   
   const [QuestionArr, setQuestionArr] = useState([]);
@@ -106,15 +107,7 @@ function QuestionTUpdate({ route, navigation }) {
                 }}
                 
               >
-                {/* <TextInput style ={styles.text}
-     value = {Question}
-     placeholder ={item.Question}
-     multiline={true}
-     onChangeText={(text) => {
-       setQuestion(text)
-     }} > 
-       </TextInput>
-      */}
+               
         <FormField maxLength={150} name="QuestionT"
           placeholder={item.QuestionT}
           onChangeText={(text) => setQuestionT( text )}
@@ -130,14 +123,22 @@ function QuestionTUpdate({ route, navigation }) {
             
              <View style={styles.container} >
 
-             <TextInput style ={styles.text}
-     value = {Answer}
-     placeholder ="Correct Answer"
-     multiline={true}
-     onChangeText={(text) => {
-       setAnswer(text)
-     }} > 
-       </TextInput>
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            formHorizontal={true}
+            labelHorizontal={true}
+            buttonSize={20}
+            buttonOuterSize={30}
+            buttonColor={'tomato'}
+            selectedButtonColor={'tomato'}
+            labelStyle={{ left: -5 }}
+  
+            onPress={(id) => {
+              console.log(id)
+              setDecision(id)
+              }}
+          />
        </View>
 
              </View>

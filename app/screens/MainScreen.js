@@ -55,22 +55,22 @@ const MainScreen = (props) => {
     <Container style={styles.container}>
       <View style={styles.container}>
         <AppButton
-          title="Add Class"
+          title="Classes"
           onPress={() => props.navigation.navigate("AddClassScreen")}
         />
 
         <AppButton
-          title="Add Course"
+          title=" Courses"
           onPress={() => props.navigation.navigate("AddCourseScreen")}
         />
 
         <AppButton
-          title="Assign Quiz"
+          title=" Quiz"
           onPress={() => props.navigation.navigate("AddQuestionsScreen")}
         />
 
         <AppButton
-          title="View Report"
+          title="Report"
           onPress={() => props.navigation.navigate("ViewReportScreen")}
         />
 

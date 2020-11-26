@@ -278,12 +278,24 @@ const QuestionsScreen = (props) => {
             <View style={styles.container}></View>
 
             <View style={{alignSelf:'center',}}>
-              <TouchableOpacity onPress={() => _isChecked()}>
-                <CheckBox checked={checkboxState} />
-              </TouchableOpacity>
-
-              <Text style={{ alignSelf:'center' }}>Correct Answer</Text>
+            <RadioForm
+            radio_props={radio_props1}
+            initial={0}
+            formHorizontal={true}
+            labelHorizontal={true}
+            buttonSize={20}
+            buttonOuterSize={30}
+            buttonColor={'tomato'}
+            selectedButtonColor={'tomato'}
+            labelStyle={{ left: -5 }}
+  
+            onPress={(id) => {
+              console.log(id)
+              setDecision(id)
+              }}
+          />
             </View>
+            
             <View style={styles.container}>
               <View style={styles.container}></View>
 

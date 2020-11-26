@@ -66,6 +66,8 @@ const  handleSignUp = async() => {
       .then(() => {
       setShowLoading(false);
       console.log("successfully create user!!")})
+      Alert.alert(' successfully created user!!')
+
   //    .then(() => navigation.navigate('Login')) 
        
     })

@@ -57,6 +57,7 @@ function CourseEditScreen() {
         const collectionRef = datas.collection("Courses").doc();
         batch.set(collectionRef, item);
       });
+      Alert.alert('Course has been inserted ');
 
       const result = batch.commit();
     }

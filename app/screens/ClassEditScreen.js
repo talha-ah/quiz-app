@@ -61,10 +61,11 @@ function ClassEditScreen(props) {
         batch.set(collectionRef, item);
         // setClassAsync(item)
       });
+      Alert.alert('Class has been inserted ');
 
       const result = batch.commit();
     }
-    props.navigation.navigate("MainScreen");
+    props.navigation.navigate("AddClassScreen");
   };
 
   return (
