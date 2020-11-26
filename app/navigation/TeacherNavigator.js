@@ -20,7 +20,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import CourseUpdateScreen from "../screens/CourseUpdateScreen";
 import ClassUpdateScreen from "../screens/ClassUpdateScreen";
-// import QuestionUpdateScreen from "../screens/QuestionUpdateScreen";
+ import QuestionTUpdate from "../screens/QuestionTUpdate";
 import StudentUpdateScreen from "../screens/StudentUpdateScreen";
 import StudentMain from "../screens/StudentMain";
 import QuizSelect from "../screens/QuizSelect";
@@ -52,7 +52,7 @@ const TeacherNavigator = () => (
        <Stack.Screen name="CourseEditScreen" component={CourseEditScreen} />
       <Stack.Screen name="CourseUpdateScreen" component={CourseUpdateScreen} />
       <Stack.Screen name="ClassUpdateScreen" component={ClassUpdateScreen} />
-      {/* <Stack.Screen name="QuestionUpdateScreen" component={QuestionUpdateScreen} /> */}
+     <Stack.Screen name="QuestionTUpdate" component={QuestionTUpdate} /> 
       <Stack.Screen name="TakeQuizWait" component={TakeQuizWait} />
       <Stack.Screen name="ViewQuestionsScreen" component={ViewQuestionsScreen} />
       <Stack.Screen name="SetTimerScreen" component={SetTimerScreen} />

@@ -13,11 +13,17 @@ import {
   Body
 } from "native-base";
 import firebase from "../config/firebaseConfig";
+import RadioForm from "react-native-simple-radio-button";
 
 const ViewQuestionScreen = props => {
  
    const [question, setQuestion] = useState([])
-
+   const [questionT, setQuestionT] = useState([])
+   const [decision, setDecision] = useState(0);
+   var radio_props = [
+    { label: "MCQS", value: 0 },
+    { label: "T/F", value: 1 }
+  ];
    
    const firestore_ref = firebase.firestore().collection("QuestionMcqs");
 
@@ -42,6 +48,29 @@ const ViewQuestionScreen = props => {
        
        });
       }, []);
+      useEffect(() => {
+  
+        const ViewerTF = [];
+        firebase
+          .firestore()
+          .collection('QuestionTF')
+          .get()
+          .then((docSnapshot) => {
+            
+            docSnapshot.forEach((doc) => {
+              console.log(doc.data());
+              ViewerTF.push({
+                ...doc.data(),
+                key: doc.id,
+              });
+            });
+            console.log(ViewerTF);
+            setQuestionT(ViewerTF);
+          
+          });
+         }, []);
+         
+
     
       const deleteQuestioner = (key) => {
         console.log("questionkey_" + key);
@@ -79,6 +108,9 @@ const ViewQuestionScreen = props => {
       const updater = (key) => {
         props.navigation.navigate("QuestionUpdateScreen", { key: key });
       };
+      const updaterT = (key) => {
+        props.navigation.navigate("QuestionTUpdate", { key: key });
+      };
     
  
  
@@ -86,6 +118,22 @@ const ViewQuestionScreen = props => {
      return (
       <Container style={styles.container}>
       <Content style={styles.container}>
+      <RadioForm
+          radio_props={radio_props}
+          initial={0}
+          formHorizontal={true}
+          labelHorizontal={true}
+          buttonSize={20}
+          buttonOuterSize={30}
+          buttonColor={"tomato"}
+          selectedButtonColor={"tomato"}
+          labelStyle={{ left: -5 }}
+          onPress={(id) => {
+            console.log(id);
+            setDecision(id);
+          }}
+        />
+         {decision == 0 ? 
     <FlatList
     data={question}
     renderItem={({ item }) => (
@@ -106,6 +154,7 @@ const ViewQuestionScreen = props => {
                 Question: {item.Question
                 }
               </Text>
+              
        
        
         <View
@@ -135,11 +184,68 @@ const ViewQuestionScreen = props => {
 </View>
 
       </View>
-
+    
     
     )}
-
+         
   />
+  :
+  <FlatList
+  data={questionT}
+  renderItem={({ item }) => (
+    <View
+    style={{
+      backgroundColor: "#465881",
+      height: 90,
+      width: "100%",
+      borderWidth: 1,
+      borderColor: "white",
+      borderRadius: 15,
+      padding: 10,
+      marginVertical: 10
+    }}
+  >
+     
+      <Text style={{ color: "white" }}>
+              Question: {item.QuestionT
+              }
+            </Text>
+     
+     
+      <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                bottom: 30
+              }}
+            >
+     <TouchableOpacity onPress={() => updaterT(item.key)}>
+                <Text style={styles.align}>Update </Text>
+              </TouchableOpacity> 
+
+              <TouchableOpacity onPress={() => openTwoButtonAlert(item.key)}>
+                <Button
+                  danger
+                  transparent
+                  style={{}}
+                  onPress={() => openTwoButtonAlert(item.key)}
+                >
+                  <Icon active name="trash" />
+                </Button>
+              
+
+      </TouchableOpacity>
+</View>
+
+    </View>
+  
+  
+  )}
+       
+/>
+}
+
   </Content>
     </Container>
      )}
