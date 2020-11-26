@@ -68,22 +68,12 @@
 
 import CountDown from 'react-native-countdown-component';
 
-import {Text,View,ScrollView,StyleSheet, Alert,FlatList,TouchableOpacity} from "react-native";
+import {Text,View,ScrollView,StyleSheet,Button, Alert,FlatList,TouchableOpacity} from "react-native";
 import Screen from "../components/Screen";
 import RadioForm from 'react-native-simple-radio-button';
 
 import React ,{useState,useEffect}from "react";
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Icon,
-  Left,
-  Right,
-  Body
-} from "native-base";
+
 
 
 import firebase from "../config/firebaseConfig";
@@ -98,7 +88,7 @@ const TakeQuizScreen = props => {
      firebase
        .firestore()
        .collection('QuestionMcqs')
-      
+    
       .get()
        .then((docSnapshot) => {
          
@@ -118,48 +108,39 @@ const TakeQuizScreen = props => {
   
   
   return (
-    <ScrollView>
-      <Container style={styles.container}>
-        <Content style={styles.container}>
     <FlatList
     data={question}
     renderItem={({ item }) => (
-      <View>
-      <View
-        style={{
-          backgroundColor: "#465881",
-          height: 50,
-          width: "90%",
-          borderWidth: 1,
-          borderColor: "white",
-          borderRadius: 15,
-          padding: 10,
-          marginVertical: 10
-        }}
-      >
+      <View style={{backgroundColor:'#465881',height: 70, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableOpacity>
       <Text>Question: {item.Question} </Text>
-      
 
       </TouchableOpacity>
-      </View>
-      <View style={styles.box1}> 
-      <Text>Option 1: {item.Option1} </Text>
-      </View>
-      <View style={styles.box2}> 
+      {/* <Text>Option 1: {item.Option1} </Text>
       <Text>Option 2: {item.Option2} </Text>
-      </View>
-      <View style={styles.box2}> 
       <Text>Option 3: {item.Option3} </Text>
-      </View>
-      <View style={styles.box2}> 
-      <Text>Option 4: {item.Option4} </Text>
-      </View>
-      
-      </View>
+      <Text>Option 4: {item.Option4} </Text> */}
 
-      
-    
+<RadioForm
+            radio_props={radio_props}
+            initial={0}
+            formHorizontal={true}
+            labelHorizontal={true}
+            buttonSize={20}
+            buttonOuterSize={30}
+            buttonColor={'tomato'}
+            selectedButtonColor={'tomato'}
+            labelStyle={{ left: -5 }}
+  
+            onPress={(id) => {
+              console.log(id)
+              setDecision(id)
+              }}
+          />
+
+
+
+    </View>
   
   )}
 
@@ -167,103 +148,7 @@ const TakeQuizScreen = props => {
   
       
 
-     
-    
-    </Content>
-    </Container>
-  </ScrollView>
-    
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#465881"
-  },
-  box: {
-    width: "100%",
-    padding: 10
-  },
-  radio: {
-    alignSelf: "center"
-  },
-  view:{
-
-flex:1,
-justifyContent:'space-around'
-  },
-  text: {
-    height: 100,
-    width: "100%",
-    fontSize: 18,
-    color: "white",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 15,
-    marginTop: 10,
-    paddingHorizontal: 10
-  },
-  text1: {
-    height: 100,
-    width: "50%",
-    fontSize: 18,
-    color: "white",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 10,
-    marginTop: 10,
-    paddingHorizontal: 50
-  },
-  screen: {
-    flex: 1,
-    marginBottom: 30,
-    marginTop: 150
-  },
-
-  btn: {
-    marginTop: 20,
-    width: "70%",
-    padding: "20%",
-    alignSelf: "flex-end",
-    borderRadius: 10
-  },
-  box1: {
-    
-    borderRadius: 10,
-    width: "100%",
-    marginBottom:40
-    
-  },
-  box2: {
-    marginBottom:40,
-    alignSelf: "flex-end",
-    borderRadius: 10,
-    width: "100%"
-  },
-  box3: {
-    
-    alignSelf: "baseline",
-    borderRadius: 10,
-    width: "40%"
-  },
-  box4: {
-    marginTop: -99,
-    alignSelf: "flex-end",
-    borderRadius: 10,
-    width: "40%"
-  },
-
-  backbtn: {
-    marginTop: 50,
-    width: "70%",
-    padding: "20%"
-  }
-});
-
-export default TakeQuizScreen;
- // <CountDown
+      // <CountDown
       //   until={60 * 10 + 30}
       //   size={30}
       //   onFinish={() => alert('Finished')}
@@ -275,6 +160,49 @@ export default TakeQuizScreen;
      
       
     // </Screen>
+    
+
+    
+  );
+}
+
+const styles = StyleSheet.create({
+container: {
+  padding: 10,
+  backgroundColor: '#465881',
+},
+text:{
+fontSize:18
+},
+screen: {
+  flex: 1,
+  marginBottom: 30,
+  marginTop: 150
+},
+logo: {
+  width: 450,
+  height: 250,
+  alignSelf: "center",
+  marginTop: 10,
+  marginBottom: 20,
+},
+btn: {
+  marginTop: 0,
+  width: '70%',
+  padding: "15%",
+  alignSelf: "flex-start",
+  borderRadius: 10
+
+},
+backbtn: {
+  marginTop: 50,
+  width: '70%',
+  padding: "20%",
+
+
+}
+});
+export default TakeQuizScreen;
 
     // <Screen style={styles.container}>
      

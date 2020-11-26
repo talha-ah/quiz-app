@@ -10,7 +10,17 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
+import {
+  Container,
+  Header,
+  Title,
+  Content,
 
+  Icon,
+  Left,
+  Right,
+  Body
+} from "native-base";
 import {
   AppForm as Form,
   AppFormField as FormField,
@@ -86,8 +96,10 @@ function QuestionUpdateScreen({ route, navigation }) {
     };
 
   return (
-    <ImageBackground blurRadius={1} style={styles.background}>
+   
       <ScrollView>
+         <Container style={styles.container}>
+      <Content style={styles.container}>
         <FlatList
           data={QuestionArr}
           renderItem={({ item }) => (
@@ -186,8 +198,10 @@ function QuestionUpdateScreen({ route, navigation }) {
             </View>
           )}
         />
+        </Content>
+    </Container>
       </ScrollView>
-    </ImageBackground>
+    
   );
 }
 
@@ -199,8 +213,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   container: {
-    flex: 1,
-    justifyContent: "flex-end"
+    padding: 10,
+    backgroundColor: '#465881',
   },
   box:{
     width:"100%",

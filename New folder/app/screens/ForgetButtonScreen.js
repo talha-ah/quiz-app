@@ -7,15 +7,14 @@ import {
   StyleSheet,
   View,
   Button,
-  Alert,
-  ScrollView
+  Alert,ScrollView
 } from "react-native";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import firebase from "../config/firebaseConfig";
 
 import ForgetButton from "../components/ForgetButton";
-//import { ScrollView } from "react-native-gesture-handler";
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required("Please enter registered email")

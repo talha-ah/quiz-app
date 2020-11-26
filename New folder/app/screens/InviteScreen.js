@@ -17,7 +17,7 @@ import {
 
 import AppButton from "../components/AppButton";
 import firebase from "../config/firebaseConfig";
-//import { color } from 'react-native-reanimated';
+import { color } from 'react-native-reanimated';
 
 function InviteScreen(props) {
   state = {

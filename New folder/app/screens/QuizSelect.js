@@ -75,7 +75,7 @@ const [quizTitle, setQuizTitle] = useState("");
         //setClassAsync(item)
       });           
     const result =  batch.commit();
-    props.navigation.navigate('SetTimerScreen')
+    props.navigation.navigate('AddQuestionsScreen')
 
     }
 

@@ -1,5 +1,5 @@
 import React ,{useState,useEffect}from "react";
-import { Text, Alert, StyleSheet, View ,FlatList,TouchableOpacity} from "react-native";
+import { Text,Alert, StyleSheet, View ,FlatList,TouchableOpacity} from "react-native";
 
 import {
   Container,
@@ -14,6 +14,7 @@ import {
 } from "native-base";
 import firebase from "../config/firebaseConfig";
 import RadioForm from "react-native-simple-radio-button";
+import AppButton from "../components/AppButton";
 
 const ViewQuestionScreen = props => {
  
@@ -25,7 +26,8 @@ const ViewQuestionScreen = props => {
     { label: "T/F", value: 1 }
   ];
    
-   
+   const firestore_ref = firebase.firestore().collection("QuestionMcqs");
+
    useEffect(() => {
   
      const Viewer = [];
@@ -72,8 +74,6 @@ const ViewQuestionScreen = props => {
 
     
       const deleteQuestioner = (key) => {
-        if(decision==0){
-        const firestore_ref = firebase.firestore().collection("QuestionMcqs");
         console.log("questionkey_" + key);
         const db = firestore_ref.doc(key);
         db.delete()
@@ -83,20 +83,6 @@ const ViewQuestionScreen = props => {
           .catch((err) => {
             Alert.alert(err);
           });
-        }
-          else{
-            const firestoret_ref = firebase.firestore().collection("QuestionTF");
-        console.log("questionkey_" + key);
-        const db = firestoret_ref.doc(key);
-        db.delete()
-          .then((res) => {
-            console.log("Item removed from database");
-          })
-          .catch((err) => {
-            Alert.alert(err);
-          });}
-
-          
       },
       openTwoButtonAlert = (key) => {
         Alert.alert(
@@ -125,16 +111,6 @@ const ViewQuestionScreen = props => {
       };
       const updaterT = (key) => {
         props.navigation.navigate("QuestionTUpdate", { key: key });
-      };
-      const fullQuestion = (key) => {
-        if(decision==0){
-        props.navigation.navigate("ViewFullQuestion", { key: key });
-        }
-        else
-        {
-          props.navigation.navigate("ViewTFQuestion", { key: key });
-        }
-        
       };
     
  
@@ -175,16 +151,11 @@ const ViewQuestionScreen = props => {
       }}
     >
        
-       <TouchableOpacity>
-                    <Text
-                      style={{ color: "white" }}
-                      onPress={() => props.navigation.navigate("InviteScreen")}
-                    >
-                      Question: {item.Question}{" "}
-                    </Text>
-                  </TouchableOpacity>
-
-               
+        <Text style={{ color: "white" }}>
+                Question: {item.Question
+                }
+              </Text>
+              
        
        
         <View
@@ -211,14 +182,19 @@ const ViewQuestionScreen = props => {
                 
 
         </TouchableOpacity>
+
+        
 </View>
+
 
       </View>
     
     
     )}
+    
          
   />
+  
   :
   <FlatList
   data={questionT}
@@ -235,14 +211,12 @@ const ViewQuestionScreen = props => {
       marginVertical: 10
     }}
   >
-      <TouchableOpacity onPress={() => fullQuestion(item.key)}>
-        <Text style={{ color: "white" }}>
-                Question: {item.QuestionT
-                }
-              </Text>
-       
-        </TouchableOpacity>
-      
+     
+      <Text style={{ color: "white" }}>
+              Question: {item.QuestionT
+              }
+            </Text>
+     
      
       <View
               style={{
@@ -277,6 +251,16 @@ const ViewQuestionScreen = props => {
        
 />
 }
+<View>
+  
+<AppButton title="Next"
+            onPress={()=>
+              props.navigation.navigate("SetTimerScreen")
+            }     
+          /> 
+                </View>
+
+     
 
   </Content>
     </Container>
@@ -293,6 +277,13 @@ const styles = StyleSheet.create({
   text:{
 fontSize:18
   },
+  btn: {
+    marginTop: 20,
+    width: "70%",
+    padding: "20%",
+    alignSelf: "flex-end",
+    borderRadius: 10
+  },
   screen: {
     flex: 1,
     marginBottom: 30,
@@ -308,7 +299,7 @@ fontSize:18
   align: {
     // alignSelf: "flex-end",
     // marginBottom: -9
-    color: "white"
+    color: "red"
   },
   btn: {
     marginTop: 20,

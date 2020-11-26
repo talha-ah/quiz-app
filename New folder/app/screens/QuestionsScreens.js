@@ -4,12 +4,11 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  TouchableOpacity,
   Image,
   Button,
   Text,
   TextInput,
-  Alert
+  Alert,TouchableOpacity
 } from "react-native";
 
 import RadioForm from "react-native-simple-radio-button";
@@ -28,7 +27,7 @@ import {
   Body,
   CheckBox
 } from "native-base";
-//import {  } from "react-native-gesture-handler";
+
 
 var radio_props = [
   { label: "MCQS", value: 0 },
@@ -253,7 +252,7 @@ const QuestionsScreen = (props) => {
                   <Button
                     style={styles.btn}
                     title="Next"
-                    onPress={() => props.navigation.navigate("QuizSelect")}
+                    onPress={() => props.navigation.navigate("SetTimerScreen")}
                   />
                 </View>
           </View>
@@ -293,7 +292,7 @@ const QuestionsScreen = (props) => {
                   <Button
                     style={styles.btn}
                     title="Next"
-                    onPress={() => props.navigation.navigate("QuizSelect")}
+                    onPress={() => props.navigation.navigate("SetTimerScreen")}
                   />
                 </View>
               </View>

@@ -10,7 +10,17 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
+import {
+  Container,
+  Header,
+  Title,
+  Content,
 
+  Icon,
+  Left,
+  Right,
+  Body
+} from "native-base";
 import {
   AppForm as Form,
   AppFormField as FormField,
@@ -20,19 +30,13 @@ import {
 import CourseEditScreen from "./CourseEditScreen";
 import firebase from "../config/firebaseConfig";
 
-function QuestionUpdateScreen({ route, navigation }) {
+function QuestionTUpdate({ route, navigation }) {
   
   const [QuestionArr, setQuestionArr] = useState([]);
   const [decision, setDecision] = useState(0)
   const [Question ,setQuestion]= useState('')
-  const [QuestionT ,setTQuestion]= useState('')
-  const [Option1 ,setOption1]= useState('')
-  const [Option2 ,setOption2]= useState('')
-  const [Option3 ,setOption3]= useState('')
-  const [Option4 ,setOption4]= useState('')
-  const [Answer ,setAnswer]= useState('')
-  const [tOption1 ,settOption1]= useState('')
-  const [tOption2 ,settOption2]= useState('')
+  const [QuestionT ,setQuestionT]= useState('')
+  const [Answer,setAnswer]=useState('')
   const [checkboxState ,setCheckboxState]= useState(false)
  
   const { key } = route.params;
@@ -40,22 +44,22 @@ function QuestionUpdateScreen({ route, navigation }) {
   useEffect(() => {
     console.log("key: " + key);
 
-    const UpdateQuestion = [];
+    const UpdateQuestionT = [];
     firebase
       .firestore()
-      .collection("QuestionMcqs")
+      .collection("QuestionTF")
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
           console.log(doc.data());
           if (doc.id == key)
-            UpdateQuestion.push({
+            UpdateQuestionT.push({
               ...doc.data(),
               key: doc.id
             });
         });
       
-        setQuestionArr(UpdateQuestion);
+        setQuestionArr(UpdateQuestionT);
       });
   }, []);
 
@@ -67,18 +71,15 @@ function QuestionUpdateScreen({ route, navigation }) {
     const batch = datas.batch();
     const arr=[{
         QuestionType:0,
-        Question:Question,
-        Option1:Option1,
-        Option2:Option2,
-        Option3:Option3,
-        Option4:Option4,
+        QuestionT:QuestionT,
+      
         Answer:Answer,
         quizKey:'',
         quizTitle:''
       }];
 
     arr.forEach((item) => {
-      const collectionRef = datas.collection("QuestionMcqs").doc(keys);
+      const collectionRef = datas.collection("QuestionTF").doc(keys);
       batch.set(collectionRef, item);
     });
 
@@ -86,19 +87,18 @@ function QuestionUpdateScreen({ route, navigation }) {
     };
 
   return (
-    <ImageBackground blurRadius={1} style={styles.background}>
+   
       <ScrollView>
+         <Container style={styles.container}>
+      <Content style={styles.container}>
         <FlatList
           data={QuestionArr}
           renderItem={({ item }) => (
             <View style={styles.container}>
               <Form
                initialValues={{
-                Question: item.Question,
-                Option1:item.Option1,
-                 Option2:item.Option2,
-                 Option3:item.Option3,
-                 Option4:item.Option4,
+                QuestionT: item.QuestionT,
+              
                 Answer:item.Answer,
                 quizKey:'',
                  quizTitle:''
@@ -115,55 +115,19 @@ function QuestionUpdateScreen({ route, navigation }) {
      }} > 
        </TextInput>
       */}
-        <FormField maxLength={150} name="Question"
-          placeholder={item.Question}
-          onChangeText={(text) => setQuestion( text )}
-          value={Question} />
+        <FormField maxLength={150} name="QuestionT"
+          placeholder={item.QuestionT}
+          onChangeText={(text) => setQuestionT( text )}
+          value={QuestionT} />
           <View style= {styles.container}>
-       <View style ={styles.box1}>
-             <TextInput style ={styles.text}
-           value = {Option1}
-           placeholder ="option 1"
-           onChangeText={(text) => {
-             setOption1(text)
-           }} > 
-             </TextInput>
-            
-             </View>
+      
              
-             <View style ={styles.box2}>
-             <TextInput style ={styles.text}
-           value = {Option2}
-           placeholder ="option 2"
-           onChangeText={(text) => {
-             setOption2(text)
-           }} > 
-             </TextInput>
             
-             </View>
              </View>
 
              <View style= {styles.container}>
-             <View style ={styles.box3}>
-             <TextInput style ={styles.text}
-           value = {Option3}
-           placeholder ="option 3"
-           onChangeText={(text) => {
-             setOption3(text)
-           }} > 
-             </TextInput>
+           
             
-             </View>
-             <View style ={styles.box4}>
-             <TextInput style ={styles.text}
-           value = {Option4}
-           placeholder ="option 4"
-           onChangeText={(text) => {
-             setOption4(text)
-           }} > 
-             </TextInput>
-            
-             </View>
              <View style={styles.container} >
 
              <TextInput style ={styles.text}
@@ -186,8 +150,10 @@ function QuestionUpdateScreen({ route, navigation }) {
             </View>
           )}
         />
+        </Content>
+    </Container>
       </ScrollView>
-    </ImageBackground>
+    
   );
 }
 
@@ -199,8 +165,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   container: {
-    flex: 1,
-    justifyContent: "flex-end"
+    padding: 10,
+    backgroundColor: '#465881',
   },
   box:{
     width:"100%",
@@ -260,4 +226,4 @@ const styles = StyleSheet.create({
       },
     
 });
-export default QuestionUpdateScreen;
+export default QuestionTUpdate;

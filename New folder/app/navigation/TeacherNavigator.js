@@ -13,7 +13,7 @@ import CourseEditScreen from "../screens/CourseEditScreen";
 import ViewQuestionsScreen from "../screens/ViewQuestionsScreen";
 import SetTimerScreen from "../screens/SetTimerScreen";
 import ClassEditScreen from "../screens/ClassEditScreen";
-import ClassSelection from "../screens/ClassSelection";
+// import ClassSelection from "../screens/ClassSelection";
 import AddStudentScreen from "../screens/AddStudentScreen";
 import LoginScreen from "../screens/LoginScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
@@ -25,8 +25,6 @@ import StudentUpdateScreen from "../screens/StudentUpdateScreen";
 import StudentMain from "../screens/StudentMain";
 import QuizSelect from "../screens/QuizSelect";
 import QuestionUpdateScreen from "../screens/QuestionUpdateScreen";
-import ViewFullQuestion from "../screens/ViewFullQuestion";
-import ViewTFQuestion from "../screens/ViewTFQuestion";
 
 const Stack = createStackNavigator();
 
@@ -39,8 +37,7 @@ const TeacherNavigator = () => (
         options={{ headerShown: true}}
       />
       
-      <Stack.Screen name="ViewFullQuestion" component={ViewFullQuestion} /> 
-      <Stack.Screen name="ViewTFQuestion" component={ViewTFQuestion} /> 
+      
       <Stack.Screen name="QuestionUpdateScreen" component={QuestionUpdateScreen} />
       <Stack.Screen name="AddClassScreen" component={AddClassScreen} />
       <Stack.Screen name="StudentUpdateScreen" component={StudentUpdateScreen} />
@@ -60,7 +57,7 @@ const TeacherNavigator = () => (
       <Stack.Screen name="ViewQuestionsScreen" component={ViewQuestionsScreen} />
       <Stack.Screen name="SetTimerScreen" component={SetTimerScreen} />
       <Stack.Screen name="ClassEditScreen" component={ClassEditScreen} />
-      <Stack.Screen name="ClassSelection" component={ClassSelection} />
+      {/* <Stack.Screen name="ClassSelection" component={ClassSelection} /> */}
       <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
