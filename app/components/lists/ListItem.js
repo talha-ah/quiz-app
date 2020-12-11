@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 15,
-    backgroundColor: '#465881',
+    backgroundColor: "#465881",
   },
   detailsContainer: {
     marginLeft: 10,

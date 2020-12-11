@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
   },
   text: {
     text: {
-        color: "#fff",
-        justifyContent:"center",
-        alignSelf:"center",
-        fontSize: 12,
-        fontWeight: "bold",
-      },
+      color: "#fff",
+      justifyContent: "center",
+      alignSelf: "center",
+      fontSize: 12,
+      fontWeight: "bold",
+    },
   },
 });
 

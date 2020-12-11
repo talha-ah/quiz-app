@@ -1,0 +1,42 @@
+Teacher specifications
+	◦	Registration 
+
+	◦	Forget password 
+
+	◦	In add class teacher can add the class he is teaching to and in that class he can send an invitation link to the students to join that class. (Just like in google classroom)
+
+	◦	In add course teacher can add the courses he is teaching and can add to which class he is teaching that course. 
+
+	◦	In View report screen teacher will select the course the class and can see the marks in every quiz attempted by the students till now. 
+
+	◦	In assign quiz teacher has two options add question and view question, in add questions the options are for mcqs and other for true false.
+ 		First he’ll select the course he’s writing questions for than the teacher is supposed to give the tiltle of the quiz if its quiz1 2 or whatever 
+		then he’ll write the questions with options and also the correct option for both of them also the marks for each question
+
+	◦	Now teacher can save the question and add as many as he likes. He can directly move on to the next screen and set the timer for all of the questions he added
+		or can select few by going to view questions screen. 
+
+	◦	Teacher can  view all the saved questions  in view questions section from here he can select one or more questions and move to the the next phase which is setting 
+		timer (questions can be categorised into a folder topic wise like a folder named topic abc will only include questions of that topic)
+
+	◦	In setting timer screen the teacher is supposed to set the date and time of appearance of the quiz on students screen. And also the start and end time of quiz. 
+
+	◦	Now teacher will select the class to which he’ll send the quiz. And submit the quiz.
+		
+Students specifications
+	◦	Registration 
+
+	◦	Forget password 
+
+	◦	If the quiz is not uploaded yet by the teacher the screen will be showing “no quiz uploaded yet” on the attempt quiz screen
+
+	◦	Once the quiz is uploaded student will get a notification on their mobiles and on clicking it they'll directly redirect to the app login page
+		they can also view the notifications on the notifications screen and on attempt quiz screen they can view the quiz.
+
+	◦	Now the student can view the questions and attempt them also can view remaining no of questions and the remaining time. 
+
+	◦	If the times up he can no longer view the questions and will see the the obtained marks. 
+
+	◦	If the quiz is completed in time then also the obtained marks will be shown.
+
+	◦	In view report the student can see the marks of all the quizes he has given till now.
