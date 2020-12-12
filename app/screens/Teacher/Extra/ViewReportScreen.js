@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Table, Row, Rows } from "react-native-table-component";
-import Screen from "../../components/Screen";
+import Screen from "../../../components/Screen";
 
 export default class ExampleTwo extends Component {
   constructor(props) {

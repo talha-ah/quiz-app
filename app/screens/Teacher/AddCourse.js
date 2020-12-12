@@ -1,22 +1,12 @@
-import AsyncStorage from "@react-native-community/async-storage";
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  Alert,
-  View,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../../components/AppButton";
 
 import {
   AppForm as Form,
   AppFormField as FormField,
-  AppFormPicker as Picker,
-  SubmitButton,
 } from "../../components/forms";
-import Screen from "../../components/Screen";
 import firebase from "../../config/firebaseConfig";
 
 const validationSchema = Yup.object().shape({
@@ -25,41 +15,61 @@ const validationSchema = Yup.object().shape({
   coursecode: Yup.string().required().label("Course Code"),
 });
 
-function CourseEditScreen() {
-  //const firestore_ref=firebase.firestore().collection('Courses')
+function AddCourse(props) {
+  const firestore_ref = firebase.firestore().collection("Course");
 
   const [coursetitle, SetCoursetitle] = useState("");
   const [creditHrs, SetCreditHrs] = useState("");
   const [coursecode, SetCoursecode] = useState("");
-  const [showLoading, setShowLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const params = props.route.params;
+    if (params) {
+      SetCoursetitle(params.courseItem.courseTitle);
+      SetCreditHrs(params.courseItem.creditHours);
+      SetCoursecode(params.courseItem.courseCode);
+    }
+  }, []);
 
   const addCourse = () => {
-    //try{
-    console.log("add pressed");
     if (coursetitle === "" || creditHrs === "" || coursecode === "") {
-      //your error
-      //  setShowLoading(true);
-      console.log("Enter Valid details");
-      Alert.alert("Enter Valid details");
+      alert("Enter Valid details");
     } else {
-      const datas = firebase.firestore();
-
-      const batch = datas.batch();
-      const arr = [
-        {
-          coursetitle: coursetitle,
-          creditHrs: creditHrs,
-          coursecode: coursecode,
-        },
-      ];
-
-      arr.forEach((item) => {
-        const collectionRef = datas.collection("Courses").doc();
-        batch.set(collectionRef, item);
-      });
-      Alert.alert("Course has been inserted ");
-
-      const result = batch.commit();
+      setLoading(true);
+      const params = props.route.params;
+      if (params) {
+        firestore_ref
+          .doc(params.courseItem.key)
+          .update({
+            courseTitle: coursetitle,
+            creditHours: creditHrs,
+            courseCode: coursecode,
+          })
+          .then((resData) => {
+            props.navigation.navigate("Courses");
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            alert("There was an error");
+          });
+      } else {
+        firestore_ref
+          .add({
+            courseTitle: coursetitle,
+            creditHours: creditHrs,
+            courseCode: coursecode,
+          })
+          .then((resData) => {
+            props.navigation.navigate("Courses");
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            alert("There was an error");
+          });
+      }
     }
   };
 
@@ -74,7 +84,7 @@ function CourseEditScreen() {
               coursecode: "",
             }}
             onSubmit={(values) => console.log(values)}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
           >
             <FormField
               maxLength={255}
@@ -91,7 +101,6 @@ function CourseEditScreen() {
               onChangeText={(text) => SetCreditHrs(text)}
               value={creditHrs}
             />
-
             <FormField
               maxLength={9}
               multiline
@@ -100,7 +109,11 @@ function CourseEditScreen() {
               onChangeText={(text) => SetCoursecode(text)}
               value={coursecode}
             />
-            <AppButton title="Add " onPress={addCourse} />
+            <AppButton
+              onPress={addCourse}
+              title={loading ? "Loading..." : "Add"}
+              disabled={loading}
+            />
           </Form>
         </View>
       </ScrollView>
@@ -111,13 +124,8 @@ function CourseEditScreen() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    alignItems: "stretch",
-    backgroundColor: "#465881",
     padding: 10,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "flex-end",
+    backgroundColor: "#465881",
   },
 });
-export default CourseEditScreen;
+export default AddCourse;

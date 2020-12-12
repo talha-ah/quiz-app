@@ -9,11 +9,11 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import Screen from "../../components/Screen";
+import Screen from "../../../components/Screen";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import firebase from "../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 
 const SetTimerScreen = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);

@@ -1,11 +1,8 @@
 import React from "react";
 import {
-  ImageBackground,
   ScrollView,
   StyleSheet,
   View,
-  TouchableOpacity,
-  Image,
   Button,
   Text,
   TextInput,
@@ -17,18 +14,6 @@ import Screen from "../../components/Screen";
 import { useState } from "react";
 
 import firebase from "../../config/firebaseConfig";
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Icon,
-  Left,
-  Right,
-  Body,
-  CheckBox,
-} from "native-base";
-//import {  } from "react-native-gesture-handler";
 
 var radio_props = [
   { label: "MCQS", value: 0 },
@@ -248,7 +233,7 @@ const QuestionsScreen = (props) => {
               <Button
                 style={styles.btn}
                 title="Next"
-                onPress={() => props.navigation.navigate("QuizSelect")}
+                onPress={() => props.navigation.navigate("ViewQuiz")}
               />
             </View>
           </View>
@@ -297,7 +282,7 @@ const QuestionsScreen = (props) => {
                     <Button
                       style={styles.btn}
                       title="Next"
-                      onPress={() => props.navigation.navigate("QuizSelect")}
+                      onPress={() => props.navigation.navigate("ViewQuiz")}
                     />
                   </View>
                 </View>
@@ -392,159 +377,3 @@ const styles = StyleSheet.create({
   },
 });
 export default QuestionsScreen;
-
-/*import React from "react";
-import { ImageBackground, StyleSheet, View, Image, Text,Button,TextInput } from "react-native";
-import AppButton from "../../components/AppButton";
-import RadioForm from 'react-native-simple-radio-button';
-import Screen from "../../components/Screen";
-import {useState} from "react";
-
-
-
-var radio_props = [{label:'MCQS', value:0}, {label:'T/F', value:1}]
-
-state = {
-    value:false
-  };
-function QuestionsScreen({ route, navigation }) {
-    
-    // var decision=0
-
-    const [decision, setDecision] = useState(0)
-    const [Question ,setQuestion]= useState('')
-    const [questionArray ,setquestionarray]= useState([])
-    return (
-      <Screen style={styles.container}>
-        <View style={styles.screen}>
-       
-    
-    
-         
-    
-        </View>
-        <View style={styles.btn}>
-          <RadioForm
-            radio_props={radio_props}
-            initial={0}
-            formHorizontal={true}
-            labelHorizontal={true}
-            buttonSize={20}
-            buttonOuterSize={30}
-            buttonColor={'tomato'}
-            selectedButtonColor={'tomato'}
-            labelStyle={{ left: -5 }}
-  
-            onPress={(id) => {
-              console.log(id)
-              setDecision(id)
-              }}
-          />
-        </View>
-       
-        
-        {decision==0 ? <View>
-            <Text >
-              Question
-            </Text>
-           <TextInput style ={styles.text}
-           value = {Question}
-           placeholder ="Write Question"
-           multiline={true}
-           onChangeText={(text) => {
-             setQuestion(text)
-           }} > 
-             </TextInput>
-             <View style ={styles.options}>
-             <View style ={styles.option}></View>
-             <View style ={styles.option2}></View>
-             
-
-             </View>
-            
-
-            </View>
-            
-            :
-            <View>
-    
-           <Text>Hello</Text>
-            </View>
-            
-            
-          }
-
-        <View>
-        < Button style={styles.btn}
-        title="Next"   onPress={() => {
-          console.log("Next Pressed")
-          //save your data
-          var fullquestionObject = {question:Question, option1:yeygeyr}
-          questionArray.push(fullquestionObject)
-          //save array async storage.
-          setQuestion('')
-        }
-          
-        }/></View>
-         <View>
-        < Button style={styles.btn}
-        title="Save"/>
-        </View>
-          </Screen>
-        
-    
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      padding: 10,
-      backgroundColor: '#c0c0c0',
-    },
-    options:{
-height: '40%',
-width:'100%',
-backgroundColor:'blue',
-marginTop: 20
-    },
-    option:{
-      height: '50%',
-      width:'100%',
-      backgroundColor:'red'
-    },
-    option2:{
-      height: '50%',
-      width:'100%',
-      backgroundColor:'yellow'
-    },
-    text:{
-      height: 90,
-      width :"100%",
-    borderWidth: 1,
-    borderColor: "red" 
-      
-    },
-    screen: {
-      flex: 1,
-      marginBottom: 30,
-      marginTop: 10
-    },
-    logo: {
-      width: 450,
-      height: 250,
-      alignSelf: "center",
-      marginTop: 10,
-      marginBottom: 20,
-    },
-    btn: {
-      marginTop: 20,
-      width: '70%',
-      padding: "20%",
-      alignSelf: "auto",
-      borderRadius: 10
-  
-    },
-  });
-  
-  export default QuestionsScreen;
-  */

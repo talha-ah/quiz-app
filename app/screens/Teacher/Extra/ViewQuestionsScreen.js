@@ -19,9 +19,9 @@ import {
   Right,
   Body,
 } from "native-base";
-import firebase from "../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 import RadioForm from "react-native-simple-radio-button";
-import AppButton from "../../components/AppButton";
+import AppButton from "../../../components/AppButton";
 
 const ViewQuestionScreen = (props) => {
   const [question, setQuestion] = useState([]);
@@ -247,7 +247,7 @@ const ViewQuestionScreen = (props) => {
         <View>
           <AppButton
             title="Next"
-            onPress={() => props.navigation.navigate("QuizSelect")}
+            onPress={() => props.navigation.navigate("ViewQuiz")}
           />
         </View>
       </Content>

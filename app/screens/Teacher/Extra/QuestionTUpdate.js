@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, FlatList, View } from "react-native";
-import AppButton from "../../components/AppButton";
+import AppButton from "../../../components/AppButton";
 import { Container, Content } from "native-base";
 import {
   AppForm as Form,
   AppFormField as FormField,
-} from "../../components/forms";
-import firebase from "../../config/firebaseConfig";
+} from "../../../components/forms";
+import firebase from "../../../config/firebaseConfig";
 import RadioForm from "react-native-simple-radio-button";
 var radio_props = [
   { label: "True", value: 0 },

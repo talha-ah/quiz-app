@@ -6,13 +6,13 @@ import {
   FlatList,
   View,
 } from "react-native";
-import AppButton from "../../components/AppButton";
+import AppButton from "../../../components/AppButton";
 
 import {
   AppForm as Form,
   AppFormField as FormField,
-} from "../../components/forms";
-import firebase from "../../config/firebaseConfig";
+} from "../../../components/forms";
+import firebase from "../../../config/firebaseConfig";
 
 function StudentUpdateScreen({ route, navigation }) {
   const [StudentName, setStudentName] = useState("");

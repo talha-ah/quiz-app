@@ -9,13 +9,13 @@ import {
   TextInput,
 } from "react-native";
 import * as Yup from "yup";
-import AppButton from "../../components/AppButton";
+import AppButton from "../../../components/AppButton";
 
 import {
   AppForm as Form,
   AppFormField as FormField,
-} from "../../components/forms";
-import firebase from "../../config/firebaseConfig";
+} from "../../../components/forms";
+import firebase from "../../../config/firebaseConfig";
 
 function QuestionUpdateScreen({ route, navigation }) {
   const [QuestionArr, setQuestionArr] = useState([]);

@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 
-import firebase from "../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 
 function ViewTFQuestion({ route, navigation }) {
   const [QuestionArray, setQuestionArray] = useState([]);

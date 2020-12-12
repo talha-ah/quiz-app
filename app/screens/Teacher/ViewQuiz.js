@@ -8,7 +8,8 @@ import {
   Alert,
 } from "react-native";
 import firebase from "../../config/firebaseConfig";
-function QuizSelect(props) {
+
+function ViewQuiz(props) {
   const firestore_ref = firebase.firestore().collection("Class");
 
   const [classed, setClassed] = useState([]);
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default QuizSelect;
+export default ViewQuiz;
 
 // import React, { Component } from "react";
 // import { Container,Button, Header, Content, Icon, Picker, Form,StyleSheet,Input,Item } from "native-base";

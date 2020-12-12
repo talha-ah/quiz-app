@@ -12,19 +12,19 @@ const MainScreen = (props) => {
       <View style={styles.container}>
         <AppButton
           title="Classes"
-          onPress={() => props.navigation.navigate("AddClassScreen")}
+          onPress={() => props.navigation.navigate("Classes")}
         />
         <AppButton
           title="Courses"
-          onPress={() => props.navigation.navigate("AddCourseScreen")}
+          onPress={() => props.navigation.navigate("Courses")}
         />
         <AppButton
           title="Quizzes"
-          onPress={() => props.navigation.navigate("AddQuestionsScreen")}
+          onPress={() => props.navigation.navigate("Quizzes")}
         />
         <AppButton
           title="Reports"
-          onPress={() => props.navigation.navigate("ViewReportScreen")}
+          // onPress={() => props.navigation.navigate("ViewReportScreen")}
         />
         <AppButton
           title="Logout"

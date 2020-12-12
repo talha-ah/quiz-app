@@ -1,8 +1,8 @@
 //import { SearchBar } from 'react-native-elements';
 import React from "react";
 import { Button, Alert, Image, StyleSheet, View, Text } from "react-native";
-import Screen from "../../components/Screen";
-import AppButton from "../../components/AppButton";
+import Screen from "../../../components/Screen";
+import AppButton from "../../../components/AppButton";
 
 const AddQuestionsScreen = (props) => {
   // state = {
@@ -23,7 +23,7 @@ const AddQuestionsScreen = (props) => {
 
       <AppButton
         title="Add Question"
-        onPress={() => props.navigation.navigate("QuestionsScreens")}
+        onPress={() => props.navigation.navigate("AddQuiz")}
       />
 
       <View style={styles.container}></View>

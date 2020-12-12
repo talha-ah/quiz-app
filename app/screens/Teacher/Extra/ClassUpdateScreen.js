@@ -9,16 +9,16 @@ import {
 } from "react-native";
 
 import * as Yup from "yup";
-import AppButton from "../../components/AppButton";
+import AppButton from "../../../components/AppButton";
 
 import {
   AppForm as Form,
   AppFormField as FormField,
   AppFormPicker as Picker,
   SubmitButton,
-} from "../../components/forms";
+} from "../../../components/forms";
 
-import firebase from "../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 
 // const validationSchema = Yup.object().shape({
 //   coursetitle: Yup.string().required().min(1).label("Course Title"),
@@ -103,7 +103,6 @@ function ClassUpdateScreen({ route, navigation }) {
                 }}
               >
                 <FormField
-                  maxLength={5}
                   name="Batch"
                   placeholder={item.batchs}
                   onChangeText={(text) => setBatchs(text)}
@@ -111,7 +110,6 @@ function ClassUpdateScreen({ route, navigation }) {
                 />
 
                 <FormField
-                  maxLength={10}
                   name="programme"
                   placeholder={item.programme}
                   onChangeText={(text) => setProgramme(text)}

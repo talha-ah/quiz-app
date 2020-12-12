@@ -7,16 +7,16 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
-import AppButton from "../../components/AppButton";
-import firebase from "../../config/firebaseConfig";
+import AppButton from "../../../components/AppButton";
+import firebase from "../../../config/firebaseConfig";
 
 import {
   AppForm as Form,
   AppFormField as FormField,
   AppFormPicker as Picker,
   SubmitButton,
-} from "../../components/forms";
-import Screen from "../../components/Screen";
+} from "../../../components/forms";
+import Screen from "../../../components/Screen";
 
 const validationSchema = Yup.object().shape({
   StudentName: Yup.string().required().min(1).label("Student Name"),
