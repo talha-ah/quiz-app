@@ -62,7 +62,7 @@ function InviteScreen(props) {
         ),
       })
       .then((studentsDoc) => {
-        props.navigation.navigate("ViewClass");
+        props.navigation.goBack();
       })
       .catch((err) => {
         alert(err.message);

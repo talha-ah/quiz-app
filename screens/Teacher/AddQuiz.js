@@ -61,7 +61,7 @@ function AddQuiz(props) {
             quizDateTime: quizTime,
           })
           .then((resData) => {
-            props.navigation.navigate("Quizzes");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);
@@ -76,7 +76,7 @@ function AddQuiz(props) {
             quizDateTime: quizTime,
           })
           .then((resData) => {
-            props.navigation.navigate("Quizzes");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);

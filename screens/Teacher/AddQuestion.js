@@ -11,7 +11,7 @@ import {
 } from "../../components/forms";
 
 const questionTypes = [
-  { label: "Radio Type", value: 0 },
+  { label: "True/False", value: 0 },
   { label: "MCQ Type", value: 1 },
 ];
 
@@ -51,7 +51,7 @@ function AddQuestion(props) {
           answer,
         })
         .then((resData) => {
-          props.navigation.navigate("Questions");
+          props.navigation.goBack();
         })
         .catch((err) => {
           setLoading(false);

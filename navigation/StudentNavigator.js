@@ -2,9 +2,11 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StudentMain from "../screens/Student/StudentMain";
-import TakeQuizScreen from "../screens/Student/TakeQuizScreen";
+
+import Quizzes from "../screens/Student/Quizzes";
+import TakeQuiz from "../screens/Student/TakeQuiz";
+
 import NotificationScreen from "../screens/Student/NotificationScreen";
-import ViewReportScreen from "../screens/Student/ViewReportScreen";
 import StudentReport from "../screens/Student/StudentReport";
 
 const Stack = createStackNavigator();
@@ -16,9 +18,9 @@ const StudentNavigator = () => (
       component={StudentMain}
       options={{ headerShown: false }}
     />
-    <Stack.Screen name="TakeQuizScreen" component={TakeQuizScreen} />
+    <Stack.Screen name="Quizzes" component={Quizzes} />
+    <Stack.Screen name="TakeQuiz" component={TakeQuiz} />
     <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-    <Stack.Screen name="ViewReportScreen" component={ViewReportScreen} />
     <Stack.Screen name="StudentReport" component={StudentReport} />
   </Stack.Navigator>
 );

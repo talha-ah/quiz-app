@@ -53,7 +53,7 @@ function AddClass(props) {
             section: section,
           })
           .then((resData) => {
-            props.navigation.navigate("Classes");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);
@@ -67,7 +67,7 @@ function AddClass(props) {
             section: section,
           })
           .then((resData) => {
-            props.navigation.navigate("Classes");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);

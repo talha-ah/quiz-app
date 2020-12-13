@@ -48,7 +48,7 @@ function InviteScreen(props) {
         course: props.route.params.addId,
       })
       .then((resData) => {
-        props.navigation.navigate("ViewCourse");
+        props.navigation.goBack();
       })
       .catch((err) => {
         alert(err.message);

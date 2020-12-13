@@ -37,7 +37,7 @@ const ViewCourse = (props) => {
         setStudents(studentsArray);
         firestore_ref
           .collection("Quiz")
-          .where("course", "==", courseItem.key)
+          .where("course", "==", props.route.params.courseItem.key)
           .get()
           .then((quizzesDoc) => {
             let quizzesArray = [];
@@ -264,8 +264,8 @@ const ViewCourse = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
+    flexGrow: 1,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   btn: {
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     width: "100%",
-    marginTop: 10,
+    marginVertical: 10,
     backgroundColor: "#fc5c65",
     overflow: "hidden",
   },

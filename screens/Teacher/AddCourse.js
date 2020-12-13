@@ -47,7 +47,7 @@ function AddCourse(props) {
             courseCode: coursecode,
           })
           .then((resData) => {
-            props.navigation.navigate("Courses");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);
@@ -62,7 +62,7 @@ function AddCourse(props) {
             class: null,
           })
           .then((resData) => {
-            props.navigation.navigate("Courses");
+            props.navigation.goBack();
           })
           .catch((err) => {
             setLoading(false);

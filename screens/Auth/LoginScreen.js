@@ -29,18 +29,20 @@ function LoginScreen(props) {
       const response = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
-      await AsyncStorage.setItem(
-        "userData",
-        JSON.stringify({ ...response, flag: flag })
-      );
       const doc = await firestore_ref
         .collection(flag === 0 ? "TeacherUser" : "StudentUser")
         .doc(response.user.uid)
         .get();
 
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({ ...doc.data(), key: doc.id, flag: flag })
+      );
+
       if (doc.exists) {
         navigate(flag === 0 ? "teacher" : "student");
       } else {
+        setShowLoading(false);
         alert(`Not registered as a ${flag === 0 ? "teacher" : "student"}`);
       }
     } catch (error) {
@@ -74,7 +76,11 @@ function LoginScreen(props) {
               onChangeText={(text) => setPassword(text)}
               value={password}
             />
-            <AppButton title="Login" onPress={handleLogin} />
+            <AppButton
+              title={showLoading ? "Loading..." : "Login"}
+              onPress={handleLogin}
+              disabled={showLoading}
+            />
           </AppForm>
           <AppButton
             title="Forgot Password?"
