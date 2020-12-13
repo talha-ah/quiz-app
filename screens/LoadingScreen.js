@@ -5,7 +5,7 @@ export default function LoadingScreen(props) {
   return (
     <View style={[styles.container, props.style]}>
       <ActivityIndicator size="large" color="#fff" />
-      <Text>Loading</Text>
+      <Text style={{ color: "#fff" }}>Loading</Text>
     </View>
   );
 }

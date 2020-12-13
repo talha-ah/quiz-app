@@ -12,11 +12,11 @@ import { Button, Icon } from "native-base";
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 
-function Quizzes(props) {
-  const firestore_ref = firebase.firestore().collection("Quiz");
+function Courses(props) {
+  const firestore_ref = firebase.firestore().collection("Course");
 
   const [loading, setLoading] = useState(true);
-  const [quizzes, setQuizzes] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -25,17 +25,17 @@ function Quizzes(props) {
 
   function getData() {
     setRefreshing(true);
-    const quizzesList = [];
+    const coursesList = [];
     firestore_ref
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
-          quizzesList.push({
+          coursesList.push({
             ...doc.data(),
             key: doc.id,
           });
         });
-        setQuizzes(quizzesList);
+        setCourses(coursesList);
         setRefreshing(false);
         setLoading(false);
       })
@@ -44,12 +44,12 @@ function Quizzes(props) {
       });
   }
 
-  function deleteQuiz(key) {
+  function deleteCourser(key) {
     firestore_ref
       .doc(key)
       .delete()
       .then((res) => {
-        setQuizzes(quizzes.filter((quiz) => quiz.key !== key));
+        setCourses(courses.filter((course) => course.key !== key));
       })
       .catch((err) => {
         alert(err);
@@ -57,7 +57,7 @@ function Quizzes(props) {
   }
   function openTwoButtonAlert(key) {
     Alert.alert(
-      "Delete Quiz",
+      "Delete Course",
       "Are you sure to delete it?",
       [
         {
@@ -67,7 +67,7 @@ function Quizzes(props) {
         {
           text: "Yes",
           onPress: () => {
-            deleteQuiz(key);
+            deleteCourser(key);
           },
         },
       ],
@@ -82,27 +82,33 @@ function Quizzes(props) {
   ) : (
     <FlatList
       style={styles.container}
-      data={quizzes}
+      data={courses}
       refreshing={refreshing}
       onRefresh={getData}
       renderItem={({ item }) => (
         <TouchableOpacity
+          key={item.key}
+          onPress={() =>
+            props.navigation.navigate("ViewCourse", { courseItem: item })
+          }
           style={{
+            backgroundColor: "#465881",
             height: 90,
-            padding: 10,
             width: "100%",
             borderWidth: 1,
-            borderRadius: 15,
-            marginVertical: 10,
             borderColor: "white",
-            backgroundColor: "#465881",
+            borderRadius: 15,
+            padding: 10,
+            marginVertical: 10,
           }}
-          onPress={() =>
-            props.navigation.navigate("Questions", { quizzId: item.key })
-          }
         >
-          <Text style={{ color: "white" }}>Quiz Title: {item.quizTitle}</Text>
-          <Text style={{ color: "white" }}>Time Allowed: {item.quizTime}</Text>
+          <Text style={{ color: "white" }}>
+            Course Title: {item.courseTitle}
+          </Text>
+          <Text style={{ color: "white" }}>Course Code: {item.courseCode}</Text>
+          <Text style={{ color: "white" }}>
+            Credit Hrs.: {item.creditHours}
+          </Text>
           <View
             style={{
               flexDirection: "row",
@@ -113,7 +119,7 @@ function Quizzes(props) {
           >
             <TouchableOpacity
               onPress={() =>
-                props.navigation.navigate("AddQuiz", { quizItem: item })
+                props.navigation.navigate("AddCourse", { courseItem: item })
               }
             >
               <Text style={styles.align}>Update</Text>
@@ -133,10 +139,10 @@ function Quizzes(props) {
         <Button
           style={styles.btn}
           onPress={() => {
-            props.navigation.navigate("AddQuiz");
+            props.navigation.navigate("AddCourse");
           }}
         >
-          <Text style={styles.text}>Add Quiz</Text>
+          <Text style={styles.text}>Add Course</Text>
         </Button>
       )}
     />
@@ -190,4 +196,4 @@ const styles = StyleSheet.create({
     marginTop: -150,
   },
 });
-export default Quizzes;
+export default Courses;

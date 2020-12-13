@@ -8,15 +8,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button, Icon } from "native-base";
+import moment from "moment";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 
-function Courses(props) {
-  const firestore_ref = firebase.firestore().collection("Course");
+function Quizzes(props) {
+  const firestore_ref = firebase.firestore().collection("Quiz");
 
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -25,17 +26,17 @@ function Courses(props) {
 
   function getData() {
     setRefreshing(true);
-    const coursesList = [];
+    const quizzesList = [];
     firestore_ref
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
-          coursesList.push({
+          quizzesList.push({
             ...doc.data(),
             key: doc.id,
           });
         });
-        setCourses(coursesList);
+        setQuizzes(quizzesList);
         setRefreshing(false);
         setLoading(false);
       })
@@ -44,12 +45,12 @@ function Courses(props) {
       });
   }
 
-  function deleteCourser(key) {
+  function deleteQuiz(key) {
     firestore_ref
       .doc(key)
       .delete()
       .then((res) => {
-        setCourses(courses.filter((course) => course.key !== key));
+        setQuizzes(quizzes.filter((quiz) => quiz.key !== key));
       })
       .catch((err) => {
         alert(err);
@@ -57,7 +58,7 @@ function Courses(props) {
   }
   function openTwoButtonAlert(key) {
     Alert.alert(
-      "Delete Course",
+      "Delete Quiz",
       "Are you sure to delete it?",
       [
         {
@@ -67,7 +68,7 @@ function Courses(props) {
         {
           text: "Yes",
           onPress: () => {
-            deleteCourser(key);
+            deleteQuiz(key);
           },
         },
       ],
@@ -77,33 +78,45 @@ function Courses(props) {
     );
   }
 
+  function getTime(seconds) {
+    var curdate = new Date(null);
+    curdate.setTime(seconds * 1000);
+    return curdate.toLocaleString();
+  }
+
   return loading ? (
     <LoadingScreen />
   ) : (
     <FlatList
       style={styles.container}
-      data={courses}
+      data={quizzes}
       refreshing={refreshing}
       onRefresh={getData}
       renderItem={({ item }) => (
-        <View
+        <TouchableOpacity
           style={{
-            backgroundColor: "#465881",
             height: 90,
+            padding: 10,
             width: "100%",
             borderWidth: 1,
-            borderColor: "white",
             borderRadius: 15,
-            padding: 10,
             marginVertical: 10,
+            borderColor: "white",
+            backgroundColor: "#465881",
           }}
+          onPress={() =>
+            props.navigation.navigate("Questions", { quizzId: item.key })
+          }
         >
+          <Text style={{ color: "white" }}>Quiz Title: {item.quizTitle}</Text>
+          <Text style={{ color: "white" }}>Time Allowed: {item.quizTime}</Text>
           <Text style={{ color: "white" }}>
-            Course Title: {item.courseTitle}
+            Quiz Date:{" "}
+            {moment(getTime(item.quizDate.seconds)).format("YYYY-MM-DD")}
           </Text>
-          <Text style={{ color: "white" }}>Course Code: {item.courseCode}</Text>
           <Text style={{ color: "white" }}>
-            Credit Hrs.: {item.creditHours}
+            Quiz Time:{" "}
+            {moment(getTime(item.quizDateTime.seconds)).format("HH:mm")}
           </Text>
           <View
             style={{
@@ -115,7 +128,7 @@ function Courses(props) {
           >
             <TouchableOpacity
               onPress={() =>
-                props.navigation.navigate("AddCourse", { courseItem: item })
+                props.navigation.navigate("AddQuiz", { quizItem: item })
               }
             >
               <Text style={styles.align}>Update</Text>
@@ -129,16 +142,16 @@ function Courses(props) {
               <Icon active name="trash" />
             </Button>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
       ListFooterComponent={() => (
         <Button
           style={styles.btn}
           onPress={() => {
-            props.navigation.navigate("AddCourse");
+            props.navigation.navigate("AddQuiz");
           }}
         >
-          <Text style={styles.text}>Add Course</Text>
+          <Text style={styles.text}>Add Quiz</Text>
         </Button>
       )}
     />
@@ -154,21 +167,11 @@ const styles = StyleSheet.create({
   align: {
     color: "red",
   },
-  wrapper: {
-    flexDirection: "row",
-  },
-  title: {
-    flex: 1,
-    backgroundColor: "#f6f8fa",
-  },
   row: {
     height: 20,
   },
   text: {
     textAlign: "center",
-  },
-  screen: {
-    flex: 1,
   },
   btn: {
     borderRadius: 25,
@@ -185,11 +188,5 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
   },
-
-  screen: {
-    flex: 1,
-
-    marginTop: -150,
-  },
 });
-export default Courses;
+export default Quizzes;

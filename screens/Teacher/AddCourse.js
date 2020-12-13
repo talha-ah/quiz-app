@@ -50,7 +50,6 @@ function AddCourse(props) {
             props.navigation.navigate("Courses");
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
             alert("There was an error");
           });
@@ -60,12 +59,12 @@ function AddCourse(props) {
             courseTitle: coursetitle,
             creditHours: creditHrs,
             courseCode: coursecode,
+            class: null,
           })
           .then((resData) => {
             props.navigation.navigate("Courses");
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
             alert("There was an error");
           });

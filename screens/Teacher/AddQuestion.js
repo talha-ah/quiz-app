@@ -55,7 +55,6 @@ function AddQuestion(props) {
         })
         .catch((err) => {
           setLoading(false);
-          console.log(err);
         });
     }
   };

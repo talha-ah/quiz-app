@@ -66,6 +66,8 @@ const RegisterScreen = (props) => {
           cpassword: cpassword,
           regno: regno,
           phonenumber: phonenumber,
+          classes: [],
+          courses: [],
         });
         setShowLoading(false);
         Alert.alert("Successfully created user!!");

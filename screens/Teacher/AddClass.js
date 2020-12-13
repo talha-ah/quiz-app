@@ -6,6 +6,7 @@ import {
   View,
   Alert,
 } from "react-native";
+import * as Yup from "yup";
 import AppButton from "../../components/AppButton";
 import firebase from "../../config/firebaseConfig";
 
@@ -14,53 +15,61 @@ import {
   AppFormField as FormField,
 } from "../../components/forms";
 
-function AddQuiz(props) {
-  const firestore_ref = firebase.firestore().collection("Quiz");
+const validationSchema = Yup.object().shape({
+  batch: Yup.string().required().min(4).label("batch"),
+  programme: Yup.string().required().min(1).max(6).label("programme"),
+  section: Yup.string().required().min(1).max(2).label("section"),
+});
 
-  const [title, setTitle] = useState("");
-  const [time, setTime] = useState("");
+function AddClass(props) {
+  const firestore_ref = firebase.firestore().collection("Class");
+
+  const [batch, setBatch] = useState("");
+  const [programme, setProgramme] = useState("");
+  const [section, setSection] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const params = props.route.params;
     if (params) {
-      setTitle(params.quizItem.quizTitle);
-      setTime(params.quizItem.quizTime);
+      setBatch(params.classItem.batch);
+      setProgramme(params.classItem.programme);
+      setSection(params.classItem.section);
     }
   }, []);
 
-  const addQuiz = () => {
-    if (title === "" || time === "") {
+  const addClass = () => {
+    if (batch === "" || programme === "" || section === "") {
       Alert.alert("Error", "Enter Valid details");
     } else {
       setLoading(true);
       const params = props.route.params;
       if (params) {
         firestore_ref
-          .doc(params.quizItem.key)
+          .doc(params.classItem.key)
           .update({
-            quizTitle: title,
-            quizTime: time,
+            batch: batch,
+            programme: programme,
+            section: section,
           })
           .then((resData) => {
-            props.navigation.navigate("Quizzes");
+            props.navigation.navigate("Classes");
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
             alert("There was an error");
           });
       } else {
         firestore_ref
           .add({
-            quizTitle: title,
-            quizTime: time,
+            batch: batch,
+            programme: programme,
+            section: section,
           })
           .then((resData) => {
-            props.navigation.navigate("Quizzes");
+            props.navigation.navigate("Classes");
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
             alert("There was an error");
           });
@@ -74,27 +83,35 @@ function AddQuiz(props) {
         <View style={styles.container}>
           <Form
             initialValues={{
-              title: "",
-              time: "",
+              batch: "",
+              programme: "",
+              section: "",
             }}
             onSubmit={(values) => console.log(values)}
+            // validationSchema={validationSchema}
           >
             <FormField
-              name="quizTitle"
-              placeholder="Quiz Title"
-              onChangeText={(text) => setTitle(text)}
-              value={title}
+              name="batch"
+              placeholder="Batch"
+              onChangeText={(text) => setBatch(text)}
+              value={batch}
             />
             <FormField
-              name="time"
-              keyboardType="numeric"
-              placeholder="Quiz Time (in minutes)"
-              onChangeText={(text) => setTime(text)}
-              value={time}
+              name="programme"
+              placeholder="Programme"
+              onChangeText={(text) => setProgramme(text)}
+              value={programme}
+            />
+            <FormField
+              maxLength={2}
+              name="section"
+              placeholder="Section"
+              onChangeText={(text) => setSection(text)}
+              value={section}
             />
             <AppButton
               title={loading ? "Loading..." : "Add"}
-              onPress={addQuiz}
+              onPress={addClass}
               disabled={loading}
             />
           </Form>
@@ -111,4 +128,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#465881",
   },
 });
-export default AddQuiz;
+export default AddClass;

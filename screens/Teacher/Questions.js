@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  Alert,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  FlatList,
-} from "react-native";
+import { Alert, Text, StyleSheet, View, FlatList } from "react-native";
 import { Button, Icon } from "native-base";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 
-function ClassList(props) {
-  const firestore_ref = firebase.firestore().collection("Class");
+function QuestionsList(props) {
+  const firestore_ref = firebase.firestore().collection("Question");
 
-  const [classes, setClasses] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -25,39 +18,39 @@ function ClassList(props) {
 
   function getData() {
     setRefreshing(true);
-    const classesArray = [];
+    const questionsArray = [];
     firestore_ref
-      .orderBy("batch", "desc")
+      .where("quizzId", "==", props.route.params.quizzId)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
-          classesArray.push({
+          questionsArray.push({
             ...doc.data(),
             key: doc.id,
           });
         });
-        setClasses(classesArray);
+        setQuestions(questionsArray);
         setLoading(false);
         setRefreshing(false);
       });
   }
 
-  const deleteClasser = (key) => {
+  const deleteQuestion = (key) => {
     firestore_ref
       .doc(key)
       .delete()
       .then((res) => {
-        const newArrya = classes.filter((clasIn) => clasIn.key !== key);
-        setClasses(newArrya);
+        const newArrya = questions.filter((itmIn) => itmIn.key !== key);
+        setQuestions(newArrya);
       })
       .catch((err) => {
-        Alert.alert(err.message);
+        alert(err.message);
       });
   };
 
   const openTwoButtonAlert = (key) => {
     Alert.alert(
-      "Delete Class",
+      "Delete Question",
       "Are you sure to delete it?",
       [
         {
@@ -67,7 +60,7 @@ function ClassList(props) {
         {
           text: "Yes",
           onPress: () => {
-            deleteClasser(key);
+            deleteQuestion(key);
           },
         },
       ],
@@ -82,63 +75,69 @@ function ClassList(props) {
   ) : (
     <FlatList
       style={styles.container}
-      data={classes}
+      data={questions}
       refreshing={refreshing}
       onRefresh={getData}
       renderItem={({ item }) => (
-        <TouchableOpacity
+        <View
           key={item.key}
           style={{
-            backgroundColor: "#465881",
-            height: 90,
+            padding: 10,
             width: "100%",
             borderWidth: 1,
-            borderColor: "white",
             borderRadius: 15,
-            padding: 10,
             marginVertical: 10,
+            borderColor: "white",
+            backgroundColor: "#465881",
           }}
-          onPress={() =>
-            props.navigation.navigate("ViewClass", {
-              classId: item.key,
-            })
-          }
         >
-          <Text style={{ color: "white" }}>Batch: {item.batchs}</Text>
-          <Text style={{ color: "white" }}>Programme: {item.programme}</Text>
-          <Text style={{ color: "white" }}>Section: {item.section}</Text>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "flex-end",
-              bottom: 30,
+              justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity
-              style={{}}
-              onPress={() =>
-                props.navigation.navigate("AddClass", { classItem: item })
-              }
-            >
-              <Text style={styles.align}>Update</Text>
-            </TouchableOpacity>
+            <View>
+              <Text style={{ color: "white" }}>Question: {item.question}</Text>
+              <Text style={{ color: "white" }}>
+                Type: {item.questionType === 0 ? "Radio" : "MCQ"}
+              </Text>
+              <Text style={{ color: "white" }}>Options 1: {item.option1}</Text>
+              {item.questionType === 1 && (
+                <Text style={{ color: "white" }}>
+                  Options 2: {item.option2}
+                </Text>
+              )}
+              {item.questionType === 1 && (
+                <Text style={{ color: "white" }}>
+                  Options 3: {item.option3}
+                </Text>
+              )}
+              <Text style={{ color: "white" }}>Options 4: {item.option4}</Text>
+              <Text style={{ color: "white" }}>Answer: {item.answer}</Text>
+            </View>
             <Button
               danger
               transparent
+              style={{ alignSelf: "center" }}
               onPress={() => openTwoButtonAlert(item.key)}
             >
               <Icon active name="trash" />
             </Button>
           </View>
-        </TouchableOpacity>
+        </View>
       )}
       ListFooterComponent={() => (
         <Button
           style={styles.btn}
-          onPress={() => props.navigation.navigate("AddClass")}
+          onPress={() =>
+            props.navigation.navigate("AddQuestion", {
+              quizzId: props.route.params.quizzId,
+            })
+          }
         >
-          <Text style={styles.text}>Add New Class</Text>
+          <Text style={styles.text}>Add New Question</Text>
         </Button>
       )}
     />
@@ -170,4 +169,4 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 });
-export default ClassList;
+export default QuestionsList;
