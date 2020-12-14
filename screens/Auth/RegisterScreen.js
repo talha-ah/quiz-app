@@ -68,6 +68,7 @@ const RegisterScreen = (props) => {
           phonenumber: phonenumber,
           classes: [],
           courses: [],
+          results: [],
         });
         setShowLoading(false);
         Alert.alert("Successfully created user!!");

@@ -13,10 +13,8 @@ import firebase from "../../config/firebaseConfig";
 import { AppForm, AppFormField } from "../../components/forms";
 
 function LoginScreen(props) {
-  const [email, setEmail] = useState(
-    props.route.params.flag === 0 ? "test@teacher.com" : "test@user.com"
-  );
-  const [password, setPassword] = useState("password12");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showLoading, setShowLoading] = useState(false);
 
   const handleLogin = async () => {
