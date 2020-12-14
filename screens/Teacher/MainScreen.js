@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { Container } from "native-base";
 import AppButton from "../../components/AppButton";
 
 const MainScreen = (props) => {

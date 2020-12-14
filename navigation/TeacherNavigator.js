@@ -27,11 +27,7 @@ const Stack = createStackNavigator();
 
 const TeacherNavigator = () => (
   <Stack.Navigator>
-    <Stack.Screen
-      name="MainSreen"
-      component={MainScreen}
-      options={{ headerShown: true }}
-    />
+    <Stack.Screen name="MainSreen" component={MainScreen} />
     <Stack.Screen name="Classes" component={Classes} />
     <Stack.Screen name="AddClass" component={AddClass} />
     <Stack.Screen name="ViewClass" component={ViewClass} />

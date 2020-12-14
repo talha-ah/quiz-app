@@ -8,23 +8,55 @@ import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 import Item from "../../components/Item";
 
+function getTime(seconds) {
+  var curdate = new Date(null);
+  curdate.setTime(seconds * 1000);
+  return curdate.toLocaleString();
+}
+
+function checkQuiz(quiz) {
+  if (
+    moment(new Date(getTime(quiz.quizDate.seconds))).isSame(
+      moment(new Date()),
+      "day"
+    )
+  ) {
+    if (
+      Number(
+        moment
+          .utc(
+            moment(new Date()).diff(
+              moment(new Date(getTime(quiz.quizDateTime.seconds)))
+            )
+          )
+          .format("mm")
+      ) < Number(quiz.quizTime)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function Quizzes(props) {
   const firestore_ref = firebase.firestore().collection("Quiz");
 
   const [loading, setLoading] = useState(true);
   const [quizzes, setQuizzes] = useState([]);
-  const [user, setUser] = useState("");
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getData();
+    const interval = setInterval(() => {
+      getData();
+    }, 1000 * 60);
+    return () => clearInterval(interval);
   }, []);
 
   async function getData() {
     setRefreshing(true);
     let userData = await AsyncStorage.getItem("userData");
     let userOBJ = JSON.parse(userData);
-    setUser(userOBJ);
 
     const quizzesList = [];
     await Promise.all(
@@ -33,35 +65,16 @@ function Quizzes(props) {
           .where("course", "==", courseId)
           .get();
         quizDoc.forEach((doc) => {
-          let docData = doc.data();
-
-          if (
-            moment(new Date(getTime(docData.quizDate.seconds))).isSame(
-              new Date(),
-              "day"
-            ) &&
-            !moment(new Date(getTime(docData.quizDateTime.seconds))).isBefore(
-              new Date(),
-              "hour"
-            )
-          ) {
-            quizzesList.push({
-              ...doc.data(),
-              key: doc.id,
-            });
-          }
+          quizzesList.push({
+            ...doc.data(),
+            key: doc.id,
+          });
         });
       })
     );
     setQuizzes(quizzesList);
     setLoading(false);
     setRefreshing(false);
-  }
-
-  function getTime(seconds) {
-    var curdate = new Date(null);
-    curdate.setTime(seconds * 1000);
-    return curdate.toLocaleString();
   }
 
   return loading ? (
@@ -96,18 +109,20 @@ function Quizzes(props) {
             </View>
           }
           actions={
-            <View>
-              <Button
-                style={styles.btn}
-                onPress={() =>
-                  props.navigation.navigate("TakeQuiz", {
-                    quizItem: item,
-                  })
-                }
-              >
-                <Text style={styles.text}>Take</Text>
-              </Button>
-            </View>
+            checkQuiz(item) && (
+              <View>
+                <Button
+                  style={styles.btn}
+                  onPress={() =>
+                    props.navigation.navigate("TakeQuiz", {
+                      quizItem: item,
+                    })
+                  }
+                >
+                  <Text style={styles.text}>Take</Text>
+                </Button>
+              </View>
+            )
           }
         />
       )}

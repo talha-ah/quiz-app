@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import CountDown from "react-native-countdown-component";
 import { Button } from "native-base";
+import moment from "moment";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
@@ -20,10 +21,26 @@ function TakeQuiz(props) {
   useEffect(() => {
     getData();
 
+    const minutes =
+      Number(quiz.quizTime) -
+      Number(
+        moment
+          .utc(
+            moment(new Date()).diff(
+              moment(
+                new Date(
+                  getTime(props.route.params.quizItem.quizDateTime.seconds)
+                )
+              )
+            )
+          )
+          .format("mm")
+      );
+    console.log(minutes);
     const timer = setTimeout(() => {
       alert("Times Up");
       onSubmit();
-    }, Number(props.route.params.quizItem.quizTime) * 60000);
+    }, Number(Math.abs(minutes)));
     return () => clearTimeout(timer);
   }, []);
 

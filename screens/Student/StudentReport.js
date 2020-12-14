@@ -10,7 +10,6 @@ export default function Result(props) {
   const firestore_ref = firebase.firestore().collection("StudentUser");
 
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState("");
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -18,19 +17,29 @@ export default function Result(props) {
   }, []);
 
   async function getData() {
-    let userData = await AsyncStorage.getItem("userData");
-    let userOBJ = JSON.parse(userData);
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let userOBJ = JSON.parse(userData);
 
-    const userDoc = await firestore_ref.doc(userOBJ.key).get();
-    const dataArray = [];
-    userDoc
-      .data()
-      .results.map((item) =>
-        dataArray.push([item.quizzId, item.obtained, item.total])
+      const userDoc = await firestore_ref.doc(userOBJ.key).get();
+      const dataArray = [];
+      await Promise.all(
+        userDoc.data().results.map(async (item) => {
+          const quiz = await firebase
+            .firestore()
+            .collection("Quiz")
+            .doc(item.quizzId)
+            .get();
+          const quizDoc = quiz.data();
+          dataArray.push([quizDoc.quizTitle, item.obtained, item.total]);
+        })
       );
-    setUser(userDoc);
-    setData(dataArray);
-    setLoading(false);
+      setData(dataArray);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      alert(err.message);
+    }
   }
 
   return loading ? (
