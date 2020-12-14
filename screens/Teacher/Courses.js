@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button, Icon } from "native-base";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
@@ -23,10 +24,13 @@ function Courses(props) {
     getData();
   }, []);
 
-  function getData() {
+  async function getData() {
     setRefreshing(true);
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     const coursesList = [];
     firestore_ref
+      .where("teacherId", "==", userOBJ.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
@@ -85,6 +89,11 @@ function Courses(props) {
       data={courses}
       refreshing={refreshing}
       onRefresh={getData}
+      ListEmptyComponent={
+        <View>
+          <Text style={styles.text}>No Data!</Text>
+        </View>
+      }
       renderItem={({ item }) => (
         <TouchableOpacity
           key={item.key}
@@ -152,7 +161,7 @@ function Courses(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {

@@ -84,6 +84,11 @@ function TakeQuiz(props) {
     <FlatList
       style={styles.container}
       data={questions}
+      ListEmptyComponent={
+        <View>
+          <Text style={styles.text}>No Data!</Text>
+        </View>
+      }
       ListHeaderComponent={() => (
         <CountDown
           until={Number(props.route.params.quizItem.quizTime) * 60}

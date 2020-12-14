@@ -9,6 +9,7 @@ import {
 import * as Yup from "yup";
 import AppButton from "../../components/AppButton";
 import firebase from "../../config/firebaseConfig";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import {
   AppForm as Form,
@@ -38,7 +39,9 @@ function AddClass(props) {
     }
   }, []);
 
-  const addClass = () => {
+  const addClass = async () => {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     if (batch === "" || programme === "" || section === "") {
       Alert.alert("Error", "Enter Valid details");
     } else {
@@ -62,6 +65,7 @@ function AddClass(props) {
       } else {
         firestore_ref
           .add({
+            teacherId: userOBJ.key,
             batch: batch,
             programme: programme,
             section: section,
@@ -124,7 +128,7 @@ function AddClass(props) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
 });

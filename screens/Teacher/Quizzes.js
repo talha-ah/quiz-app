@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Button, Icon } from "native-base";
 import moment from "moment";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
@@ -24,10 +25,13 @@ function Quizzes(props) {
     getData();
   }, []);
 
-  function getData() {
+  async function getData() {
     setRefreshing(true);
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     const quizzesList = [];
     firestore_ref
+      .where("teacherId", "==", userOBJ.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
@@ -92,6 +96,11 @@ function Quizzes(props) {
       data={quizzes}
       refreshing={refreshing}
       onRefresh={getData}
+      ListEmptyComponent={
+        <View>
+          <Text style={styles.text}>No Data!</Text>
+        </View>
+      }
       renderItem={({ item }) => (
         <TouchableOpacity
           style={{
@@ -161,7 +170,7 @@ function Quizzes(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {

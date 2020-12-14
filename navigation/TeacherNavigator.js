@@ -20,6 +20,9 @@ import AddStudent from "../screens/Teacher/AddStudent";
 import AddCourseIn from "../screens/Teacher/AddCourseIn";
 import AddQuizIn from "../screens/Teacher/AddQuizIn";
 
+import GenerateReport from "../screens/Teacher/GenerateReport";
+import Report from "../screens/Teacher/Report";
+
 const Stack = createStackNavigator();
 
 const TeacherNavigator = () => (
@@ -46,6 +49,9 @@ const TeacherNavigator = () => (
     <Stack.Screen name="AddStudent" component={AddStudent} />
     <Stack.Screen name="AddCourseIn" component={AddCourseIn} />
     <Stack.Screen name="AddQuizIn" component={AddQuizIn} />
+
+    <Stack.Screen name="GenerateReport" component={GenerateReport} />
+    <Stack.Screen name="Report" component={Report} />
   </Stack.Navigator>
 );
 

@@ -154,7 +154,7 @@ function AddQuestion(props) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   row: {

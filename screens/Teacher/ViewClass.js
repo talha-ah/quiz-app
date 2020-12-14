@@ -24,7 +24,7 @@ const ViewClass = (props) => {
     setRefreshing(true);
     firestore_ref
       .collection("StudentUser")
-      .where("classes", "array-contains", classItem.key)
+      .where("classes", "array-contains", props.route.params.classItem.key)
       .get()
       .then((students) => {
         let studentsArray = [];
@@ -37,7 +37,7 @@ const ViewClass = (props) => {
         setStudents(studentsArray);
         firestore_ref
           .collection("Course")
-          .where("class", "==", classItem.key)
+          .where("class", "==", props.route.params.classItem.key)
           .get()
           .then((coursesDoc) => {
             let coursesArray = [];
@@ -105,7 +105,9 @@ const ViewClass = (props) => {
       .collection("StudentUser")
       .doc(key)
       .update({
-        classes: firebase.firestore.FieldValue.arrayRemove(classItem.key),
+        classes: firebase.firestore.FieldValue.arrayRemove(
+          props.route.params.classItem.key
+        ),
       })
       .then((res) => {
         const studentsArray = students.filter(
@@ -248,7 +250,7 @@ const ViewClass = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   btn: {

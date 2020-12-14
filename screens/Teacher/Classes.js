@@ -11,6 +11,7 @@ import { Button, Icon } from "native-base";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
+import AsyncStorage from "@react-native-community/async-storage";
 
 function ClassList(props) {
   const firestore_ref = firebase.firestore().collection("Class");
@@ -23,11 +24,13 @@ function ClassList(props) {
     getData();
   }, []);
 
-  function getData() {
+  async function getData() {
     setRefreshing(true);
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     const classesArray = [];
     firestore_ref
-      .orderBy("batch", "desc")
+      .where("teacherId", "==", userOBJ.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
@@ -85,6 +88,11 @@ function ClassList(props) {
       data={classes}
       refreshing={refreshing}
       onRefresh={getData}
+      ListEmptyComponent={
+        <View>
+          <Text style={styles.text}>No Data!</Text>
+        </View>
+      }
       renderItem={({ item }) => (
         <TouchableOpacity
           key={item.key}
@@ -148,7 +156,7 @@ function ClassList(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {

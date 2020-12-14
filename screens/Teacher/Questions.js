@@ -78,6 +78,11 @@ function QuestionsList(props) {
       data={questions}
       refreshing={refreshing}
       onRefresh={getData}
+      ListEmptyComponent={
+        <View>
+          <Text style={styles.text}>No Data!</Text>
+        </View>
+      }
       renderItem={({ item }) => (
         <View
           key={item.key}
@@ -147,7 +152,7 @@ function QuestionsList(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {

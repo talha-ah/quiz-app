@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../../components/AppButton";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import {
   AppForm as Form,
@@ -32,7 +33,9 @@ function AddCourse(props) {
     }
   }, []);
 
-  const addCourse = () => {
+  const addCourse = async () => {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     if (coursetitle === "" || creditHrs === "" || coursecode === "") {
       alert("Enter Valid details");
     } else {
@@ -56,6 +59,7 @@ function AddCourse(props) {
       } else {
         firestore_ref
           .add({
+            teacherId: userOBJ.key,
             courseTitle: coursetitle,
             creditHours: creditHrs,
             courseCode: coursecode,
@@ -123,7 +127,7 @@ function AddCourse(props) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
 });

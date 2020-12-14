@@ -11,6 +11,7 @@ import moment from "moment";
 import AppButton from "../../components/AppButton";
 import firebase from "../../config/firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import {
   AppForm as Form,
@@ -45,8 +46,10 @@ function AddQuiz(props) {
     }
   }, []);
 
-  const addQuiz = () => {
-    if (title === "" || time === "") {
+  const addQuiz = async () => {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
+    if (title === "" || time === "" || quizTime === "" || quizDate === "") {
       Alert.alert("Error", "Enter Valid details");
     } else {
       setLoading(true);
@@ -70,6 +73,7 @@ function AddQuiz(props) {
       } else {
         firestore_ref
           .add({
+            teacherId: userOBJ.key,
             quizTitle: title,
             quizTime: time,
             quizDate: quizDate,
@@ -174,7 +178,7 @@ function AddQuiz(props) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
 });

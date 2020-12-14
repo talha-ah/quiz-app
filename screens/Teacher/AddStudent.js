@@ -78,6 +78,11 @@ function InviteScreen(props) {
         data={students}
         refreshing={refreshing}
         onRefresh={getStudents}
+        ListEmptyComponent={
+          <View>
+            <Text style={styles.text}>No Data!</Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <Item
             body={
@@ -111,7 +116,7 @@ function InviteScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Icon } from "native-base";
 import { StyleSheet, View, FlatList, Text } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
 import Item from "../../components/Item";
@@ -18,18 +19,24 @@ function InviteScreen(props) {
     getQuizzes();
   }, []);
 
-  function getQuizzes() {
+  async function getQuizzes() {
     setRefreshing(true);
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
+
     firestore_ref
-      .where("course", "!=", props.route.params.addId)
+      .where("teacherId", "==", userOBJ.key)
       .get()
       .then((quizzesDoc) => {
         let quizzesArray = [];
         quizzesDoc.forEach((doc) => {
-          quizzesArray.push({
-            ...doc.data(),
-            key: doc.id,
-          });
+          let docData = doc.data();
+          if (docData.course !== props.route.params.addId) {
+            quizzesArray.push({
+              ...doc.data(),
+              key: doc.id,
+            });
+          }
         });
         setQuizzes(quizzesArray);
         setRefreshing(false);
@@ -64,6 +71,11 @@ function InviteScreen(props) {
         data={quizzes}
         refreshing={refreshing}
         onRefresh={getQuizzes}
+        ListEmptyComponent={
+          <View>
+            <Text style={styles.text}>No Data!</Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <Item
             body={
@@ -96,7 +108,7 @@ function InviteScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#465881",
   },
   align: {
