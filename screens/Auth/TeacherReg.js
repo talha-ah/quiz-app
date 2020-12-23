@@ -63,7 +63,9 @@ const TeacherReg = (props) => {
         });
         setShowLoading(false);
         Alert.alert("Successfully created user!!");
-        props.navigation.navigate("Login");
+        props.navigation.navigate("Login", {
+          flag: 1,
+        });
       }
     } catch (er) {
       console.log(er.message);
@@ -141,7 +143,11 @@ const TeacherReg = (props) => {
             <View>
               <Text
                 style={styles.loginText}
-                onPress={() => props.navigation.navigate("Login")}
+                onPress={() =>
+                  props.navigation.navigate("Login", {
+                    flag: 1,
+                  })
+                }
               >
                 Already Registered? Click here to login
               </Text>

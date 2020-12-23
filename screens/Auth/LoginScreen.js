@@ -88,7 +88,10 @@ function LoginScreen(props) {
             style={styles.loginText}
             onPress={() =>
               props.navigation.navigate(
-                props.route.params.flag == 0 ? "TeacherReg" : "Register"
+                props.route.params.flag == 0 ? "TeacherReg" : "Register",
+                {
+                  flag: props.route.params.flag,
+                }
               )
             }
           >

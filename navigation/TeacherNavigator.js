@@ -19,6 +19,7 @@ import AddQuestion from "../screens/Teacher/AddQuestion";
 import AddStudent from "../screens/Teacher/AddStudent";
 import AddCourseIn from "../screens/Teacher/AddCourseIn";
 import AddQuizIn from "../screens/Teacher/AddQuizIn";
+import QuizCourse from "../screens/Teacher/QuizCourseAssign";
 
 import GenerateReport from "../screens/Teacher/GenerateReport";
 import Report from "../screens/Teacher/Report";
@@ -45,6 +46,7 @@ const TeacherNavigator = () => (
     <Stack.Screen name="AddStudent" component={AddStudent} />
     <Stack.Screen name="AddCourseIn" component={AddCourseIn} />
     <Stack.Screen name="AddQuizIn" component={AddQuizIn} />
+    <Stack.Screen name="QuizCourse" component={QuizCourse} />
 
     <Stack.Screen name="GenerateReport" component={GenerateReport} />
     <Stack.Screen name="Report" component={Report} />

@@ -114,7 +114,7 @@ function Quizzes(props) {
             backgroundColor: "#465881",
           }}
           onPress={() =>
-            props.navigation.navigate("Questions", { quizzId: item.key })
+            props.navigation.navigate("Questions", { quizz: item })
           }
         >
           <Text style={{ color: "white" }}>Quiz Title: {item.quizTitle}</Text>

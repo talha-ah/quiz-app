@@ -3,12 +3,30 @@ import RadioForm from "react-native-simple-radio-button";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import CountDown from "react-native-countdown-component";
+import { CommonActions } from "@react-navigation/native";
 import { Button } from "native-base";
 import moment from "moment";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 import Item from "../../components/Item";
+
+function getTime(seconds) {
+  var curdate = new Date(null);
+  curdate.setTime(seconds * 1000);
+  return curdate.toLocaleString();
+}
+
+const timeLeft = (minutesInt, timeInt) => {
+  const minutes =
+    Number(minutesInt) -
+    Number(
+      moment
+        .utc(moment(new Date()).diff(moment(new Date(getTime(timeInt)))))
+        .format("mm")
+    );
+  return minutes;
+};
 
 function TakeQuiz(props) {
   const firestore_ref = firebase.firestore();
@@ -21,26 +39,14 @@ function TakeQuiz(props) {
   useEffect(() => {
     getData();
 
-    const minutes =
-      Number(quiz.quizTime) -
-      Number(
-        moment
-          .utc(
-            moment(new Date()).diff(
-              moment(
-                new Date(
-                  getTime(props.route.params.quizItem.quizDateTime.seconds)
-                )
-              )
-            )
-          )
-          .format("mm")
-      );
-    console.log(minutes);
+    let minutes = timeLeft(
+      props.route.params.quizItem.quizTime,
+      props.route.params.quizItem.quizDateTime.seconds
+    );
     const timer = setTimeout(() => {
       alert("Times Up");
       onSubmit();
-    }, Number(Math.abs(minutes)));
+    }, Number(Math.abs(minutes)) * 60000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -88,7 +94,13 @@ function TakeQuiz(props) {
         }),
       })
       .then((docUpdate) => {
-        props.navigation.navigate("StudentPortal");
+        alert("Quiz submitted succesfully!");
+        props.navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "StudentPortal" }],
+          })
+        );
       })
       .catch((err) => {
         alert(err);
@@ -106,9 +118,15 @@ function TakeQuiz(props) {
           <Text style={styles.text}>No Data!</Text>
         </View>
       }
+      stickyHeaderIndices={[0]}
       ListHeaderComponent={() => (
         <CountDown
-          until={Number(props.route.params.quizItem.quizTime) * 60}
+          until={
+            timeLeft(
+              props.route.params.quizItem.quizTime,
+              props.route.params.quizItem.quizDateTime.seconds
+            ) * 60
+          }
           onFinish={() => {
             alert("Times Up");
             onSubmit();
@@ -121,9 +139,10 @@ function TakeQuiz(props) {
           timeLabelStyle={{ color: "#fff", fontWeight: "bold" }}
           separatorStyle={{ color: "#fff" }}
           showSeparator
+          style={{ marginTop: 10 }}
         />
       )}
-      renderItem={({ item, index }) => (
+      renderItem={({ item }) => (
         <Item
           body={
             <View>
@@ -162,7 +181,7 @@ function TakeQuiz(props) {
       )}
       ListFooterComponent={() => (
         <Button style={styles.btn} onPress={onSubmit} disabled={loading2}>
-          <Text style={styles.text}>Submit</Text>
+          <Text style={styles.text}>{loading2 ? "Submitting" : "Submit"}</Text>
         </Button>
       )}
     />
@@ -171,8 +190,8 @@ function TakeQuiz(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    flexGrow: 1,
+    paddingHorizontal: 10,
     backgroundColor: "#465881",
   },
   text: {
@@ -195,6 +214,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 10,
     backgroundColor: "#fc5c65",
+    marginBottom: 10,
   },
 });
 export default TakeQuiz;

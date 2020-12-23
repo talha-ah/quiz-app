@@ -72,7 +72,9 @@ const RegisterScreen = (props) => {
         });
         setShowLoading(false);
         Alert.alert("Successfully created user!!");
-        props.navigation.navigate("Login");
+        props.navigation.navigate("Login", {
+          flag: 0,
+        });
       }
     } catch (er) {
       console.log(er.message);
@@ -160,7 +162,11 @@ const RegisterScreen = (props) => {
             <View style={{ top: 20 }}>
               <Text
                 style={styles.loginText}
-                onPress={() => props.navigation.navigate("Login")}
+                onPress={() =>
+                  props.navigation.navigate("Login", {
+                    flag: 0,
+                  })
+                }
               >
                 Already Registered? Click here to login
               </Text>

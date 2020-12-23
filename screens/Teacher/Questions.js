@@ -20,7 +20,7 @@ function QuestionsList(props) {
     setRefreshing(true);
     const questionsArray = [];
     firestore_ref
-      .where("quizzId", "==", props.route.params.quizzId)
+      .where("quizzId", "==", props.route.params.quizz.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
@@ -134,16 +134,28 @@ function QuestionsList(props) {
         </View>
       )}
       ListFooterComponent={() => (
-        <Button
-          style={styles.btn}
-          onPress={() =>
-            props.navigation.navigate("AddQuestion", {
-              quizzId: props.route.params.quizzId,
-            })
-          }
-        >
-          <Text style={styles.text}>Add New Question</Text>
-        </Button>
+        <>
+          <Button
+            style={styles.btn}
+            onPress={() =>
+              props.navigation.navigate("AddQuestion", {
+                quizzId: props.route.params.quizz.key,
+              })
+            }
+          >
+            <Text style={styles.text}>Add New Question</Text>
+          </Button>
+          <Button
+            style={styles.btn}
+            onPress={() =>
+              props.navigation.navigate("QuizCourse", {
+                quizz: props.route.params.quizz,
+              })
+            }
+          >
+            <Text style={styles.text}>Assign to Course</Text>
+          </Button>
+        </>
       )}
     />
   );
