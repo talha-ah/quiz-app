@@ -45,6 +45,7 @@ function LoginScreen(props) {
       }
     } catch (error) {
       alert(error);
+      setShowLoading(false);
     }
   };
   return (

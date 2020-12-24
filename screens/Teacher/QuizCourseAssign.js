@@ -62,10 +62,34 @@ function InviteScreen(props) {
         course: courseId,
       })
       .then((resData) => {
-        props.navigation.goBack();
-      })
-      .catch((err) => {
-        alert(err.message);
+        firestore_ref
+          .collection("StudentUser")
+          .where("courses", "array-contains", courseId)
+          .get()
+          .then(async (docSnapshot) => {
+            if (docSnapshot.size > 0) {
+              docSnapshot.forEach(async (userItem, index) => {
+                await firestore_ref
+                  .collection("StudentUser")
+                  .doc(userItem.id)
+                  .update({
+                    notifications: firebase.firestore.FieldValue.arrayUnion({
+                      quizz: props.route.params.quizz,
+                      date: new Date(),
+                      status: "pending",
+                    }),
+                  });
+              });
+              props.navigation.goBack();
+            } else {
+              props.navigation.goBack();
+            }
+          })
+          .catch((err) => {
+            setLoading2(false);
+            console.log(err);
+            alert(err.message);
+          });
       });
   }
 

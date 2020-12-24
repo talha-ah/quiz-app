@@ -22,17 +22,24 @@ function checkQuiz(quiz) {
     )
   ) {
     if (
-      Number(
-        moment
-          .utc(
-            moment(new Date()).diff(
-              moment(new Date(getTime(quiz.quizDateTime.seconds)))
-            )
-          )
-          .format("mm")
-      ) < Number(quiz.quizTime)
+      moment(new Date(getTime(quiz.quizDateTime.seconds))).isSame(
+        moment(new Date()),
+        "hour"
+      )
     ) {
-      return true;
+      if (
+        Number(
+          moment
+            .utc(
+              moment(new Date()).diff(
+                moment(new Date(getTime(quiz.quizDateTime.seconds)))
+              )
+            )
+            .format("mm")
+        ) < Number(quiz.quizTime)
+      ) {
+        return true;
+      }
     }
   }
   return false;
@@ -141,6 +148,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginTop: 10,
+    marginBottom: 10,
     backgroundColor: "#fc5c65",
     borderRadius: 25,
     justifyContent: "center",

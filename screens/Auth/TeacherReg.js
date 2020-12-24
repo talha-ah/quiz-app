@@ -6,7 +6,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Alert,
 } from "react-native";
 import { View } from "native-base";
 
@@ -43,9 +42,9 @@ const TeacherReg = (props) => {
         cpassword === "" ||
         phonenumber === ""
       ) {
-        Alert.alert("Write details ");
+        alert("Write details ");
       } else if (password !== cpassword) {
-        Alert.alert("Passwords didn't match");
+        alert("Passwords didn't match");
       } else {
         setShowLoading(true);
         const res = await firebase
@@ -62,15 +61,14 @@ const TeacherReg = (props) => {
           phonenumber: phonenumber,
         });
         setShowLoading(false);
-        Alert.alert("Successfully created user!!");
+        alert("Successfully created user!!");
         props.navigation.navigate("Login", {
           flag: 1,
         });
       }
     } catch (er) {
-      console.log(er.message);
       setShowLoading(false);
-      Alert.alert(er.message);
+      alert(er.message);
     }
   };
 

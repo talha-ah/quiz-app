@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Alert,
 } from "react-native";
 import Screen from "../../components/Screen";
 import { AppForm, AppFormField } from "../../components/forms";
@@ -48,9 +47,9 @@ const RegisterScreen = (props) => {
         regno === "" ||
         phonenumber === ""
       ) {
-        Alert.alert("Write details ");
+        alert("Write details ");
       } else if (password !== cpassword) {
-        Alert.alert("Passwords didn't match");
+        alert("Passwords didn't match");
       } else {
         setShowLoading(true);
         const res = await firebase
@@ -69,17 +68,17 @@ const RegisterScreen = (props) => {
           classes: [],
           courses: [],
           results: [],
+          notifications: [],
         });
         setShowLoading(false);
-        Alert.alert("Successfully created user!!");
+        alert("Successfully created user!!");
         props.navigation.navigate("Login", {
           flag: 0,
         });
       }
     } catch (er) {
-      console.log(er.message);
       setShowLoading(false);
-      Alert.alert(er.message);
+      alert(er.message);
     }
   };
   return (

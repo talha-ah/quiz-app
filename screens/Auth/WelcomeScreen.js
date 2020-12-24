@@ -32,7 +32,6 @@ function WelcomeScreen({ route, navigation }) {
         selectedButtonColor={"tomato"}
         labelStyle={{ left: -5 }}
         onPress={(id) => {
-          console.log(id);
           setDecision(id);
         }}
       />

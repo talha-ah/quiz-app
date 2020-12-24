@@ -47,15 +47,39 @@ function InviteScreen(props) {
       });
   }
 
-  function addQuiz(key) {
+  function addQuiz(item) {
     setLoading2(true);
     firestore_ref
-      .doc(key)
+      .doc(item.key)
       .update({
         course: props.route.params.addId,
       })
       .then((resData) => {
-        props.navigation.goBack();
+        firebase
+          .firestore()
+          .collection("StudentUser")
+          .where("courses", "array-contains", props.route.params.addId)
+          .get()
+          .then(async (docSnapshot) => {
+            if (docSnapshot.size > 0) {
+              docSnapshot.forEach(async (userItem) => {
+                await firebase
+                  .firestore()
+                  .collection("StudentUser")
+                  .doc(userItem.id)
+                  .update({
+                    notifications: firebase.firestore.FieldValue.arrayUnion({
+                      quizz: item,
+                      date: new Date(),
+                      status: "pending",
+                    }),
+                  });
+              });
+              props.navigation.goBack();
+            } else {
+              props.navigation.goBack();
+            }
+          });
       })
       .catch((err) => {
         alert(err.message);
@@ -92,7 +116,7 @@ function InviteScreen(props) {
               <Button
                 rounded
                 danger
-                onPress={() => addQuiz(item.key)}
+                onPress={() => addQuiz(item)}
                 disabled={loading2}
               >
                 <Icon name="add" style={{ color: "#fff" }} />

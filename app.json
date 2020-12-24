@@ -19,6 +19,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "io.expo.client",
+      "useNextNotificationsApi": true
     }
   }
 }

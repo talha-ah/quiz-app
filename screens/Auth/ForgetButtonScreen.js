@@ -37,7 +37,7 @@ const ForgetButtonScreen = (props) => {
       })
       .catch((e) => {
         setShowLoading(false);
-        Alert.alert(e.message);
+        alert(e.message);
       });
   };
   return (

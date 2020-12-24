@@ -14,7 +14,7 @@ const StudentMain = (props) => {
       />
       <AppButton
         title="Notifications"
-        // onPress={() => props.navigation.navigate("NotificationScreen")}
+        onPress={() => props.navigation.navigate("StudentNotifications")}
       />
       <AppButton
         title="Marksheet"
