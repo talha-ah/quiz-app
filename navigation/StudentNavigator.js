@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import StudentMain from "../screens/Student/StudentMain";
@@ -14,6 +12,49 @@ import firebase from "../config/firebaseConfig";
 
 import StudentReport from "../screens/Student/StudentReport";
 
+// Notifications
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+
+// Background
+import * as BackgroundFetch from "expo-background-fetch";
+import * as TaskManager from "expo-task-manager";
+const TASK_NAME = "BACKGROUND_TASK";
+TaskManager.defineTask(TASK_NAME, () => {
+  try {
+    let unsubscribe;
+    async function cl() {
+      let userData = await AsyncStorage.getItem("userData");
+      let userOBJ = JSON.parse(userData);
+
+      unsubscribe = firestore_ref
+        .doc(userOBJ.key)
+        .onSnapshot(async function (doc) {
+          let userData2 = await AsyncStorage.getItem("userData");
+          let userOBJ2 = JSON.parse(userData2);
+
+          let updatedLength = doc.data().notifications.length;
+          let storedLength = userOBJ2.notifications.length;
+
+          updatedLength !== storedLength && schedulePushNotification();
+
+          await AsyncStorage.setItem(
+            "userData",
+            JSON.stringify({ ...doc.data(), key: doc.id, flag: 1 })
+          );
+        });
+    }
+    cl();
+
+    return unsubscribe
+      ? BackgroundFetch.Result.NewData
+      : BackgroundFetch.Result.NoData;
+  } catch (err) {
+    unsubscribe();
+    return BackgroundFetch.Result.Failed;
+  }
+});
+
 const Stack = createStackNavigator();
 
 Notifications.setNotificationHandler({
@@ -23,7 +64,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -34,7 +74,6 @@ async function schedulePushNotification() {
     trigger: null,
   });
 }
-
 async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {
@@ -72,6 +111,7 @@ const StudentNavigator = () => {
   const firestore_ref = firebase.firestore().collection("StudentUser");
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const notificationListener = useRef();
   const responseListener = useRef();
 
@@ -101,19 +141,39 @@ const StudentNavigator = () => {
     async function cl() {
       let userData = await AsyncStorage.getItem("userData");
       let userOBJ = JSON.parse(userData);
-      // this.fireStore.collection('users').doc(`${uid}/notifications`)
-      // .valueChanges()
-      // .subscribe(data => console.log(data))
 
-      unsubscribe = firestore_ref.doc(userOBJ.key).onSnapshot(function (doc) {
-        console.log(userOBJ.email, "Notifications: ", doc.data().notifications);
-        schedulePushNotification();
-      });
+      unsubscribe = firestore_ref
+        .doc(userOBJ.key)
+        .onSnapshot(async function (doc) {
+          let userData2 = await AsyncStorage.getItem("userData");
+          let userOBJ2 = JSON.parse(userData2);
+
+          let updatedLength = doc.data().notifications.length;
+          let storedLength = userOBJ2.notifications.length;
+
+          updatedLength !== storedLength && schedulePushNotification();
+
+          await AsyncStorage.setItem(
+            "userData",
+            JSON.stringify({ ...doc.data(), key: doc.id, flag: 1 })
+          );
+        });
     }
     cl();
-
+    RegisterBackgroundTask();
     return () => unsubscribe && unsubscribe();
   }, []);
+
+  const RegisterBackgroundTask = async () => {
+    try {
+      await BackgroundFetch.registerTaskAsync(TASK_NAME, {
+        minimumInterval: 5, // seconds,
+      });
+      console.log("Task registered");
+    } catch (err) {
+      console.log("Task Register failed:", err);
+    }
+  };
 
   return (
     <Stack.Navigator>
