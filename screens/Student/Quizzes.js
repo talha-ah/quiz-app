@@ -72,10 +72,26 @@ function Quizzes(props) {
           .where("course", "==", courseId)
           .get();
         quizDoc.forEach((doc) => {
-          quizzesList.push({
-            ...doc.data(),
-            key: doc.id,
-          });
+          let docData = doc.data();
+          if (
+            !docData.users.some((item) => item === userOBJ.key) &&
+            !moment(new Date(getTime(docData.quizDate.seconds))).isBefore(
+              moment(new Date()),
+              "day"
+            )
+          ) {
+            if (
+              !moment(new Date(getTime(docData.quizDateTime.seconds))).isBefore(
+                moment(new Date()),
+                "hour"
+              )
+            ) {
+              quizzesList.push({
+                ...doc.data(),
+                key: doc.id,
+              });
+            }
+          }
         });
       })
     );
@@ -119,7 +135,7 @@ function Quizzes(props) {
             checkQuiz(item) && (
               <View>
                 <Button
-                  style={styles.btn}
+                  style={[styles.btn]}
                   onPress={() =>
                     props.navigation.navigate("TakeQuiz", {
                       quizItem: item,
@@ -147,14 +163,15 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   btn: {
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: "#fc5c65",
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
     padding: 10,
-    width: "100%",
+    width: "90%",
+    marginTop: 10,
+    marginLeft: 14,
+    marginBottom: 10,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fc5c65",
   },
 });
 export default Quizzes;

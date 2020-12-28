@@ -1,6 +1,7 @@
+import moment from "moment";
+import { Button, Icon } from "native-base";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import moment from "moment";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
@@ -39,6 +40,20 @@ function Notifications(props) {
     setRefreshing(false);
   }
 
+  async function deleteNotification(item) {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
+    let notificationsArray = notifications;
+    notificationsArray = notificationsArray.filter((ite) => ite !== item);
+    firestore_ref
+      .doc(userOBJ.key)
+      .update({
+        notifications: notificationsArray,
+      })
+      .then((data) => setNotifications(notificationsArray))
+      .catch((err) => console.log(err));
+  }
+
   return loading ? (
     <LoadingScreen />
   ) : (
@@ -62,10 +77,22 @@ function Notifications(props) {
               </Text>
               <Text style={styles.text}>
                 Quiz Date:{" "}
-                {moment(getTime(item.date.seconds)).format("YYYY-MM-DD")}
+                {moment(getTime(item.quizz.quizDate.seconds)).format(
+                  "YYYY-MM-DD"
+                )}
               </Text>
-              <Text style={styles.text}>Status: seen</Text>
+              <Text style={styles.text}>
+                Quiz Time:{" "}
+                {moment(getTime(item.quizz.quizDateTime.seconds)).format(
+                  "HH:mm"
+                )}
+              </Text>
             </View>
+          }
+          actions={
+            <Button danger transparent onPress={() => deleteNotification(item)}>
+              <Icon active name="trash" />
+            </Button>
           }
         />
       )}

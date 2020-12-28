@@ -68,7 +68,7 @@ function ClassList(props) {
                 Course Code: {item.courseCode}
               </Text>
               <Text style={{ color: "white" }}>
-                Credit Hrs.: {item.creditHours}}
+                Credit Hrs.: {item.creditHours}
               </Text>
             </View>
           }

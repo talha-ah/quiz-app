@@ -1,25 +1,40 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import defaultStyles from "../config/styles";
 
-function AppTextInput({ icon, ...otherProps }) {
+function AppTextInput({ icon, rightIcon, rightOnPress, ...otherProps }) {
   return (
     <View style={styles.container}>
       {icon && (
-        <MaterialCommunityIcons
-          name={icon}
-          size={20}
-          color={defaultStyles.colors.medium}
-          style={styles.icon}
-        />
+        <View style={styles.icon}>
+          <MaterialCommunityIcons
+            size={20}
+            name={icon}
+            color={defaultStyles.colors.medium}
+          />
+        </View>
       )}
       <TextInput
         placeholderTextColor={defaultStyles.colors.medium}
-        style={defaultStyles.text}
+        style={[defaultStyles.text, styles.input]}
         {...otherProps}
       />
+      {rightIcon && (
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={rightOnPress}
+          activeOpacity={8}
+        >
+          <MaterialCommunityIcons
+            size={20}
+            name={rightIcon}
+            style={styles.icon}
+            color={defaultStyles.colors.medium}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -34,7 +49,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   icon: {
-    marginRight: 10,
+    width: 30,
+    alignItems: "center",
+  },
+  input: {
+    flex: 1,
   },
 });
 

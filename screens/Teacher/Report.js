@@ -25,12 +25,14 @@ export default function Result(props) {
           let item = doc.data();
           let total = 0;
           let obtained = 0;
+          let totalQuizzez = 0;
           if (item.results) {
             item.results.map((quizResult) => {
-              total += quizResult.total;
-              obtained += quizResult.obtained;
+              totalQuizzez++;
+              total += quizResult.totalMarks;
+              obtained += quizResult.obtainedMarks;
             });
-            dataArray.push([item.username, obtained, total]);
+            dataArray.push([item.username, totalQuizzez, obtained, total]);
           }
         });
         setData(dataArray);
@@ -49,8 +51,8 @@ export default function Result(props) {
       <Table borderStyle={{ borderWidth: 1, borderColor: "#c8e1ff" }}>
         <Row
           style={styles.head}
-          data={["Student Name", "Obtained Marks", "Total Marks"]}
-          textStyle={{ textAlign: "center", fontWeight: "bold" }}
+          data={["Student Name", "Quizzes", "Scored", "Total"]}
+          textStyle={{ textAlign: "center", fontWeight: "bold", fontSize: 10 }}
         />
         <Rows data={data} textStyle={styles.text} />
       </Table>

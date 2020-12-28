@@ -16,6 +16,7 @@ function LoginScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showLoading, setShowLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -54,26 +55,28 @@ function LoginScreen(props) {
         <View style={styles.container}>
           <AppForm initialValues={{ email: "", password: "", classes: "" }}>
             <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
               icon="email"
-              keyboardType="email-address"
               name="email"
+              autoCorrect={false}
               placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
               textContentType="emailAddress"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
             <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
               icon="lock"
               name="password"
-              placeholder="Password"
-              secureTextEntry
-              textContentType="password"
-              onChangeText={(text) => setPassword(text)}
               value={password}
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Password"
+              textContentType={"password"}
+              secureTextEntry={!showPassword}
+              onChangeText={(text) => setPassword(text)}
+              rightIcon={showPassword ? "eye-off" : "eye"}
+              rightOnPress={() => setShowPassword((st) => !st)}
             />
             <AppButton
               title={showLoading ? "Loading..." : "Login"}

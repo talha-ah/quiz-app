@@ -78,6 +78,7 @@ function AddQuiz(props) {
             quizTime: time,
             quizDate: quizDate,
             quizDateTime: quizTime,
+            users: [],
           })
           .then((resData) => {
             props.navigation.goBack();

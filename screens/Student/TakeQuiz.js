@@ -50,6 +50,26 @@ function TakeQuiz(props) {
     return () => clearTimeout(timer);
   }, []);
 
+  function shuffle(array) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
   function getData() {
     const questionsList = [];
     firestore_ref
@@ -64,7 +84,7 @@ function TakeQuiz(props) {
             key: doc.id,
           });
         });
-        setQuestions(questionsList);
+        setQuestions(shuffle(questionsList));
         setLoading(false);
       })
       .catch((err) => {
@@ -76,11 +96,13 @@ function TakeQuiz(props) {
     let userData = await AsyncStorage.getItem("userData");
     let userOBJ = JSON.parse(userData);
 
-    let obtained = 0;
-    let total = questions.length;
+    let obtainedMarks = 0;
+    let totalMarks = 0;
+    let totalQuestions = questions.length;
     questions.map((question) => {
+      totalMarks += Math.floor(Number(question.weight));
       if (Number(answers.get(question.key)) + 1 === Number(question.answer))
-        obtained++;
+        obtainedMarks += Math.floor(Number(question.weight));
     });
     setLoading2(true);
     firestore_ref
@@ -89,18 +111,27 @@ function TakeQuiz(props) {
       .update({
         results: firebase.firestore.FieldValue.arrayUnion({
           quizzId: props.route.params.quizItem.key,
-          obtained: obtained,
-          total: total,
+          obtainedMarks: obtainedMarks,
+          totalMarks: totalMarks,
+          totalQuestions: totalQuestions,
         }),
       })
       .then((docUpdate) => {
-        alert("Quiz submitted succesfully!");
-        props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "StudentPortal" }],
+        firestore_ref
+          .collection("Quiz")
+          .doc(props.route.params.quizItem.key)
+          .update({
+            users: firebase.firestore.FieldValue.arrayUnion(userOBJ.key),
           })
-        );
+          .then((res) => {
+            alert("Quiz submitted succesfully!");
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "StudentPortal" }],
+              })
+            );
+          });
       })
       .catch((err) => {
         alert(err);

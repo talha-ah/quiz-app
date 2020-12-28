@@ -12,7 +12,6 @@ const ViewClass = (props) => {
   const [loading, setLoading] = useState(true);
   const [classItem, setClassItem] = useState("");
   const [students, setStudents] = useState([]);
-  const [courses, setCourses] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -35,22 +34,8 @@ const ViewClass = (props) => {
           });
         });
         setStudents(studentsArray);
-        firestore_ref
-          .collection("Course")
-          .where("class", "==", props.route.params.classItem.key)
-          .get()
-          .then((coursesDoc) => {
-            let coursesArray = [];
-            coursesDoc.forEach((doc) => {
-              coursesArray.push({
-                ...doc.data(),
-                key: doc.id,
-              });
-            });
-            setCourses(coursesArray);
-            setRefreshing(false);
-            setLoading(false);
-          });
+        setRefreshing(false);
+        setLoading(false);
       })
       .catch((err) => {
         alert(err.message);
@@ -78,27 +63,6 @@ const ViewClass = (props) => {
       }
     );
   }
-  function openTwoButtonAlert1(key) {
-    Alert.alert(
-      "Remove Course",
-      "Are you sure to remove it?",
-      [
-        {
-          text: "No",
-          style: "cancel",
-        },
-        {
-          text: "Yes",
-          onPress: () => {
-            removeCourse(key);
-          },
-        },
-      ],
-      {
-        cancelable: true,
-      }
-    );
-  }
 
   const removeStudent = (key) => {
     firestore_ref
@@ -114,23 +78,6 @@ const ViewClass = (props) => {
           (studentiem) => studentiem.key !== key
         );
         setStudents(studentsArray);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-  const removeCourse = (key) => {
-    firestore_ref
-      .collection("Course")
-      .doc(key)
-      .update({
-        class: null,
-      })
-      .then((res) => {
-        const coursesArray = courses.filter(
-          (courseITem) => courseITem.key !== key
-        );
-        setCourses(coursesArray);
       })
       .catch((err) => {
         alert(err.message);
@@ -175,36 +122,6 @@ const ViewClass = (props) => {
             />
           ),
         },
-        {
-          title: "Courses",
-          data: courses,
-          renderItem: ({ item, index, section: { title, data } }) => (
-            <Item
-              body={
-                <View>
-                  <Text style={styles.text}>
-                    Course Title: {item.courseTitle}
-                  </Text>
-                  <Text style={styles.text}>
-                    Course Code: {item.courseCode}
-                  </Text>
-                  <Text style={styles.text}>
-                    Credit Hrs.: {item.creditHours}
-                  </Text>
-                </View>
-              }
-              actions={
-                <Button
-                  danger
-                  transparent
-                  onPress={() => openTwoButtonAlert1(item.key)}
-                >
-                  <Icon active name="trash" />
-                </Button>
-              }
-            />
-          ),
-        },
       ]}
       keyExtractor={(item, index) => item.key + index}
       ListHeaderComponent={() => (
@@ -219,29 +136,17 @@ const ViewClass = (props) => {
         />
       )}
       ListFooterComponent={() => (
-        <View>
-          <Button
-            style={styles.btn}
-            onPress={() => {
-              props.navigation.navigate("AddStudent", {
-                addId: classItem.key,
-                isCourse: false,
-              });
-            }}
-          >
-            <Text style={styles.text}>Add Student</Text>
-          </Button>
-          <Button
-            style={styles.btn}
-            onPress={() => {
-              props.navigation.navigate("AddCourseIn", {
-                addId: classItem.key,
-              });
-            }}
-          >
-            <Text style={styles.text}>Add Course</Text>
-          </Button>
-        </View>
+        <Button
+          style={styles.btn}
+          onPress={() => {
+            props.navigation.navigate("AddStudent", {
+              addId: classItem.key,
+              isCourse: false,
+            });
+          }}
+        >
+          <Text style={styles.text}>Add Student</Text>
+        </Button>
       )}
     />
   );

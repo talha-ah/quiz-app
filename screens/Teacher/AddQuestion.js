@@ -24,7 +24,8 @@ function AddQuestion(props) {
   const [option2, setOption2] = useState("");
   const [option3, setOption3] = useState("");
   const [option4, setOption4] = useState("");
-  const [answer, setAnswer] = useState("1");
+  const [answer, setAnswer] = useState("");
+  const [answerWeight, setAnswerWeight] = useState("");
   const [loading, setLoading] = useState(false);
 
   const addQuestion = () => {
@@ -33,6 +34,7 @@ function AddQuestion(props) {
       answer === "" ||
       option1 === "" ||
       option2 === "" ||
+      answerWeight === "" ||
       (questionType === "mcq" && (option3 === "" || option4 === ""))
     ) {
       alert("Fields are required!");
@@ -49,6 +51,7 @@ function AddQuestion(props) {
           option3,
           option4,
           answer,
+          weight: Math.floor(answerWeight),
         })
         .then((resData) => {
           props.navigation.goBack();
@@ -100,39 +103,46 @@ function AddQuestion(props) {
             </View>
             <FormField
               name="option1"
+              value={option1}
               placeholder="Option 1"
               onChangeText={(text) => setOption1(text)}
-              value={option1}
             />
             <FormField
               name="option2"
+              value={option2}
               placeholder="Option 2"
               onChangeText={(text) => setOption2(text)}
-              value={option2}
             />
             {questionType === 1 && (
               <FormField
                 name="option3"
+                value={option3}
                 placeholder="Option 3"
                 onChangeText={(text) => setOption3(text)}
-                value={option3}
               />
             )}
             {questionType === 1 && (
               <FormField
                 name="option4"
+                value={option4}
                 placeholder="Option 4"
                 onChangeText={(text) => setOption4(text)}
-                value={option4}
               />
             )}
             <FormField
+              name="answerWeight"
+              value={answerWeight}
+              placeholder="Weightage"
+              keyboardType="decimal-pad"
+              onChangeText={(text) => setAnswerWeight(text)}
+            />
+            <FormField
               name="answer"
               maxLength={1}
-              placeholder="Answer Number"
-              keyboardType="decimal-pad"
-              onChangeText={(text) => setAnswer(text)}
               value={answer}
+              keyboardType="decimal-pad"
+              placeholder="Answer Number"
+              onChangeText={(text) => setAnswer(text)}
               onEndEditing={() => {
                 if (Number(answer) <= 0 || Number(answer) > 4) {
                   setAnswer("1");

@@ -109,18 +109,19 @@ function QuestionsList(props) {
                 Type: {item.questionType === 0 ? "Radio" : "MCQ"}
               </Text>
               <Text style={{ color: "white" }}>Options 1: {item.option1}</Text>
-              {item.questionType === 1 && (
-                <Text style={{ color: "white" }}>
-                  Options 2: {item.option2}
-                </Text>
-              )}
+              <Text style={{ color: "white" }}>Options 2: {item.option2}</Text>
               {item.questionType === 1 && (
                 <Text style={{ color: "white" }}>
                   Options 3: {item.option3}
                 </Text>
               )}
-              <Text style={{ color: "white" }}>Options 4: {item.option4}</Text>
+              {item.questionType === 1 && (
+                <Text style={{ color: "white" }}>
+                  Options 4: {item.option4}
+                </Text>
+              )}
               <Text style={{ color: "white" }}>Answer: {item.answer}</Text>
+              <Text style={{ color: "white" }}>Weightage: {item.weight}</Text>
             </View>
             <Button
               danger

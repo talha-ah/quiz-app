@@ -72,9 +72,7 @@ const RegisterScreen = (props) => {
         });
         setShowLoading(false);
         alert("Successfully created user!!");
-        props.navigation.navigate("Login", {
-          flag: 0,
-        });
+        props.navigation.goBack();
       }
     } catch (er) {
       setShowLoading(false);

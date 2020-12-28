@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -36,7 +37,7 @@ TaskManager.defineTask(TASK_NAME, () => {
           let updatedLength = doc.data().notifications.length;
           let storedLength = userOBJ2.notifications.length;
 
-          updatedLength !== storedLength && schedulePushNotification();
+          updatedLength > storedLength && schedulePushNotification();
 
           await AsyncStorage.setItem(
             "userData",
@@ -151,7 +152,7 @@ const StudentNavigator = () => {
           let updatedLength = doc.data().notifications.length;
           let storedLength = userOBJ2.notifications.length;
 
-          updatedLength !== storedLength && schedulePushNotification();
+          updatedLength > storedLength && schedulePushNotification();
 
           await AsyncStorage.setItem(
             "userData",
@@ -177,13 +178,45 @@ const StudentNavigator = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="StudentPortal" component={StudentMain} />
-      <Stack.Screen name="Quizzes" component={Quizzes} />
-      <Stack.Screen name="TakeQuiz" component={TakeQuiz} />
-      <Stack.Screen name="StudentReport" component={StudentReport} />
+      <Stack.Screen
+        name="StudentPortal"
+        component={StudentMain}
+        options={{
+          title: "Profile",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="Quizzes"
+        component={Quizzes}
+        options={{
+          title: "Profile",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="TakeQuiz"
+        component={TakeQuiz}
+        options={{
+          title: "Profile",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="StudentReport"
+        component={StudentReport}
+        options={{
+          title: "Profile",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
       <Stack.Screen
         name="StudentNotifications"
         component={StudentNotifications}
+        options={{
+          title: "Profile",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
       />
     </Stack.Navigator>
   );

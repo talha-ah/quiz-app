@@ -62,9 +62,7 @@ const TeacherReg = (props) => {
         });
         setShowLoading(false);
         alert("Successfully created user!!");
-        props.navigation.navigate("Login", {
-          flag: 1,
-        });
+        props.navigation.goBack();
       }
     } catch (er) {
       setShowLoading(false);

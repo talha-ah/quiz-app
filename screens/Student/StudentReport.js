@@ -30,14 +30,19 @@ export default function Result(props) {
             .collection("Quiz")
             .doc(item.quizzId)
             .get();
-          const quizDoc = quiz.data();
-          dataArray.push([quizDoc.quizTitle, item.obtained, item.total]);
+          const quizDoc = await quiz.data();
+          quizDoc &&
+            dataArray.push([
+              quizDoc.quizTitle,
+              item.totalQuestions,
+              item.totalMarks,
+              item.obtainedMarks,
+            ]);
         })
       );
       setData(dataArray);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       alert(err.message);
     }
   }
@@ -48,9 +53,9 @@ export default function Result(props) {
     <View style={styles.container}>
       <Table borderStyle={{ borderWidth: 1, borderColor: "#c8e1ff" }}>
         <Row
-          data={["Quiz ID", "Obtained Marks", "Total Marks"]}
+          data={["Quiz ID", "Questions", "Total", "Obtained"]}
           style={styles.head}
-          textStyle={{ textAlign: "center", fontWeight: "bold" }}
+          textStyle={{ textAlign: "center", fontWeight: "bold", fontSize: 10 }}
         />
         <Rows data={data} textStyle={styles.text} />
       </Table>
