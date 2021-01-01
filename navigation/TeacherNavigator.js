@@ -13,7 +13,10 @@ import ViewCourse from "../screens/Teacher/ViewCourse";
 
 import Quizzes from "../screens/Teacher/Quizzes";
 import AddQuiz from "../screens/Teacher/AddQuiz";
-import Questions from "../screens/Teacher/Questions";
+import QuizzQuestions from "../screens/Teacher/QuizzQuestions";
+import AddQuizzQuestions from "../screens/Teacher/AddQuizzQuestions";
+
+import QuestionsScreen from "../screens/Teacher/QuestionsScreen";
 import AddQuestion from "../screens/Teacher/AddQuestion";
 
 import AddStudent from "../screens/Teacher/AddStudent";
@@ -39,8 +42,10 @@ const TeacherNavigator = () => (
 
     <Stack.Screen name="Quizzes" component={Quizzes} />
     <Stack.Screen name="AddQuiz" component={AddQuiz} />
+    <Stack.Screen name="QuizzQuestions" component={QuizzQuestions} />
+    <Stack.Screen name="AddQuizzQuestions" component={AddQuizzQuestions} />
 
-    <Stack.Screen name="Questions" component={Questions} />
+    <Stack.Screen name="QuestionsScreen" component={QuestionsScreen} />
     <Stack.Screen name="AddQuestion" component={AddQuestion} />
 
     <Stack.Screen name="AddStudent" component={AddStudent} />

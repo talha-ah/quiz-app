@@ -72,6 +72,7 @@ function Notifications(props) {
         <Item
           body={
             <View>
+              <Text style={styles.text}>{item.message}</Text>
               <Text style={styles.text}>
                 Quiz Title: {item.quizz.quizTitle}
               </Text>

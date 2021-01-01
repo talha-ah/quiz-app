@@ -20,7 +20,7 @@ function QuestionsList(props) {
     setRefreshing(true);
     const questionsArray = [];
     firestore_ref
-      .where("quizzId", "==", props.route.params.quizz.key)
+      .where("quizzes", "array-contains", props.route.params.quizz.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
@@ -38,7 +38,11 @@ function QuestionsList(props) {
   const deleteQuestion = (key) => {
     firestore_ref
       .doc(key)
-      .delete()
+      .update({
+        quizzes: firebase.firestore.FieldValue.arrayRemove(
+          props.route.params.quizz.key
+        ),
+      })
       .then((res) => {
         const newArrya = questions.filter((itmIn) => itmIn.key !== key);
         setQuestions(newArrya);
@@ -139,7 +143,7 @@ function QuestionsList(props) {
           <Button
             style={styles.btn}
             onPress={() =>
-              props.navigation.navigate("AddQuestion", {
+              props.navigation.navigate("AddQuizzQuestions", {
                 quizzId: props.route.params.quizz.key,
               })
             }

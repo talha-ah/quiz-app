@@ -20,6 +20,10 @@ const MainScreen = (props) => {
         onPress={() => props.navigation.navigate("Quizzes")}
       />
       <AppButton
+        title="Questions"
+        onPress={() => props.navigation.navigate("QuestionsScreen")}
+      />
+      <AppButton
         title="Reports"
         onPress={() => props.navigation.navigate("GenerateReport")}
       />

@@ -22,17 +22,17 @@ export default function Result(props) {
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
-          let item = doc.data();
-          let total = 0;
-          let obtained = 0;
-          let totalQuizzez = 0;
-          if (item.results) {
-            item.results.map((quizResult) => {
-              totalQuizzez++;
-              total += quizResult.totalMarks;
-              obtained += quizResult.obtainedMarks;
+          let student = doc.data();
+          if (student.results) {
+            student.results.map((quizResult) => {
+              dataArray.push([
+                student.username,
+                quizResult.quizTitle,
+                quizResult.totalQuestions,
+                quizResult.obtainedMarks,
+                quizResult.totalMarks,
+              ]);
             });
-            dataArray.push([item.username, totalQuizzez, obtained, total]);
           }
         });
         setData(dataArray);
@@ -51,7 +51,7 @@ export default function Result(props) {
       <Table borderStyle={{ borderWidth: 1, borderColor: "#c8e1ff" }}>
         <Row
           style={styles.head}
-          data={["Student Name", "Quizzes", "Scored", "Total"]}
+          data={["Student Name", "Quizz", "Questions", "Scored", "Total"]}
           textStyle={{ textAlign: "center", fontWeight: "bold", fontSize: 10 }}
         />
         <Rows data={data} textStyle={styles.text} />

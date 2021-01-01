@@ -74,6 +74,7 @@ function InviteScreen(props) {
                   .doc(userItem.id)
                   .update({
                     notifications: firebase.firestore.FieldValue.arrayUnion({
+                      message: "You have an upcoming quiz",
                       quizz: props.route.params.quizz,
                       date: new Date(),
                       status: "pending",

@@ -40,10 +40,9 @@ function AddQuestion(props) {
       alert("Fields are required!");
     } else {
       setLoading(true);
-      const quizzId = props.route.params.quizzId;
       firestore_ref
         .add({
-          quizzId,
+          quizzes: [],
           question,
           questionType,
           option1,

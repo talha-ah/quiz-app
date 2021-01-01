@@ -111,6 +111,7 @@ function TakeQuiz(props) {
       .update({
         results: firebase.firestore.FieldValue.arrayUnion({
           quizzId: props.route.params.quizItem.key,
+          quizTitle: props.route.params.quizItem.quizTitle,
           obtainedMarks: obtainedMarks,
           totalMarks: totalMarks,
           totalQuestions: totalQuestions,

@@ -64,7 +64,34 @@ function AddQuiz(props) {
             quizDateTime: quizTime,
           })
           .then((resData) => {
-            props.navigation.goBack();
+            firebase
+              .firestore()
+              .collection("StudentUser")
+              .where("courses", "array-contains", params.quizItem.course)
+              .get()
+              .then(async (docSnapshot) => {
+                if (docSnapshot.size > 0) {
+                  docSnapshot.forEach(async (userItem) => {
+                    await firebase
+                      .firestore()
+                      .collection("StudentUser")
+                      .doc(userItem.id)
+                      .update({
+                        notifications: firebase.firestore.FieldValue.arrayUnion(
+                          {
+                            message: "Quiz was updated!",
+                            quizz: params.quizItem,
+                            date: new Date(),
+                            status: "pending",
+                          }
+                        ),
+                      });
+                  });
+                  props.navigation.goBack();
+                } else {
+                  props.navigation.goBack();
+                }
+              });
           })
           .catch((err) => {
             setLoading(false);
