@@ -49,10 +49,13 @@ function AddQuiz(props) {
   const addQuiz = async () => {
     let userData = await AsyncStorage.getItem("userData");
     let userOBJ = JSON.parse(userData);
+    const dateTime = moment(quizDate)
+      .hour(moment(quizTime).hour())
+      .minute(moment(quizTime).minute());
     if (title === "" || time === "" || quizTime === "" || quizDate === "") {
       Alert.alert("Error", "Enter Valid details");
     } else {
-      setLoading(true);
+      // setLoading(true);
       const params = props.route.params;
       if (params) {
         firestore_ref
@@ -60,8 +63,8 @@ function AddQuiz(props) {
           .update({
             quizTitle: title,
             quizTime: time,
-            quizDate: quizDate,
-            quizDateTime: quizTime,
+            quizDate: new Date(dateTime),
+            quizDateTime: new Date(dateTime),
           })
           .then((resData) => {
             firebase
@@ -103,8 +106,8 @@ function AddQuiz(props) {
             teacherId: userOBJ.key,
             quizTitle: title,
             quizTime: time,
-            quizDate: quizDate,
-            quizDateTime: quizTime,
+            quizDate: new Date(dateTime),
+            quizDateTime: new Date(dateTime),
             users: [],
           })
           .then((resData) => {
@@ -210,4 +213,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#465881",
   },
 });
+
 export default AddQuiz;

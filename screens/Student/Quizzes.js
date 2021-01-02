@@ -73,6 +73,11 @@ function Quizzes(props) {
           .get();
         quizDoc.forEach((doc) => {
           let docData = doc.data();
+          console.log(
+            moment(new Date(getTime(docData.quizDate.seconds))).format(
+              "DD-MM-YYYY"
+            )
+          );
           if (
             !docData.users.some((item) => item === userOBJ.key) &&
             !moment(new Date(getTime(docData.quizDate.seconds))).isBefore(

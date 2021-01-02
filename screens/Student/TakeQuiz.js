@@ -74,7 +74,7 @@ function TakeQuiz(props) {
     const questionsList = [];
     firestore_ref
       .collection("Question")
-      .where("quizzId", "==", props.route.params.quizItem.key)
+      .where("quizzes", "array-contains", props.route.params.quizItem.key)
       .get()
       .then((docSnapshot) => {
         docSnapshot.forEach((doc) => {
