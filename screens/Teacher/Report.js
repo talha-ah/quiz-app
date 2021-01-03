@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Table, Row, Rows } from "react-native-table-component";
 
 import firebase from "../../config/firebaseConfig";
@@ -25,13 +25,15 @@ export default function Result(props) {
           let student = doc.data();
           if (student.results) {
             student.results.map((quizResult) => {
-              dataArray.push([
-                student.username,
-                quizResult.quizTitle,
-                quizResult.totalQuestions,
-                quizResult.obtainedMarks,
-                quizResult.totalMarks,
-              ]);
+              if (quizResult.courseId === props.route.params.courseItem.key) {
+                dataArray.push([
+                  student.username,
+                  quizResult.quizTitle,
+                  quizResult.totalQuestions,
+                  quizResult.obtainedMarks,
+                  quizResult.totalMarks,
+                ]);
+              }
             });
           }
         });
@@ -56,6 +58,11 @@ export default function Result(props) {
         />
         <Rows data={data} textStyle={styles.text} />
       </Table>
+      {data.length === 0 && (
+        <Text style={{ color: "#fff", textAlign: "center", marginTop: 20 }}>
+          No Data
+        </Text>
+      )}
     </View>
   );
 }

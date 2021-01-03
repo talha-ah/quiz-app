@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import RadioForm from "react-native-simple-radio-button";
 import AppButton from "../../components/AppButton";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
 
@@ -28,7 +29,9 @@ function AddQuestion(props) {
   const [answerWeight, setAnswerWeight] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const addQuestion = () => {
+  const addQuestion = async () => {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     if (
       question === "" ||
       answer === "" ||
@@ -51,6 +54,7 @@ function AddQuestion(props) {
           option4,
           answer,
           weight: Math.floor(answerWeight),
+          teacherId: userOBJ.key,
         })
         .then((resData) => {
           props.navigation.goBack();

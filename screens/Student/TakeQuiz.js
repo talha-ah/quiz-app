@@ -115,6 +115,7 @@ function TakeQuiz(props) {
           obtainedMarks: obtainedMarks,
           totalMarks: totalMarks,
           totalQuestions: totalQuestions,
+          courseId: props.route.params.quizItem.course,
         }),
       })
       .then((docUpdate) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Table, Row, Rows } from "react-native-table-component";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -59,6 +59,11 @@ export default function Result(props) {
         />
         <Rows data={data} textStyle={styles.text} />
       </Table>
+      {data.length === 0 && (
+        <Text style={{ color: "#fff", textAlign: "center", marginTop: 20 }}>
+          No Data
+        </Text>
+      )}
     </View>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Text, StyleSheet, View, FlatList } from "react-native";
 import { Button, Icon } from "native-base";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
@@ -16,20 +17,25 @@ function QuestionsList(props) {
     getData();
   }, []);
 
-  function getData() {
+  async function getData() {
+    let userData = await AsyncStorage.getItem("userData");
+    let userOBJ = JSON.parse(userData);
     setRefreshing(true);
     const questionsArray = [];
-    firestore_ref.get().then((docSnapshot) => {
-      docSnapshot.forEach((doc) => {
-        questionsArray.push({
-          ...doc.data(),
-          key: doc.id,
+    firestore_ref
+      .where("teacherId", "==", userOBJ.key)
+      .get()
+      .then((docSnapshot) => {
+        docSnapshot.forEach((doc) => {
+          questionsArray.push({
+            ...doc.data(),
+            key: doc.id,
+          });
         });
+        setQuestions(questionsArray);
+        setLoading(false);
+        setRefreshing(false);
       });
-      setQuestions(questionsArray);
-      setLoading(false);
-      setRefreshing(false);
-    });
   }
 
   const deleteQuestion = (key) => {
