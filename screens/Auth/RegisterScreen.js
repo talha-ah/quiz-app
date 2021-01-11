@@ -36,6 +36,8 @@ const RegisterScreen = (props) => {
   const [regno, setRegno] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [classcode, setClasscode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const handleSignUp = async () => {
     try {
@@ -120,10 +122,12 @@ const RegisterScreen = (props) => {
               icon="lock"
               name="password"
               placeholder="Password"
-              secureTextEntry
               textContentType="password"
               onChangeText={(text) => setPassword(text)}
               value={password}
+              secureTextEntry={!showPassword}
+              rightIcon={showPassword ? "eye-off" : "eye"}
+              rightOnPress={() => setShowPassword((st) => !st)}
             />
             <AppFormField
               autoCapitalize="none"
@@ -131,10 +135,12 @@ const RegisterScreen = (props) => {
               icon="lock"
               name="cpassword"
               placeholder="Confirm Password"
-              secureTextEntry
               textContentType="password"
               onChangeText={(text) => setCPassword(text)}
               value={cpassword}
+              secureTextEntry={!showPassword2}
+              rightIcon={showPassword2 ? "eye-off" : "eye"}
+              rightOnPress={() => setShowPassword2((st) => !st)}
             />
             <AppFormField
               autoCorrect={false}

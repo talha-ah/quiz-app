@@ -123,7 +123,7 @@ function Quizzes(props) {
       renderItem={({ item }) => (
         <Item
           body={
-            <View>
+            <View style={{ width: "42%" }}>
               <Text style={styles.text}>Quiz Title: {item.quizTitle}</Text>
               <Text style={styles.text}>Time Allowed: {item.quizTime}</Text>
               <Text style={styles.text}>

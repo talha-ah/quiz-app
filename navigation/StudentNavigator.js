@@ -11,6 +11,7 @@ import TakeQuiz from "../screens/Student/TakeQuiz";
 import StudentNotifications from "../screens/Student/StudentNotifications";
 import firebase from "../config/firebaseConfig";
 
+import Courses from "../screens/Student/Courses";
 import StudentReport from "../screens/Student/StudentReport";
 
 // Notifications
@@ -190,7 +191,7 @@ const StudentNavigator = () => {
         name="Quizzes"
         component={Quizzes}
         options={{
-          title: "Profile",
+          title: "Quizzes",
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
@@ -198,7 +199,15 @@ const StudentNavigator = () => {
         name="TakeQuiz"
         component={TakeQuiz}
         options={{
-          title: "Profile",
+          title: "TakeQuiz",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="Courses"
+        component={Courses}
+        options={{
+          title: "Marksheet",
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
@@ -206,7 +215,7 @@ const StudentNavigator = () => {
         name="StudentReport"
         component={StudentReport}
         options={{
-          title: "Profile",
+          title: "StudentReport",
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
@@ -214,7 +223,7 @@ const StudentNavigator = () => {
         name="StudentNotifications"
         component={StudentNotifications}
         options={{
-          title: "Profile",
+          title: "Notifications",
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />

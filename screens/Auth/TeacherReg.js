@@ -32,6 +32,8 @@ const TeacherReg = (props) => {
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const handleSignUp = async () => {
     try {
@@ -105,26 +107,30 @@ const TeacherReg = (props) => {
               value={email}
             />
             <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
               icon="lock"
               name="password"
-              placeholder="Password"
-              secureTextEntry
-              textContentType="password"
-              onChangeText={(text) => setPassword(text)}
               value={password}
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Password"
+              textContentType="password"
+              secureTextEntry={!showPassword}
+              onChangeText={(text) => setPassword(text)}
+              rightIcon={showPassword ? "eye-off" : "eye"}
+              rightOnPress={() => setShowPassword((st) => !st)}
             />
             <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
               icon="lock"
               name="cpassword"
-              placeholder="Confirm Password"
-              secureTextEntry
-              textContentType="password"
-              onChangeText={(text) => setCPassword(text)}
               value={cpassword}
+              autoCorrect={false}
+              autoCapitalize="none"
+              textContentType="password"
+              placeholder="Confirm Password"
+              secureTextEntry={!showPassword2}
+              onChangeText={(text) => setCPassword(text)}
+              rightIcon={showPassword2 ? "eye-off" : "eye"}
+              rightOnPress={() => setShowPassword2((st) => !st)}
             />
             <AppFormField
               autoCorrect={false}

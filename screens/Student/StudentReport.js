@@ -31,7 +31,8 @@ export default function Result(props) {
             .doc(item.quizzId)
             .get();
           const quizDoc = await quiz.data();
-          quizDoc &&
+          quizDoc.course === props.route.params.courseItem.key &&
+            quizDoc &&
             dataArray.push([
               quizDoc.quizTitle,
               item.totalQuestions,
