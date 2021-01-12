@@ -62,7 +62,9 @@ function InviteScreen(props) {
         ),
       })
       .then((studentsDoc) => {
-        props.navigation.goBack();
+        let newArray = students.filter((st) => st.key !== key);
+        setStudents(newArray);
+        setLoading2(false);
       })
       .catch((err) => {
         alert(err.message);

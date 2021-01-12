@@ -126,14 +126,34 @@ function QuestionsList(props) {
               <Text style={{ color: "white" }}>Answer: {item.answer}</Text>
               <Text style={{ color: "white" }}>Weightage: {item.weight}</Text>
             </View>
-            <Button
-              danger
-              transparent
-              style={{ alignSelf: "center" }}
-              onPress={() => openTwoButtonAlert(item.key)}
-            >
-              <Icon active name="trash" />
-            </Button>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Button
+                danger
+                transparent
+                style={{ alignSelf: "center" }}
+                onPress={() =>
+                  props.navigation.navigate("UpdateQuestion", {
+                    questionItem: item,
+                  })
+                }
+              >
+                <Text
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  Update
+                </Text>
+              </Button>
+              <Button
+                danger
+                transparent
+                style={{ alignSelf: "center" }}
+                onPress={() => openTwoButtonAlert(item.key)}
+              >
+                <Icon active name="trash" />
+              </Button>
+            </View>
           </View>
         </View>
       )}
