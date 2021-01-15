@@ -65,7 +65,19 @@ function UpdateQuestion(props) {
           answer,
           weight: Math.floor(answerWeight),
         })
-        .then((resData) => {
+        .then(async (resData) => {
+          props.route.params.questionItem.quizzes.forEach((element) => {
+            firebase
+              .firestore()
+              .collection("Quiz")
+              .doc(element)
+              .update({
+                marks: firebase.firestore.FieldValue.increment(
+                  Math.floor(answerWeight) -
+                    Math.floor(props.route.params.questionItem.weight)
+                ),
+              });
+          });
           props.navigation.goBack();
         })
         .catch((err) => {

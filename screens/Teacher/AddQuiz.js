@@ -55,7 +55,7 @@ function AddQuiz(props) {
     if (title === "" || time === "" || quizTime === "" || quizDate === "") {
       Alert.alert("Error", "Enter Valid details");
     } else {
-      // setLoading(true);
+      setLoading(true);
       const params = props.route.params;
       if (params) {
         firestore_ref
@@ -108,6 +108,8 @@ function AddQuiz(props) {
             quizTime: time,
             quizDate: new Date(dateTime),
             quizDateTime: new Date(dateTime),
+            marks: 0,
+            questions: 0,
             users: [],
           })
           .then((resData) => {
@@ -195,7 +197,9 @@ function AddQuiz(props) {
               />
             )}
             <AppButton
-              title={loading ? "Loading..." : "Add"}
+              title={
+                loading ? "Loading..." : props.route.params ? "Update" : "Add"
+              }
               onPress={addQuiz}
               disabled={loading}
             />

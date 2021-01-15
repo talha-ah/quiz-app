@@ -6,7 +6,7 @@ import firebase from "../../config/firebaseConfig";
 import LoadingScreen from "../LoadingScreen";
 
 export default function Result(props) {
-  const firestore_ref = firebase.firestore().collection("StudentUser");
+  const firestore_ref = firebase.firestore();
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -18,30 +18,56 @@ export default function Result(props) {
   async function getData() {
     const dataArray = [];
     firestore_ref
-      .where("courses", "array-contains", props.route.params.courseItem.key)
+      .collection("Quiz")
+      .where("course", "==", props.route.params.courseItem.key)
       .get()
-      .then((docSnapshot) => {
-        docSnapshot.forEach((doc) => {
-          let student = doc.data();
-          if (student.results) {
-            student.results.map((quizResult) => {
-              if (quizResult.courseId === props.route.params.courseItem.key) {
-                dataArray.push([
-                  student.username,
-                  quizResult.quizTitle,
-                  quizResult.totalQuestions,
-                  quizResult.obtainedMarks,
-                  quizResult.totalMarks,
-                ]);
-              }
-            });
-          }
+      .then((quizSnapshots) => {
+        const quizzes = [];
+        quizSnapshots.forEach(async (doc) => {
+          let quizz = doc.data();
+          quizz.id = doc.id;
+          quizzes.push(quizz);
         });
-        setData(dataArray);
-        setLoading(false);
+        firestore_ref
+          .collection("StudentUser")
+          .where("courses", "array-contains", props.route.params.courseItem.key)
+          .get()
+          .then((studentsSnapshot) => {
+            const students = [];
+            studentsSnapshot.forEach(async (doc) => {
+              let student = doc.data();
+              student.id = doc.id;
+              students.push(student);
+            });
+            quizzes.forEach((quizzItem) => {
+              students.forEach((studentItem) => {
+                const resultIndex = studentItem.results.findIndex(
+                  (result) => result.quizzId === quizzItem.id
+                );
+                if (resultIndex === -1) {
+                  dataArray.push([
+                    studentItem.username,
+                    quizzItem.quizTitle,
+                    quizzItem.questions,
+                    "null",
+                    quizzItem.marks,
+                  ]);
+                } else {
+                  dataArray.push([
+                    studentItem.username,
+                    quizzItem.quizTitle,
+                    quizzItem.questions,
+                    studentItem.results[resultIndex].obtainedMarks,
+                    quizzItem.marks,
+                  ]);
+                }
+              });
+            });
+            setData(dataArray);
+            setLoading(false);
+          });
       })
       .catch((err) => {
-        console.log(err);
         alert(err.message);
       });
   }

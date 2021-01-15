@@ -41,17 +41,29 @@ function QuestionsList(props) {
       });
   }
 
-  const addQuestion = (key) => {
+  const addQuestion = (item) => {
     firestore_ref
-      .doc(key)
+      .doc(item.key)
       .update({
         quizzes: firebase.firestore.FieldValue.arrayUnion(
           props.route.params.quizzId
         ),
       })
       .then((res) => {
-        const newArrya = questions.filter((itmIn) => itmIn.key !== key);
-        setQuestions(newArrya);
+        firebase
+          .firestore()
+          .collection("Quiz")
+          .doc(props.route.params.quizzId)
+          .update({
+            marks: firebase.firestore.FieldValue.increment(item.weight),
+            questions: firebase.firestore.FieldValue.increment(1),
+          })
+          .then((quizDoc) => {
+            const newArrya = questions.filter(
+              (itmIn) => itmIn.key !== item.key
+            );
+            setQuestions(newArrya);
+          });
       })
       .catch((err) => {
         alert(err.message);
@@ -115,7 +127,7 @@ function QuestionsList(props) {
               danger
               transparent
               style={{ alignSelf: "center" }}
-              onPress={() => addQuestion(item.key)}
+              onPress={() => addQuestion(item)}
             >
               <Icon active name="add" />
             </Button>

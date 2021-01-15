@@ -35,24 +35,36 @@ function QuestionsList(props) {
       });
   }
 
-  const deleteQuestion = (key) => {
+  const deleteQuestion = (item) => {
     firestore_ref
-      .doc(key)
+      .doc(item.key)
       .update({
         quizzes: firebase.firestore.FieldValue.arrayRemove(
           props.route.params.quizz.key
         ),
       })
       .then((res) => {
-        const newArrya = questions.filter((itmIn) => itmIn.key !== key);
-        setQuestions(newArrya);
+        firebase
+          .firestore()
+          .collection("Quiz")
+          .doc(props.route.params.quizz.key)
+          .update({
+            marks: firebase.firestore.FieldValue.increment(-item.weight),
+            questions: firebase.firestore.FieldValue.increment(-1),
+          })
+          .then((quizDoc) => {
+            const newArrya = questions.filter(
+              (itmIn) => itmIn.key !== item.key
+            );
+            setQuestions(newArrya);
+          });
       })
       .catch((err) => {
         alert(err.message);
       });
   };
 
-  const openTwoButtonAlert = (key) => {
+  const openTwoButtonAlert = (item) => {
     Alert.alert(
       "Delete Question",
       "Are you sure to delete it?",
@@ -64,7 +76,7 @@ function QuestionsList(props) {
         {
           text: "Yes",
           onPress: () => {
-            deleteQuestion(key);
+            deleteQuestion(item);
           },
         },
       ],
@@ -131,7 +143,7 @@ function QuestionsList(props) {
               danger
               transparent
               style={{ alignSelf: "center" }}
-              onPress={() => openTwoButtonAlert(item.key)}
+              onPress={() => openTwoButtonAlert(item)}
             >
               <Icon active name="trash" />
             </Button>
