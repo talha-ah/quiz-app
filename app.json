@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "r-fist-app",
-    "slug": "r-fist-app",
+    "name": "quizapp",
+    "slug": "quizapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "io.expo.client",
+      "package": "com.talha_ah.quizapp",
       "useNextNotificationsApi": true
     }
   }
