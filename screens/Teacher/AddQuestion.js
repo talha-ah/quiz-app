@@ -38,9 +38,11 @@ function AddQuestion(props) {
       option1 === "" ||
       option2 === "" ||
       answerWeight === "" ||
-      (questionType === "mcq" && (option3 === "" || option4 === ""))
+      (questionType === "mcq" && (option3 === "" || option4 === "")) ||
+      (questionType === "mcq" ? Number(answer) > 4 : Number(answer) > 2) ||
+      Number(answer) === 0
     ) {
-      alert("Fields are required!");
+      alert("Fields are invalid!");
     } else {
       setLoading(true);
       firestore_ref

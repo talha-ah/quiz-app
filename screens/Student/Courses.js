@@ -24,7 +24,6 @@ function Courses(props) {
     let userOBJ = JSON.parse(userData);
 
     const courseList = [];
-    console.log(userOBJ);
     await Promise.all(
       userOBJ.courses.map(async (courseId) => {
         const courseDoc = await firestore_ref.doc(courseId).get();

@@ -41,13 +41,15 @@ const RegisterScreen = (props) => {
 
   const handleSignUp = async () => {
     try {
+      console.log(typeof phonenumber);
       if (
         username === "" ||
         email === "" ||
         password === "" ||
         cpassword === "" ||
         regno === "" ||
-        phonenumber === ""
+        phonenumber === "" ||
+        phonenumber.length !== 11
       ) {
         alert("Write details ");
       } else if (password !== cpassword) {

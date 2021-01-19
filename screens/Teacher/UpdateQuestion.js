@@ -38,6 +38,7 @@ function UpdateQuestion(props) {
     setOption4(questionItem.option3);
     setAnswer(questionItem.answer);
     setAnswerWeight(String(questionItem.weight));
+    console.log("questionItem.questionType", questionItem.questionType);
   }, []);
 
   const updateQuestion = async () => {
@@ -47,10 +48,11 @@ function UpdateQuestion(props) {
       option1 === "" ||
       option2 === "" ||
       answerWeight === "" ||
-      (questionType === "mcq" ? answer > 4 : answer > 2) ||
-      (questionType === "mcq" && (option3 === "" || option4 === ""))
+      (questionType === "mcq" && (option3 === "" || option4 === "")) ||
+      (questionType === "mcq" ? Number(answer) > 4 : Number(answer) > 2) ||
+      Number(answer) === 0
     ) {
-      alert("Fields are required!");
+      alert("Fields are invalid!");
     } else {
       setLoading(true);
       firestore_ref
@@ -112,7 +114,7 @@ function UpdateQuestion(props) {
               <Text style={styles.text}>Question Type</Text>
               <RadioForm
                 radio_props={questionTypes}
-                initial={0}
+                initial={parseInt(props.route.params.questionItem.questionType)}
                 formHorizontal={true}
                 labelHorizontal={true}
                 buttonSize={20}
